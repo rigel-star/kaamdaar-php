@@ -1,0 +1,13 @@
+RewriteEngine on
+
+# for home/index
+RewriteRule ^(home|index)?$ index.php
+
+# for user profile
+# RewriteRule ^user\/([0-9]+)+\/?$ ./views/profile.php?uid=$1
+
+# for requests list
+# RewriteRule ^requests\/([0-9]+)+\/?$ ./views/requests.php?uid=$1
+
+# login page
+# RewriteRule ^login?$ ./views/login.php
