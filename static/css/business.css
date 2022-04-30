@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+i.td-icon {
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.page-head {
+    margin-left: 20px;
+}
+
+.page-body {
+    margin-left: 20px;
+    margin-right: 20px;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+.pc-title {
+    margin: 10px;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pc-title > div {
+    display: inline-block;
+}
+
+.new-b-btn {
+    background-color: rgb(106, 168, 255);
+    color: white;
+    transition: color 0.15s;
+    border: none;
+    width: 100px;
+    height: 40px;
+    font-size: 1.2em;
+    border-radius: 10px;
+    float: right;
+}
+
+.new-b-btn:hover {
+    opacity: 0.8;
+}
+
+.bl {
+    list-style-type: none;
+}
+
+.bli {
+    width: inherit;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.bli-root {
+    border-bottom: 1px solid black;
+}
+
+.bli-head {
+    font-family: Roboto, Arial;
+    font-weight: 400;
+    font-size: 25px;
+    width: 100%;
+    padding: 10px;
+}
+
+.bli-stat {
+    font-family: Roboto, Arial;
+    font-size: 20px;
+    width: 100%;
+    height: 80px;
+}
+
+.bli-st-i {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height: max-content;
+    height: 80px;
+    font-weight: 300;
+}
+
+.bli-total {
+    border-right: 1px solid black;
+    display: inline-block;
+    height: inherit;
+}
+
+.bli-rev {
+    border-right: 1px solid black;
+    display: inline-block;
+}
+
+.bli-rating {
+    display: inline-block;
+    height: inherit;
+}

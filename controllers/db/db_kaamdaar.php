@@ -1,6 +1,7 @@
 <?php 
 	require_once "db_controller.php";
-	require_once "/opt/lampp/htdocs/kaamdaar/models/user.php";
+	require_once "/Applications/XAMPP/htdocs/kaamdaar-php/constants.php";
+	require_once ROOT_DIR . "/models/user.php";
 	require_once "kaamdaar_db_constants.php";
 
 	final class KaamdaarDBHandler extends MySQLDBHandler
@@ -45,7 +46,7 @@
 			return $this->insertIntoTable(USER_TABLE, $field_names, $field_values, $format);
 		}
 
-		private function getUser(?string $field_name, $check_value) : User|null
+		private function getUser(?string $field_name, $check_value) : User
 		{
 			if(!$field_name || !$check_value) return null;
 
@@ -69,12 +70,12 @@
 			return $user;
 		}
 
-		public function getUserWithID(?int $uid) : User|null
+		public function getUserWithID(?int $uid) : User
 		{
 			return $this->getUser("u_id", $uid);
 		}
 
-		public function getUserWithPhone(?string $phone) : User|null
+		public function getUserWithPhone(?string $phone) : User
 		{
 			return $this->getUser("u_phone", $phone);
 		}

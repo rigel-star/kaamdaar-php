@@ -11,7 +11,7 @@
 
 	<?php
 
-		require_once'/opt/lampp/htdocs/kaamdaar/utils.php';
+		require_once '/Applications/XAMPP/htdocs/kaamdaar-php/constants.php';
     	require_once ROOT_DIR . "/views/k_auth.php";
 
 		if(already_logged_in())

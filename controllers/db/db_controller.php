@@ -33,7 +33,7 @@
 		}
 
 
-		public function fetchTableAll(string $table_name) : array|false
+		public function fetchTableAll(string $table_name) : array
 		{
 			return $this->fetchTableWhere($table_name, null);
 		}
@@ -43,7 +43,7 @@
 			string $table_name, 
 			?array $where_clauses, 
 			string $operator = "AND"
-		) : array|bool
+		) : array
 		{
 			$SQL = "SELECT * FROM $table_name ";
 
@@ -65,7 +65,7 @@
 		}
 
 
-		private function mysqliResObjToDBRowArray(mysqli_result $mysqli_result_obj) : array|false
+		private function mysqliResObjToDBRowArray(mysqli_result $mysqli_result_obj) : array
 		{
 			$rows = array();
 			while($row = $mysqli_result_obj->fetch_object())

@@ -1,7 +1,8 @@
 <?php 
     session_start();
 
-    require_once'/opt/lampp/htdocs/kaamdaar/utils.php';
+    require_once "/Applications/XAMPP/htdocs/kaamdaar-php/constants.php";
+    require_once ROOT_DIR . "/utils.php";
     require_once ROOT_DIR . "/views/k_auth.php";
 
     if(already_logged_in())
@@ -103,7 +104,7 @@
 
     <?php 
 
-    require_once'/opt/lampp/htdocs/kaamdaar/utils.php';
+    require_once ROOT_DIR . "/utils.php";
     require_once ROOT_DIR . "/controllers/db/db_kaamdaar.php";
 
     $kdb = new KaamdaarDBHandler();

@@ -1,5 +1,5 @@
 <?php
 
-	define('ROOT_DIR', '/opt/lampp/htdocs/kaamdaar');
+	define("ROOT_DIR", "/Applications/XAMPP/htdocs/kaamdaar-php");
  
 ?>
