@@ -1,5 +1,4 @@
 <?php 
-
 	require_once "constants.php";
 
 	function redirect($url) : void
@@ -8,7 +7,7 @@
 	}
 
 
-	$static_file_dir = "/kaamdaar/static/";
+	$static_file_dir = "./static/";
 
 
 	function change_static_file_dir($new_path) : void
@@ -20,10 +19,8 @@
 
 	function url_for($filename) : string
 	{
-		global $static_file_dir;
-		return "./$static_file_dir/$filename";
+		return $static_file_dir . "/" . $filename;
 	}
-
 
 
 	function get_user_location($fields=['country', 'region', 'city', 'lat', 'lon'])
@@ -41,5 +38,4 @@
 
 		return $result;
 	}
-
 ?>

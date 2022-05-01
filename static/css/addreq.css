@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    margin-top: 10px;
+}
+
+form label{
+    display: inline-block;
+    margin: 10px;
+    font-size: 18px;
+}
+
+#new {
+    text-align: center;
+}
+
+form {
+    margin-left: 150px;
+}
+
+#request {
+    position: absolute;
+    width: 50%;
+    left: 30%;
+    height: 400px;
+    border-bottom: 1px solid;
+}
+
+textarea {
+    padding: 10px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+#view_on_map {
+    margin-bottom: 10px;
+    margin-left: 30%;
+}
+
+#map {
+    position: absolute;
+    left: 40%;
+    top: 75%;
+}

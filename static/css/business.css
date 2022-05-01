@@ -4,33 +4,15 @@
     box-sizing: border-box;
 }
 
+body {
+    font-family: "Lato", sans-serif;
+    margin-top: 10px;
+}
+
 i.td-icon {
     float: right;
     margin-right: 5px;
     cursor: pointer;
-}
-
-.page-head {
-    margin-left: 20px;
-}
-
-.page-body {
-    margin-left: 20px;
-    margin-right: 20px;
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-}
-
-.pc-title {
-    margin: 10px;
-    border-bottom: 1px solid black;
-    padding-bottom: 5px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.pc-title > div {
-    display: inline-block;
 }
 
 .new-b-btn {
