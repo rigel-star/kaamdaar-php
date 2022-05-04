@@ -9,12 +9,6 @@ body {
     margin-top: 10px;
 }
 
-i.td-icon {
-    float: right;
-    margin-right: 5px;
-    cursor: pointer;
-}
-
 .new-r-btn {
     background-color: rgb(106, 168, 255);
     color: white;
@@ -42,7 +36,10 @@ i.td-icon {
 }
 
 .rli-root {
-    border-bottom: 1px solid black;
+    border-width: 0.01em;
+    border-style: solid;
+    border-color: black;
+    padding: 10px 5px 20px 5px;
 }
 
 .rli-head {
@@ -51,4 +48,34 @@ i.td-icon {
     font-size: 25px;
     width: 100%;
     padding: 10px;
+    float: left;
+}
+
+.td-icon {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.act-btns 
+{
+    float: right;
+}
+
+.view-on-map-btn
+{
+    width: 140px;
+    height: 30px;
+    font-size: 0.7em;
+}
+
+.u-lvl
+{
+    font-size: 15px;
+    color: red;
+}
+
+.req-info
+{
+    margin-left: 45px;
+    color: rgba(0, 0, 0, 0.5);
 }

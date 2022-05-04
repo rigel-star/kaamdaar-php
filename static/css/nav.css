@@ -12,11 +12,19 @@
     display: block;
 }
 
-.nav-bar a:hover {
+.nav-bar a:hover 
+{
     color: blue;
 }
 
-.page-head {
+.nav-link-active
+{
+    background-color: rgb(141, 170, 255);
+    color: blue;
+}
+
+.page-head 
+{
     display: grid;
     grid-template-columns: 20% 80%;
     margin-left: 20px;
