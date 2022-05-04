@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		
 		<link rel="stylesheet" href="../static/css/nav.css">
-		<link rel="stylesheet" href="../static/css/addreq.css">
+		<link rel="stylesheet" href="../static/css/add-request.css">
 	</head>
 	<body>
 		<div class="root">
@@ -24,13 +24,13 @@
 				<div id="nav-bar" class="nav-bar">
 					<a href="profile.php" class="nav-link"><i class="fa fa-user" style="font-size:24px"></i> Profile</a>
 					<a href="bprofile.php" class="nav-link"><i class="fa fa-briefcase" style="font-size:24px"></i> Business Profile</a>
-					<a href="#" class="nav-link"><i class="fa fa-send" style="font-size:24px"></i> Your requests</a>
+					<a href="requests.php" class="nav-link"><i class="fa fa-send" style="font-size:24px"></i> Your requests</a>
 					<a href="#" class="nav-link"><i class="fa fa-bell" style="font-size:24px"></i> Notifications</a>
 					<hr>
 					<a href="#" class="nav-link">Add new request</a>
-					<a href="#" class="nav-link">Add new business</a>
+					<a href="add-business.php" class="nav-link">Add new business</a>
 					<hr>
-					<a href="#" class="nav-link"><i class="fa fa-sign-out" style="font-size:24px"></i>Logout</a>
+					<a href="logout.php" class="nav-link"><i class="fa fa-sign-out" style="font-size:24px"></i>Logout</a>
 					<a href="#" class="nav-link"><i class="fa fa-cog" style="font-size:24px"></i> Settings</a>
 					<a href="#" class="nav-link"><i class="fa fa-print" style="font-size:24px"></i> Privacy policy</a>
 				</div>

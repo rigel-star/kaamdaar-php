@@ -43,11 +43,11 @@
 				<div id="nav-bar" class="nav-bar">
 					<a href="#" class="nav-link"><i class="fa fa-user" style="font-size:24px"></i> Profile</a>
 					<a href="bprofile.php" class="nav-link"><i class="fa fa-briefcase" style="font-size:24px"></i> Business Profile</a>
-					<a href="#" class="nav-link"><i class="fa fa-send" style="font-size:24px"></i> Your requests</a>
+					<a href="requests.php" class="nav-link"><i class="fa fa-send" style="font-size:24px"></i> Your requests</a>
 					<a href="#" class="nav-link"><i class="fa fa-bell" style="font-size:24px"></i> Notifications</a>
 					<hr>
-					<a href="addreq.php" class="nav-link">Add new request</a>
-					<a href="#" class="nav-link">Add new business</a>
+					<a href="add-request.php" class="nav-link">Add new request</a>
+					<a href="add-business.php" class="nav-link">Add new business</a>
 					<hr>
 					<a href="#" class="nav-link"><i class="fa fa-sign-out" style="font-size:24px"></i>Logout</a>
 					<a href="#" class="nav-link"><i class="fa fa-cog" style="font-size:24px"></i> Settings</a>

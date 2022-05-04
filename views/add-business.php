@@ -44,44 +44,16 @@
                     <div class="pc-title">
                         <div class="pct-1">
                             <div class="pc-main-title">
-                                <h2>All businesses</h2>
+                                <h2>Add new business</h2>
+							</div>
+							<div class="pc-sub-title">
+                                <h4>Start a new business you like</h4>
                             </div>
-                            <div class="pc-sub-title">
-                                <h4>View all the businesses you own</h4>
-                            </div>
-                        </div>
-                        <div class="pct-2">
-                            <button class="new-b-btn">Start new</button>
                         </div>
                     </div>
-                    <ul class="bl">
-                        <li class="bli">
-                            <div class="bli-root">
-                                <div class="bli-head">
-                                    <span><i class="fa fa-car" aria-hidden="true"></i></span>
-                                    <span>
-                                        <strong>Dummy Business Name</strong>
-                                    </span>
-                                    <i class="fa fa-ellipsis-v td-icon" style="font-size:24px"></i>
-                                </div>
-                                <div class="bli-stat">
-                                    <div class="bli-st-i bli-total">
-                                        <p>Total served</p>
-                                        <strong>?</strong>
-                                        <p>On last 30 days</p>
-                                    </div>
-                                    <div class="bli-st-i bli-rev">
-                                        <p>Gross revenue</p>
-                                        <strong>?</strong>
-                                    </div>
-                                    <div class="bli-st-i bli-rating">
-                                        <p>Rating</p>
-                                        <strong>?</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+					<div>
+						
+					</div>
                 </div>
             </div>
         </div>

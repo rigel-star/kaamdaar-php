@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    margin-top: 10px;
+}
+
+i.td-icon {
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.new-r-btn {
+    background-color: rgb(106, 168, 255);
+    color: white;
+    transition: color 0.15s;
+    border: none;
+    width: 100px;
+    height: 40px;
+    font-size: 1.2em;
+    border-radius: 10px;
+    float: right;
+}
+
+.new-r-btn:hover {
+    opacity: 0.8;
+}
+
+.rl {
+    list-style-type: none;
+}
+
+.rli {
+    width: inherit;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.rli-root {
+    border-bottom: 1px solid black;
+}
+
+.rli-head {
+    font-family: Roboto, Arial;
+    font-weight: 400;
+    font-size: 25px;
+    width: 100%;
+    padding: 10px;
+}
