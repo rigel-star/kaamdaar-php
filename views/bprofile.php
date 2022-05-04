@@ -1,3 +1,21 @@
+<?php 
+    require_once "k_auth.php";
+
+    if(!already_logged_in())
+        header("location:login.php");
+
+    require_once "../controllers/db/db_kaamdaar.php";
+    require_once "../models/business.php";
+
+    const business_icons = array(
+        'plumber' => '../static/icons/business/plumber.png',
+        'carpenter' => '../static/icons/business/carpenter.png'
+    );
+
+    $kdb = new KaamdaarDBHandler();
+    $bp = $kdb->getBusinessProfile($_COOKIE["user_id"]);
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +30,21 @@
 		
         <link rel="stylesheet" href="../static/css/nav.css">
 		<link rel="stylesheet" href="../static/css/business.css">
+
+        <style>
+			.nav-link-active
+			{
+				color: blue;
+				background-color: #E1EDFF;
+				display: block;
+                width: 100%;
+				height: 40px;
+				border-radius: 0 8px 8px 0;
+				margin-left: 0px;
+				transform: translateX(-20px);
+				padding: 10px 0 0 20px;
+			}
+		</style>
 
 		<title>Business Profile</title>
 	</head>
@@ -29,7 +62,7 @@
             <div class="page-body">
                 <div id="nav-bar" class="nav-bar">
                     <a href="profile.php" class="nav-link"><i class="fa fa-user" style="font-size:24px"></i> Profile</a>
-                    <a href="#" class="nav-link"><i class="fa fa-briefcase" style="font-size:24px"></i> Business Profile</a>
+                    <a href="#" class="nav-link"><span class="nav-link-active"><i class="fa fa-briefcase" style="font-size:24px"></i> Business Profile</span></a>
                     <a href="requests.php" class="nav-link"><i class="fa fa-send" style="font-size:24px"></i> Your requests</a>
                     <a href="#" class="nav-link"><i class="fa fa-bell" style="font-size:24px"></i> Notifications</a>
                     <hr>
@@ -54,33 +87,59 @@
                             <button class="new-b-btn">Start new</button>
                         </div>
                     </div>
+
+                    <div class="business-profile">
+                        <img style="border-radius: 50%; width: 150px; height: 150px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnYxsipAyyKYPxVJ957_YTNY7U3biCPc6NKA&usqp=CAU" alt="Profile">
+                        <div>
+                            <div>
+                                <span><?php echo $bp->name; ?></span>
+                            </div>
+                            <div>
+                                <span>Pragati Karmacharya</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <ul class="bl">
+                    <?php 
+                    $businesses = $kdb->getAllBusinesses($bp->bid);
+                    foreach($businesses as $bus)
+                    {
+                    ?>
                         <li class="bli">
                             <div class="bli-root">
                                 <div class="bli-head">
-                                    <span><i class="fa fa-car" aria-hidden="true"></i></span>
+                                    <img src="<?php echo business_icons[$bus->category]; ?>" alt="Icon">
                                     <span>
-                                        <strong>Dummy Business Name</strong>
+                                        <strong><?php echo ucwords($bus->category); ?></strong>
                                     </span>
                                     <i class="fa fa-ellipsis-v td-icon" style="font-size:24px"></i>
                                 </div>
                                 <div class="bli-stat">
                                     <div class="bli-st-i bli-total">
                                         <p>Total served</p>
-                                        <strong>?</strong>
+                                        <p><strong><?php echo $bus->total_served; ?></strong></p>
                                         <p>On last 30 days</p>
                                     </div>
                                     <div class="bli-st-i bli-rev">
                                         <p>Gross revenue</p>
-                                        <strong>?</strong>
+                                        <p><strong><?php echo $bus->gross_revenue; ?></strong></p>
                                     </div>
                                     <div class="bli-st-i bli-rating">
                                         <p>Rating</p>
-                                        <strong>?</strong>
+                                        <p><strong><?php echo $bus->rating; ?></strong></p>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                    <?php
+                        }
+                    ?>
                     </ul>
                 </div>
             </div>

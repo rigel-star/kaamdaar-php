@@ -54,6 +54,17 @@
                             <button class="new-b-btn">Start new</button>
                         </div>
                     </div>
+                    <div>
+                        Sort by
+                        <select name="" id="">
+                            <option value="" disabled selected>
+                                Sort by
+                            </option>
+                            <option value="date">
+                                Date
+                            </option>
+                        </select>
+                    </div>
                     <ul class="rl">
                         <li class="rli">
                             <div class="rli-root">

@@ -43,7 +43,7 @@
 			string $table_name, 
 			?array $where_clauses, 
 			string $operator = "AND"
-		) : array
+		) : ?array
 		{
 			$SQL = "SELECT * FROM $table_name ";
 
@@ -60,7 +60,7 @@
 			}
 			else
 			{
-				return false;
+				return null;
 			}
 		}
 

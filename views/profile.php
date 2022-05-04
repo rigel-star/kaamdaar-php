@@ -22,6 +22,20 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		
 		<title>Profile</title>
+
+		<style>
+			.nav-link-active
+			{
+				color: blue;
+				background-color: #E1EDFF;
+				display: block;
+				height: 40px;
+				border-radius: 0 8px 8px 0;
+				margin-left: 0px;
+				transform: translateX(-20px);
+				padding: 10px 0 0 20px;
+			}
+		</style>
 	</head>
 	<body>
 
@@ -41,7 +55,7 @@
 			</div>
 			<div class="page-body">
 				<div id="nav-bar" class="nav-bar">
-					<a href="#" class="nav-link nav-link-active"><i class="fa fa-user" style="font-size:24px"></i> Profile</a>
+					<a href="#" class="nav-link"><span class="nav-link-active"><i class="fa fa-user" style="font-size:24px;"></i> Profile</span></a>
 					<a href="bprofile.php" class="nav-link"><i class="fa fa-briefcase" style="font-size:24px"></i> Business Profile</a>
 					<a href="requests.php" class="nav-link"><i class="fa fa-send" style="font-size:24px"></i> Your requests</a>
 					<a href="#" class="nav-link"><i class="fa fa-bell" style="font-size:24px"></i> Notifications</a>
@@ -64,6 +78,12 @@
 							</div>
 						</div>
 					</div>
+					<?php 
+					$kdb = new KaamdaarDBHandler();
+					$uid = $_COOKIE['user_id'];
+					$user = $kdb->getUserWithID((int) $uid);
+					echo $user->fname;
+					?>
 				</div>
 			</div>
 		</div>

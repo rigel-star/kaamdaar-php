@@ -2,7 +2,11 @@
 	require_once "db_controller.php";
 	require_once "/Applications/XAMPP/htdocs/kaamdaar-php/constants.php";
 	require_once ROOT_DIR . "/models/user.php";
-	require_once "kaamdaar_db_constants.php";
+	require_once ROOT_DIR . "/models/business-user.php";
+	require_once ROOT_DIR . "/models/business.php";
+	require_once "kdb_constants.php";
+
+	const all_business_tables = array('plumber', 'carpenter');
 
 	final class KaamdaarDBHandler extends MySQLDBHandler
 	{
@@ -46,7 +50,7 @@
 			return $this->insertIntoTable(USER_TABLE, $field_names, $field_values, $format);
 		}
 
-		private function getUser(?string $field_name, $check_value) : User
+		private function getUser(?string $field_name, $check_value) : ?User
 		{
 			if(!$field_name || !$check_value) return null;
 
@@ -70,20 +74,82 @@
 			return $user;
 		}
 
-		public function getUserWithID(?int $uid) : User
+		public function getUserWithID(?int $uid) : ?User
 		{
 			return $this->getUser("u_id", $uid);
 		}
 
-		public function getUserWithPhone(?string $phone) : User
+		public function getUserWithPhone(?string $phone) : ?User
 		{
 			return $this->getUser("u_phone", $phone);
 		}
 
-		public function removeUser(?int $uid) : bool
+		public function removeUserWithID(?int $uid) : bool
 		{
 			if(!$uid) return false;
 			return $this->removeFromTableWhere(USER_TABLE, ["u_id=$uid"]);
+		}
+
+		public function getBusinessProfile(?int $uid) : ?BusinessUser 
+		{
+			if(!$uid) return null;
+
+			$profile = null;
+			$rows = $this->fetchTableWhere(BUSINESS_PROFILE_TABLE, ["u_id=$uid"]);
+
+			if($rows && count($rows))
+			{
+				$row = $rows[0];
+				$profile = new BusinessUser(
+					$row->getField('bp_id'),
+					$row->getField('bp_name'),
+					$row->getField('u_id')
+				);
+			}
+			return $profile;
+		}
+
+		public function getBusiness($bid, $type)
+		{
+			if(!$bid || !$type) return null;
+
+			$business = null;
+			$rows = $this->fetchTableWhere($type."_businesses", ["bp_id=$bid"]);
+
+			if($rows and count($rows))
+			{
+				$row = $rows[0];
+				$business_info = $this->fetchTableWhere($type."_business_info", ["i_id=".$row->getField('bi_id')]);
+				
+				if($business_info && count($business_info))
+				{
+					$bi = $business_info[0];
+					$business = new BusinessInfo(
+						$bid, 
+						$type, 
+						$bi->getField('i_total'),
+						$bi->getField("i_revenue"),
+						$bi->getField("i_rating")
+					);
+				}	
+			}
+			return $business;
+		}
+
+		public function getAllBusinesses(?int $bid) : ?array
+		{
+			if(!$bid) return null;
+
+			$all = array();
+			foreach(all_business_tables as $table)
+			{
+				$business = $this->getBusiness($bid, $table);
+				if($business)
+				{
+					array_push($all, $business);
+				}
+			}
+			return $all;
 		}
 
 		public function __toString()

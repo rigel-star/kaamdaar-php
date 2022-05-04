@@ -4,7 +4,8 @@
     padding-right: 20px;
 }
 
-.nav-bar a {
+.nav-bar a 
+{
     padding: 16px 8px 8px 0px;
     text-decoration: none;
     font-size: 20px;
@@ -14,12 +15,6 @@
 
 .nav-bar a:hover 
 {
-    color: blue;
-}
-
-.nav-link-active
-{
-    background-color: rgb(141, 170, 255);
     color: blue;
 }
 
