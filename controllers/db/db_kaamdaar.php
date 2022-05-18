@@ -2,8 +2,7 @@
 	require_once "db_controller.php";
 	require_once "/Applications/XAMPP/htdocs/kaamdaar-php/constants.php";
 	require_once ROOT_DIR . "/models/user.php";
-	require_once ROOT_DIR . "/models/business-user.php";
-	require_once ROOT_DIR . "/models/business.php";
+	require_once ROOT_DIR . "/models/business-profile.php";
 	require_once "kdb_constants.php";
 
 	const all_business_tables = array('plumber', 'carpenter');
@@ -101,9 +100,9 @@
 			{
 				$row = $rows[0];
 				$profile = new BusinessUser(
-					$row->getField('bp_id'),
-					$row->getField('bp_name'),
-					$row->getField('u_id')
+					$row->getField('B_PROFILE_ID'),
+					$row->getField('B_PROFILE_NAME'),
+					$row->getField('U_ID')
 				);
 			}
 			return $profile;
@@ -114,7 +113,7 @@
 			if(!$bid || !$type) return null;
 
 			$business = null;
-			$rows = $this->fetchTableWhere($type."_businesses", ["bp_id=$bid"]);
+			$rows = $this->fetchTableWhere($type."", ["bp_id=$bid"]);
 
 			if($rows and count($rows))
 			{

@@ -3,11 +3,10 @@
 import sys
 import mysql.connector as mysqldb
 
-DB_USERNAME = "rigelstar"
-DB_PASSWORD = "*galexia7#"
+DB_USERNAME = "root"
+DB_PASSWORD = ""
 DB_SERVERNAME = "localhost"
-DB_NAME = 'kaamdaar'
-
+DB_NAME = 'learning'
 
 def get_new_kdb_connection():
 	return mysqldb.connect(
@@ -22,7 +21,7 @@ db_conn.autocommit = True
 
 db_cursor = db_conn.cursor(dictionary=True, buffered=True)
 
-REQUEST_TABLES = ['painter_requests', 'carpenter_requests', 'plumber_requests']
+REQUEST_TABLES = ['students']
 
 FETCH_QUERY = f"SELECT * FROM {REQUEST_TABLES[0]}"
 
@@ -30,7 +29,7 @@ db_cursor.execute(FETCH_QUERY)
 results = db_cursor.fetchall()
 
 for row in results:
-	date_started = row['pr_date_started']
-	date_end = row['pr_date_end']
+	sname = row['sname']
+	semail = row['semail']
 
-	print(date_started, date_end)
+	print(sname, semail)

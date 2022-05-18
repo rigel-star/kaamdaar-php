@@ -8,3 +8,91 @@ body {
     font-family: "Lato", sans-serif;
     margin-top: 10px;
 }
+
+.pdiv
+{
+    border: 1px solid black;
+    margin: 0 10px 15px 10px;
+}
+
+.profile-top 
+{
+    height: 400px;
+}
+
+.pt-1 
+{
+    width: 100%;
+    height: 250px;
+    background-image: url("../images/box-texture.jpeg");
+    background-repeat: repeat-x;
+    background-repeat: repeat-y;
+}
+
+.pt-2 
+{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.pt-2-1
+{
+    margin: 10px 0 0 20px;
+}
+
+.profile-pic
+{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    transform: translateY(-100px);
+}
+
+.profile-edit-btn
+{
+    width: 200px;
+    height: 30px;
+    font-size: 1em;
+    margin-top: 5px;
+    background-color: rgb(255, 185, 70);
+    color: black;
+    transition: color 0.15s;
+    border: none;
+}
+
+.profile-middle
+{
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.profile-stat div
+{
+    display: flex;
+    justify-content: start;
+}
+
+.profile-stat p
+{
+    display: inline-block;
+    margin-right: 50px;
+}
+
+.profile-stat, .profile-about, .profile-map
+{
+    background-color: rgb(250, 250, 250);
+    padding: 5px 10px 5px 10px;
+}
+
+.profile-bottom
+{
+    height: 400px;
+    width: 100%;
+}
+
+.map 
+{
+    width: 100%;
+    height: 400px;
+}

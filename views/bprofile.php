@@ -4,15 +4,15 @@
     if(!already_logged_in())
         header("location:login.php");
 
-    require_once "../controllers/db/db_kaamdaar.php";
-    require_once "../models/business.php";
+    require_once "../controllers/db/kaamdaar_orm.php";
+    require_once "../models/business-profile.php";
 
     const business_icons = array(
         'plumber' => '../static/icons/business/plumber.png',
-        'carpenter' => '../static/icons/business/carpenter.png'
+        'Auto Mobile Repair' => '../static/icons/business/carpenter.png'
     );
 
-    $kdb = new KaamdaarDBHandler();
+    $kdb = new KaamdaarORM();
     $bp = $kdb->getBusinessProfile($_COOKIE["user_id"]);
 ?>
 
@@ -88,46 +88,62 @@
                         </div>
                     </div>
 
+                    <?php 
+                        if(!$bp)
+                        {
+                            echo "You haven't set up your business profile.";
+                            die('');
+                        }
+                    ?>
+
                     <div class="business-profile">
-                        <img style="border-radius: 50%; width: 150px; height: 150px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnYxsipAyyKYPxVJ957_YTNY7U3biCPc6NKA&usqp=CAU" alt="Profile">
-                        <div>
-                            <div>
-                                <span><?php echo $bp->name; ?></span>
-                            </div>
-                            <div>
-                                <span>Pragati Karmacharya</span>
+                        <div class="profile-top pdiv">
+                            <div class="pt-1"></div>
+                            <div class="pt-2">
+                                <img class="profile-pic" src="../static/images/profile.jpg" alt="Profile pic">
+                                <div class="pt-2-1">
+                                    <h2 class="profile-name"><?php echo $bp->b_profile_name; ?></h2>
+                                    <button class="profile-edit-btn">Edit your profile</button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <ul class="bl">
                     <?php 
-                    $businesses = $kdb->getAllBusinesses($bp->bid);
+                    $businesses = $kdb->getAllBusinessInfo($bp->b_profile_id);
+
+                    if(count($businesses) < 1)
+                    {
+                        echo "You don't own any business. Start by creating one.";
+                        die('');
+                    }
+
                     foreach($businesses as $bus)
                     {
                     ?>
                         <li class="bli">
                             <div class="bli-root">
                                 <div class="bli-head">
-                                    <img src="<?php echo business_icons[$bus->category]; ?>" alt="Icon">
+                                    <img src="<?php echo business_icons[$bus->business_type]; ?>" alt="Icon">
                                     <span>
-                                        <strong><?php echo ucwords($bus->category); ?></strong>
+                                        <strong><?php echo ucwords($bus->business_type); ?></strong>
                                     </span>
                                     <i class="fa fa-ellipsis-v td-icon" style="font-size:24px"></i>
                                 </div>
                                 <div class="bli-stat">
                                     <div class="bli-st-i bli-total">
                                         <p>Total served</p>
-                                        <p><strong><?php echo $bus->total_served; ?></strong></p>
+                                        <p><strong><?php echo $bus->business_total; ?></strong></p>
                                         <p>On last 30 days</p>
                                     </div>
                                     <div class="bli-st-i bli-rev">
                                         <p>Gross revenue</p>
-                                        <p><strong><?php echo $bus->gross_revenue; ?></strong></p>
+                                        <p><strong><?php echo $bus->business_revenue; ?></strong></p>
                                     </div>
                                     <div class="bli-st-i bli-rating">
                                         <p>Rating</p>
-                                        <p><strong><?php echo $bus->rating; ?></strong></p>
+                                        <p><strong><?php echo $bus->business_rating; ?></strong></p>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>

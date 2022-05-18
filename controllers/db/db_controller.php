@@ -33,6 +33,24 @@
 		}
 
 
+		public function rawExecute($sql)
+		{
+
+		}
+
+
+		public function rawExecuteQuery($sql)
+		{
+
+		}
+
+
+		public function rawExecuteUpdate($sql)
+		{
+
+		}
+
+
 		public function fetchTableAll(string $table_name) : array
 		{
 			return $this->fetchTableWhere($table_name, null);

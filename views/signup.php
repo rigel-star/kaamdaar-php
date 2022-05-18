@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 
-    require_once'/opt/lampp/htdocs/kaamdaar/utils.php';
+    require_once '/Applications/XAMPP/htdocs/kaamdaar-php/utils.php';
     require_once ROOT_DIR . "/controllers/db/db_kaamdaar.php";
     require_once ROOT_DIR . "/models/user.php";
 
@@ -49,7 +49,7 @@
 
 			$user_phone = $user->phone;
 			$user_pass = $user->password;
-			$user_id = 4;
+			$user_id = $user->id;
 
 			$cookie_time = time() + (86400 * 30 * 12);
             $HOME_URL = "/";

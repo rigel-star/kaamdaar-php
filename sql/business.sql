@@ -1,54 +1,63 @@
-DROP TABLE IF EXISTS painting_businesses;
-
-create table business_category(
-	bc_id int primary key auto_increment,
-	bc_name varchar(50) not null
-) ENGINE=INNODB;
-
-insert into business_category(bc_name) values("Painter"), ("Carpenter"), ("Computer Repair"), ("Plumber");
-
-CREATE TABLE IF NOT EXISTS painting_businesses(
-	b_id INT(4) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	b_name VARCHAR(255) NOT NULL,
-	b_phone VARCHAR(20) NOT NULL,
-	b_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	b_location VARCHAR(255) NOT NULL,
-	b_loc_latlong VARCHAR(20) NOT NULL,
-	u_id INT(4) NOT NULL,
-	FOREIGN KEY(u_id) REFERENCES users(u_id)
-)ENGINE=INNODB;
-
-INSERT INTO painting_businesses(b_name, b_phone, b_date, b_location, b_loc_latlong, u_id)
-VALUES("Ramesh Solutions Pvt. Ltd.", "9819187362", DEFAULT, "Sankhamul, Planning Lane 9, Lalitpur", "27.6853, 85.3317", 1);
-
-INSERT INTO painting_businesses(b_name, b_phone, b_date, b_location, b_loc_latlong, u_id)
-VALUES("Pragati Solutions Pvt. Ltd.", "9803993178", DEFAULT, "Pulchowk, Lalitpur", "27.6853, 85.3317", 2);
-
 create table business_profile(
-	bp_id int not null primary key auto_increment,
-	bp_name varchar(100) not null,
-	u_id int not null,
-	foreign key(u_id) references users(u_id)
+	B_PROFILE_ID INT PRIMARY KEY AUTO_INCREMENT,
+	B_PROFILE_NAME VARCHAR(50) NOT NULL,
+	B_PROFILE_IMAGE VARCHAR(255) NOT NULL
+	U_ID INT NOT NULL,
+	CONSTRAINT business_profile_u_id_fk FOREIGN KEY(U_ID) REFERENCES users(U_ID) ON DELETE CASCADE
 )ENGINE=INNODB;
 
-insert into business_profile(bp_name, u_id)
-	value("Pragati Solutions Pvt. Ltd.", 1);
-
-create table plumber_businesses(
-	pb_id int not null primary key auto_increment,
-	bp_id int not null,
-	foreign key(bp_id) references business_profile(bp_id)
+CREATE TABLE IF NOT EXISTS business(
+	BUSINESS_ID INT PRIMARY KEY AUTO_INCREMENT,
+	BUSINESS_TYPE INT NOT NULL,
+	B_PROFILE_ID INT NOT NULL,
+	CONSTRAINT business_b_profile_id_fk FOREIGN KEY(B_PROFILE_ID) REFERENCES business_profile(B_PROFILE_ID) ON DELETE CASCADE,
+	CONSTRAINT business_business_type_fk FOREIGN KEY(BUSINESS_TYPE) REFERENCES business_category(B_CAT_ID) ON DELETE CASCADE
 )ENGINE=INNODB;
 
-insert into plumber_businesses (
-	bp_id
-) values (
-	1,
-);
-
-
-create table carpenter_businesses(
-    pb_id int not null primary key auto_increment,
-    bp_id int not null,
-    foreign key(bp_id) references business_profile(bp_id)
+CREATE TABLE IF NOT EXISTS business_info(
+	B_INFO_ID INT PRIMARY KEY AUTO_INCREMENT,
+	B_INFO_REVENUE FLOAT DEFAULT 0.0,
+	B_INFO_RATING FLOAT DEFAULT 0.0,
+	B_INFO_TOTAL INT DEFAULT 0,
+	BUSINESS_ID INT NOT NULL,
+	CONSTRAINT business_info_business_id_fk FOREIGN KEY(BUSINESS_ID) REFERENCES business(BUSINESS_ID) ON DELETE CASCADE
 )ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS business_category(
+	B_CAT_ID INT PRIMARY KEY,
+	B_CAT_NAME VARCHAR(50) NOT NULL,
+	B_CAT_ICON VARCHAR(255) NOT NULL
+)ENGINE=INNODB;
+
+
+-------------------------------------------------------------------------
+DELIMITER %%
+CREATE TRIGGER insert_default_business_info AFTER INSERT ON business
+	FOR EACH ROW
+	BEGIN 
+		DECLARE BID int;
+		SET BID = new.BUSINESS_ID;
+		INSERT INTO business_info(B_INFO_REVENUE, B_INFO_RATING, B_INFO_TOTAL, BUSINESS_ID) values(DEFAULT, DEFAULT, DEFAULT, BID);
+	END%%
+DELIMITER ;
+
+DELIMITER %%
+CREATE TRIGGER delete_business_info_on_business_delete AFTER DELETE ON business
+	FOR EACH ROW
+	BEGIN 
+		DECLARE BID int;
+		SET BID = old.BUSINESS_ID;
+		DELETE FROM business_info WHERE BUSINESS_ID = BID;
+	END%%
+DELIMITER ;
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+DELIMITER %%
+CREATE PROCEDURE remove_business(IN B_ID INT)
+BEGIN
+	START TRANSACTION;
+	DELETE FROM business WHERE BUSINESS_ID = B_ID;
+	COMMIT;
+END%%
+DELIMITER ;
+-------------------------------------------------------------------------

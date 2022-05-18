@@ -105,9 +105,9 @@
     <?php 
 
     require_once ROOT_DIR . "/utils.php";
-    require_once ROOT_DIR . "/controllers/db/db_kaamdaar.php";
+    require_once ROOT_DIR . "/controllers/db/kaamdaar_orm.php";
 
-    $kdb = new KaamdaarDBHandler();
+    $kdb = new KaamdaarORM();
     $error = [];
 
     function validate_login()
@@ -129,10 +129,10 @@
             $user_phone = $_POST['phone'];
             $user_pass = $_POST['password'];
 
-            $user = $kdb->getUserWithPhone($user_phone);
+            $user = $kdb->getUserByPhone($user_phone);
             if($user)
             {
-                if($user_pass != $user->password)
+                if(md5($user_pass) != md5($user->password))
                 {
                     $error['password'] = "Invalid password";
                     return;
