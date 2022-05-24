@@ -11,7 +11,8 @@ body {
 
 .pdiv
 {
-    border: 1px solid black;
+    border: 0.03em solid black;
+    box-shadow: .1em;
     margin: 0 10px 15px 10px;
 }
 
@@ -79,7 +80,7 @@ body {
     margin-right: 50px;
 }
 
-.profile-stat, .profile-about, .profile-map
+.profile-stat, .profile-about, .profile-map, .profile-recent-activity
 {
     background-color: rgb(250, 250, 250);
     padding: 5px 10px 5px 10px;
@@ -87,12 +88,37 @@ body {
 
 .profile-bottom
 {
-    height: 400px;
     width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+}
+
+.pra-list
+{
+    list-style-type: none;
+}
+
+.pra-li-root
+{
+    border: 1px solid black;
+    margin-top: 5px;
+}
+
+.pra-li-top
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.pra-li-top span 
+{
+    font-size: 25px;
 }
 
 .map 
 {
-    width: 100%;
-    height: 400px;
+    margin-top: 5px;
+    width: 500px;
+    height: 500px;
+    border-radius: 1em;
 }

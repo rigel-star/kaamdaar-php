@@ -109,6 +109,13 @@
                         </div>
                     </div>
 
+                    <script>
+                        var businessTypes = [];
+                        var totalServed = [];
+                        var rating = [];
+                        var revenue = [];
+                    </script>
+
                     <ul class="bl">
                     <?php 
                     $businesses = $kdb->getAllBusinessInfo($bp->b_profile_id);
@@ -125,9 +132,11 @@
                         <li class="bli">
                             <div class="bli-root">
                                 <div class="bli-head">
-                                    <img src="<?php echo business_icons[$bus->business_type]; ?>" alt="Icon">
+                                    <?php $type = $bus->business_type; ?>
+                                    <img src="<?php echo business_icons[$type]; ?>" alt="Icon">
+                                    <script>businessTypes.push("<?php echo $type; ?>");</script>
                                     <span>
-                                        <strong><?php echo ucwords($bus->business_type); ?></strong>
+                                        <strong><?php echo ucwords($type); ?></strong>
                                     </span>
                                     <i class="fa fa-ellipsis-v td-icon" style="font-size:24px"></i>
                                 </div>
@@ -135,15 +144,18 @@
                                     <div class="bli-st-i bli-total">
                                         <p>Total served</p>
                                         <p><strong><?php echo $bus->business_total; ?></strong></p>
+                                        <script>totalServed.push(Number("<?php echo $bus->business_total;?>"));</script>
                                         <p>On last 30 days</p>
                                     </div>
                                     <div class="bli-st-i bli-rev">
                                         <p>Gross revenue</p>
                                         <p><strong><?php echo $bus->business_revenue; ?></strong></p>
+                                        <script>revenue.push(Number("<?php echo $bus->business_revenue;?>"));</script>
                                     </div>
                                     <div class="bli-st-i bli-rating">
                                         <p>Rating</p>
                                         <p><strong><?php echo $bus->business_rating; ?></strong></p>
+                                        <script>rating.push(parseFloat("<?php echo $bus->business_total;?>"));</script>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>
@@ -157,8 +169,55 @@
                         }
                     ?>
                     </ul>
+
+                    <div class="business-analytics">
+                        <div>
+                            <select name="chart-options" id="chart-options">
+                                <option value="rev">
+                                    Revenue
+                                </option>
+                                <option value="rat">
+                                    Rating
+                                </option>
+                                <option value="tot" selected>
+                                    Total Served
+                                </option>
+                            </select>
+                        </div>
+                        <canvas id="business-analytics-chart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+        <script src="business-chart.js"></script>
+        <script>
+            let label = "Total Served";
+            let data = totalServed;
+            const context = document.getElementById("business-analytics-chart").getContext("2d");
+            let chart = generateChart(context, label, businessTypes, data);
+
+            var businessAnalyticsOptions = document.getElementById("chart-options");
+            businessAnalyticsOptions.addEventListener("change", function() {
+                let chosen = this.value;
+                if(chosen === "rat")
+                {
+                    label = "Rating";
+                    data = rating;
+                }
+                else if(chosen === "tot")
+                {
+                    label = "Total";
+                    data = totalServed;
+                }
+                else if(chosen == "rev")
+                {
+                    label = "Revenue";
+                    data = revenue;
+                }
+                updateChart(chart, data, label);
+            });
+        </script>
     </body>
 </html>

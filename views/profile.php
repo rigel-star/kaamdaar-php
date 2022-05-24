@@ -26,7 +26,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
     	<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
-		<script src="../static/js/profile-map.js"></script>
+		<script src="../static/js/profile-map.js" defer></script>
 		
 		<title>Profile</title>
 
@@ -91,33 +91,33 @@
 								<img class="profile-pic" src="../static/images/profile.jpg" alt="Profile pic">
 								<div class="pt-2-1">
 									<h2 class="profile-name"><?php echo $user->fname . " " . $user->lname;?></h2>
+									<p class="profile-loc"><?php echo $user->location; ?></p>
 									<button class="profile-edit-btn">Edit your profile</button>
 								</div>
 							</div>
 						</div>
 						<div class="profile-middle">
 							<div class="profile-about pdiv">
-								<h3>About</h3>
+								<h4>About</h4>
 								<p><?php echo $user->phone;?></p>
 								<p><?php echo $user->location;?></p>
 							</div>
 							<div class="profile-stat pdiv">
-								<h3>Insights</h3>
+								<h4>Insights</h4>
 								<div>
 									<p>
 										<?php $business_count = $korm->rawQuery("select count(*) as bcount from business where business_id = $uid")->current(); ?>
-										<strong><?php echo $business_count['bcount']; ?></strong>
-										<br>
+										<h3><?php echo $business_count['bcount']; ?></h3>
 										business(es)
 									</p>
 									<p>
 										<?php $business_count = $korm->rawQuery("select count(*) as bcount from request where request_id = $uid")->current(); ?>
-										<strong><?php echo $business_count['bcount']; ?></strong>
+										<h3><?php echo $business_count['bcount']; ?></h3>
 										<br>
 										Requests
 									</p>
 									<p>
-										<strong>1</strong>
+										<h3>1</h3>
 										<br>
 										Ratings
 									</p>
@@ -125,13 +125,37 @@
 							</div>
 						</div>
 						<div class="profile-bottom">
+							<div class="profile-recent-activity pdiv">
+								<h4>Your recent activities</h4>
+								<ul class="pra-list">
+									<li class="pra-list-item">
+										<div class="pra-li-root">
+											<div class="pra-li-top">
+												<span><i class="fa fa-laptop" aria-hidden="true"></i></span>
+												<div>
+													<h3 class="pra-bname">Computer Repair</h3>
+													<p class="pra-boname">B. Tech Solutions</p>
+												</div>
+											</div>
+											<div class="pra-li-bottom">
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star checked"></span>
+												<span class="fa fa-star"></span>
+												<span class="fa fa-star"></span>
+												<span class="pra-review">I like it</span>
+												<p class="pra-date">Date</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+
 							<?php $user_loc = get_user_location(); ?>
 							<div class="profile-map pdiv">
-								<h3>You on map</h3>
+								<h4>You on map</h4>
 								<p>Drag and drop to change your location</p>
-								<div class="map" id="map">
-
-								</div>
+								<div class="map" id="map"></div>
 							</div>
 
 							<script type="text/javascript">
