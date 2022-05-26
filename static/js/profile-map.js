@@ -5,8 +5,8 @@ function initMap(center)
 {
 	var mapOptions = {
 		container: 'map',
-		style: 'mapbox://styles/mapbox/satellite-streets-v11',
-		// style: 'mapbox://styles/kaamdaar/cl05hz32x001d14o3p6emqazs',
+		// style: 'mapbox://styles/mapbox/satellite-streets-v11',
+		style: 'mapbox://styles/kaamdaar/cl05hz32x001d14o3p6emqazs',
 		zoom: 0, // default is 0; no zoom
 		center
 	};

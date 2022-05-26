@@ -9,7 +9,7 @@
 
     const business_icons = array(
         'plumber' => '../static/icons/business/plumber.png',
-        'Auto Mobile Repair' => '../static/icons/business/carpenter.png'
+        'Auto Mobile Repair' => 'https://www.svgrepo.com/show/52022/car-repair.svg'
     );
 
     $kdb = new KaamdaarORM();
@@ -119,6 +119,7 @@
                     <ul class="bl">
                     <?php 
                     $businesses = $kdb->getAllBusinessInfo($bp->b_profile_id);
+                    $totalBusinesses = 0;
 
                     if(count($businesses) < 1)
                     {
@@ -128,15 +129,16 @@
 
                     foreach($businesses as $bus)
                     {
+                        $totalBusinesses++;
                     ?>
                         <li class="bli">
                             <div class="bli-root">
                                 <div class="bli-head">
-                                    <?php $type = $bus->business_type; ?>
-                                    <img src="<?php echo business_icons[$type]; ?>" alt="Icon">
+                                    <?php $type = $bus->business_type;?>
+                                    <img src="<?php echo $business_icons[$type];?>" alt="Icon">
                                     <script>businessTypes.push("<?php echo $type; ?>");</script>
                                     <span>
-                                        <strong><?php echo ucwords($type); ?></strong>
+                                        <strong><?php echo ucwords($type);?></strong>
                                     </span>
                                     <i class="fa fa-ellipsis-v td-icon" style="font-size:24px"></i>
                                 </div>
@@ -144,18 +146,18 @@
                                     <div class="bli-st-i bli-total">
                                         <p>Total served</p>
                                         <p><strong><?php echo $bus->business_total; ?></strong></p>
-                                        <script>totalServed.push(Number("<?php echo $bus->business_total;?>"));</script>
+                                        <script>totalServed.push([Number("<?php echo $bus->business_total;?>")]);</script>
                                         <p>On last 30 days</p>
                                     </div>
                                     <div class="bli-st-i bli-rev">
                                         <p>Gross revenue</p>
                                         <p><strong><?php echo $bus->business_revenue; ?></strong></p>
-                                        <script>revenue.push(Number("<?php echo $bus->business_revenue;?>"));</script>
+                                        <script>revenue.push([Number("<?php echo $bus->business_revenue;?>")]);</script>
                                     </div>
                                     <div class="bli-st-i bli-rating">
                                         <p>Rating</p>
                                         <p><strong><?php echo $bus->business_rating; ?></strong></p>
-                                        <script>rating.push(parseFloat("<?php echo $bus->business_total;?>"));</script>
+                                        <script>rating.push([parseFloat("<?php echo $bus->business_total;?>")]);</script>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>
@@ -169,6 +171,10 @@
                         }
                     ?>
                     </ul>
+
+                    <div>
+                        <h2><?php echo $totalBusinesses . " business" . ($totalBusinesses > 1 ? "es" : "");?></h2>
+                    </div>
 
                     <div class="business-analytics">
                         <div>
@@ -208,7 +214,7 @@
                 }
                 else if(chosen === "tot")
                 {
-                    label = "Total";
+                    label = "Total served";
                     data = totalServed;
                 }
                 else if(chosen == "rev")
@@ -216,7 +222,7 @@
                     label = "Revenue";
                     data = revenue;
                 }
-                updateChart(chart, data, label);
+                updateChart(chart, label, businessTypes, data);
             });
         </script>
     </body>
