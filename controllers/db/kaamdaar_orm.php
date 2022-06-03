@@ -4,7 +4,7 @@
     require_once ROOT_DIR . "models/business-profile.php";
     require_once ROOT_DIR . "models/business.php";
 
-    use Model\{User, Business, BusinessProfile};
+    use Model\{User, Business, BusinessProfile, BusinessCategory};
 
     class ResultSet implements Iterator, Countable
     {
@@ -230,6 +230,23 @@
         public function fetchRequestNotifications($bid)
         {
             $types = $this->getAllOwnedBusinessTypes($bid);
+        }
+
+        public function getBusinessCategories()
+        {
+            $result_set = $this->from("br_category")->fetch(null, null);
+            $cats = [];
+            
+            foreach($result_set as $result)
+            {
+                $cat = new BusinessCategory(
+                    $result['BR_CAT_ID'],
+                    $result['BR_CAT_NAME'],
+                    $result['BR_CAT_ICON']
+                );
+                array_push($cats, $cat);
+            }
+            return $cats;
         }
 
         public function rawQuery($SQL)

@@ -1,8 +1,8 @@
 <?php 
     require_once "k_auth.php";
 
-    if(!already_logged_in())
-        header("location:login.php");
+    session_start();
+	if(!isset($_SESSION['user_phone'])) header('location:login.php');
 
     require_once "../controllers/db/kaamdaar_orm.php";
     require_once "../models/business-profile.php";
@@ -13,7 +13,7 @@
     );
 
     $kdb = new KaamdaarORM();
-    $bp = $kdb->getBusinessProfile($_COOKIE["user_id"]);
+    $bp = $kdb->getBusinessProfile($_SESSION["user_id"]);
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +91,7 @@
                     <?php 
                         if(!$bp)
                         {
-                            echo "You haven't set up your business profile.";
+                            echo "You haven't set up your business profile. <a href='#'>Setup</a> new profile.";
                             die('');
                         }
                     ?>
@@ -123,7 +123,7 @@
 
                     if(count($businesses) < 1)
                     {
-                        echo "You don't own any business. Start by creating one.";
+                        echo "You don't own any business. <a href='#'>Start</a> by creating one.";
                         die('');
                     }
 

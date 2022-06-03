@@ -1,3 +1,12 @@
+<?php 
+	require_once "../constants.php";
+    require_once ROOT_DIR . "models/business-category.php";
+	require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
+
+    use Model\{BusinessCategory};
+
+	$orm = new KaamdaarORM();
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -46,35 +55,25 @@
 						</div>
 					</div>
 					<div id="request">
-						<form>
-							<label>Request :</label>
-							<select>
-								<option selected disabled >Select</option>
-								<option value="carpenter">Carpenter</option>
-								<option value="plumber">Plumber</option>
-								<option value="painter">Painter</option>
-								<option value="electrician">Electrician</option>
-								<option value="mechanic">Mechanic</option>
-							</select> 
-							<label>Select Urgency:</label>
-							<select>
-								<option selected disabled >Select</option>
-								<option value="urgent">Urgent</option>
-								<option value="timely">Timely</option>
-							</select> <br>
+						<?php 
+						$categories = $orm->getBusinessCategories();
+						?>
 
-							<label>Address:</label>
-							<input type="text" name="address" placeholder="Enter address">
-							<br>
-
-							<label>Add description:</label><br>
-							<textarea rows="10" cols="40"></textarea>
-							<br>
-							<button id="view_on_map" onclick="focus:#map">Pin on map <i class="fa fa-map" style="font-size:20px;"></i></button></a>
-						</form>
-					</div>
-					<div id="map">
-						<h1>HELLO ITS ME MAP</h1>
+						<div class="business-cat-list">
+							<?php 
+							foreach($categories as $category)
+							{
+							?>
+								<div class="bcli">
+									<div class="bcli-root">
+										<img id="bcli-icon" width="50px" height="50px" src='<?php echo $category->cat_icon; ?>' alt='Icon'/>
+										<p id="bcli-name"><?php echo $category->cat_name; ?></p>
+									</div>
+								</div>
+							<?php
+							}
+							?>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,3 +1,12 @@
+<?php 
+	require_once "../constants.php";
+    require_once ROOT_DIR . "models/business-category.php";
+	require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
+
+    use Model\{BusinessCategory};
+
+	$orm = new KaamdaarORM();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,7 +20,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		
         <link rel="stylesheet" href="../static/css/nav.css">
-		<link rel="stylesheet" href="../static/css/business.css">
+		<link rel="stylesheet" href="../static/css/add-business.css">
 
 		<title>Business Profile</title>
 	</head>
@@ -51,9 +60,24 @@
                             </div>
                         </div>
                     </div>
-					<div>
-						
-					</div>
+                    <?php 
+						$categories = $orm->getBusinessCategories();
+					?>
+					<div class="business-cat-list">
+                        <?php 
+                        foreach($categories as $category)
+                        {
+                        ?>
+                            <div class="bcli">
+                                <div class="bcli-root">
+                                    <img id="bcli-icon" width="50px" height="50px" src='<?php echo $category->cat_icon; ?>' alt='Icon'/>
+                                    <p id="bcli-name"><?php echo $category->cat_name; ?></p>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
