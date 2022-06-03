@@ -25,7 +25,7 @@
 					<a href="profile.php" class="nav-link"><i class="fa fa-user" style="font-size:24px"></i> Profile</a>
 					<a href="bprofile.php" class="nav-link"><i class="fa fa-briefcase" style="font-size:24px"></i> Business Profile</a>
 					<a href="requests.php" class="nav-link"><i class="fa fa-send" style="font-size:24px"></i> Your requests</a>
-					<a href="#" class="nav-link"><i class="fa fa-bell" style="font-size:24px"></i> Notifications</a>
+					<a href="notifications.php" class="nav-link"><i class="fa fa-bell" style="font-size:24px"></i> Notifications</a>
 					<hr>
 					<a href="#" class="nav-link">Add new request</a>
 					<a href="add-business.php" class="nav-link">Add new business</a>

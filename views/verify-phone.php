@@ -9,7 +9,7 @@
 
         <script>
             const firebaseConfig = {
-                apiKey: process.env.FIREBASE_AUTH_TOKEN, //"AIzaSyD9-kR5IW-5shei47uNPaWXbVs8wM8X40A",
+                apiKey: "AIzaSyD9-kR5IW-5shei47uNPaWXbVs8wM8X40A",
                 authDomain: "kaamdaar-9e5b8.firebaseapp.com",
                 projectId: "kaamdaar-9e5b8",
                 storageBucket: "kaamdaar-9e5b8.appspot.com",

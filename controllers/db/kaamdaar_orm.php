@@ -215,6 +215,23 @@
             return $all_business;
         }
 
+        public function getAllOwnedBusinessTypes($bid)
+        {
+            $result_set = $this->from("business")->fetch(["business_type"], ["BUSINESS_ID=$bid"]);
+            $types = [];
+
+            foreach($result_set as $result)
+            {
+                array_push($types, $result['business_type']);
+            }
+            return $types;
+        }
+
+        public function fetchRequestNotifications($bid)
+        {
+            $types = $this->getAllOwnedBusinessTypes($bid);
+        }
+
         public function rawQuery($SQL)
         {
             return new ResultSet($this->connection->query($SQL));
