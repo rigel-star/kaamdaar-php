@@ -4,26 +4,21 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="./static/index.css">
-	<base href="/">
 	<title>Home - Kaamdaar</title>
 </head>
 <body>
 
 	<?php
-
-		require_once '/Applications/XAMPP/htdocs/kaamdaar-php/constants.php';
+		require_once "./constants.php";
     	require_once ROOT_DIR . "/views/k_auth.php";
 
+		putenv("MAP_TOKEN=pk.eyJ1Ijoia2FhbWRhYXIiLCJhIjoiY2wwNWhwNjl5MDhjMjNjbnoxajMxOXExMCJ9.KDuSWfD7invXCiRTg_WMfg");
+		putenv("FIREBASE_AUTH_TOKEN=AIzaSyD9-kR5IW-5shei47uNPaWXbVs8wM8X40A");
+
 		if(already_logged_in())
-		{
-			$uid = $_COOKIE['user_id'];
 			header("location:views/profile.php");
-			echo $uid;
-		}
 		else
-		{
 			header("location:views/login.php");
-		}
 	?>
 
 </body>

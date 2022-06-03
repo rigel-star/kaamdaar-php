@@ -6,9 +6,7 @@
 		header("location:$url.php");
 	}
 
-
 	$static_file_dir = "./static/";
-
 
 	function change_static_file_dir($new_path) : void
 	{
@@ -16,16 +14,14 @@
 		$static_file_dir = $new_path;
 	}
 
-
 	function url_for($filename) : string
 	{
 		return $static_file_dir . "/" . $filename;
 	}
 
-
 	function get_user_location($fields=['country', 'region', 'city', 'lat', 'lon'])
 	{
-		$query = @unserialize (file_get_contents('http://ip-api.com/php/'));
+		$query = @unserialize(file_get_contents('http://ip-api.com/php/'));
 
 		$result = [];
 		if($query)
@@ -35,7 +31,6 @@
 				$result[$field] = $query[$field];
 			}
 		}
-
 		return $result;
 	}
 ?>

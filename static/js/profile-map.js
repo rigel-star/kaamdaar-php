@@ -70,8 +70,7 @@ function onLocationAccessSuccess(pos)
 	// init map with users current location
 	// mapbox is kinda weird, it takes longitude first and then latitude
 	const userLoc = [pos.coords.longitude, pos.coords.latitude];
-	const ktmLatLong = [85.3240, 27.7172];
-	initMap(ktmLatLong);
+	initMap(userLoc);
 }
 
 function onLocationAccessError(err)

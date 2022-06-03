@@ -1,8 +1,10 @@
 <?php
-    require_once "/Applications/XAMPP/htdocs/kaamdaar-php/constants.php";
-    require_once ROOT_DIR . "/models/user.php";
-    require_once ROOT_DIR . "/models/business-profile.php";
-    require_once ROOT_DIR . "/models/business.php";
+    require_once "../constants.php";
+    require_once ROOT_DIR . "models/user.php";
+    require_once ROOT_DIR . "models/business-profile.php";
+    require_once ROOT_DIR . "models/business.php";
+
+    use Model\{User, Business, BusinessProfile};
 
     class ResultSet implements Iterator, Countable
     {
@@ -13,14 +15,11 @@
         public function __construct($result)
         {
             if(!($result instanceof mysqli_result))
-            {
                 return;
-            }
 
             while($row = $result->fetch_assoc())
-            {
                 array_push($this->items, $row);
-            }
+
             $this->itemsCount = count($this->items);
         }
 
@@ -52,6 +51,7 @@
 
     class KaamdaarORM
     {
+        public $connection = null;
         public function __construct()
         {
             $this->connection = new mysqli("localhost", "root", "", "kaamdaar");
@@ -77,7 +77,7 @@
 
         public function fetch(?array $attrs, ?array $where_clauses)
         {
-            if(!isset($this->current_table))
+            if($this->current_table === "")
             {
                 echo "Choose a table using 'from()' first.";
                 return null;
@@ -89,11 +89,15 @@
             else $SQL .= "*";
 
             $SQL .= " FROM $this->current_table";
-            unset($this->current_table);
+            $this->current_table = "";
 
             if($where_clauses && count($where_clauses))
             {
-                $SQL .= " WHERE " . implode(" and ", $this->array_map_assoc(function($key, $value) {return "$key=$value";}, $where_clauses));
+                $SQL .= " WHERE " . implode(" and ", $this->array_map_assoc(
+                    function($key, $value) {
+                        return "$key=$value";
+                    }, 
+                $where_clauses));
             }
             $SQL .= ";";
 
@@ -105,18 +109,7 @@
 
         public function fetchAll()
         {
-            if(!isset($this->current_table))
-            {
-                echo "Choose a table using 'from()' first.";
-                return null;
-            }
-
-            $SQL = "SELECT * FROM $this->current_table;";
-            unset($this->current_table);
-            if($result = $this->connection->query($SQL))
-                return new ResultSet($result);
-            else 
-                return null;
+            return $this->fetch(null, null);
         }
 
         private function array_map_assoc($func, array $arr)
@@ -210,7 +203,7 @@
             $all_business = [];
             foreach($result_set as $result)
             {
-                array_push($all_business, new Business(
+                array_push($all_business, new Model\Business(
                     $result['business_id'],
                     $result['business_type'],
                     $result['business_profile_id'],

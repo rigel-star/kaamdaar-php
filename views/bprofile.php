@@ -217,7 +217,7 @@
                     label = "Total served";
                     data = totalServed;
                 }
-                else if(chosen == "rev")
+                else if(chosen === "rev")
                 {
                     label = "Revenue";
                     data = revenue;

@@ -1,14 +1,13 @@
 <?php 
-	session_start();
-
-	require_once '/Applications/XAMPP/htdocs/kaamdaar-php/constants.php';
-    require_once ROOT_DIR . "/views/k_auth.php";
+	require_once '../constants.php';
+    require_once "k_auth.php";
 
     if(!already_logged_in()) header('location:login.php');
 
-	require_once '/Applications/XAMPP/htdocs/kaamdaar-php/utils.php';
-	require_once ROOT_DIR . "/controllers/db/db_kaamdaar.php";
-	require_once ROOT_DIR . "/controllers/db/kaamdaar_orm.php";
+	session_start();
+	require_once '../utils.php';
+	require_once ROOT_DIR . "controllers/db/db_kaamdaar.php";
+	require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +74,7 @@
 								<h2>Profile</h2>
 							</div>
 							<div class="pc-sub-title">
-								<h4>View and manage you profile</h4>
+								<h4>View and manage your profile</h4>
 							</div>
 						</div>
 					</div>

@@ -1,9 +1,9 @@
 <?php 
     session_start();
 
-    require_once "/Applications/XAMPP/htdocs/kaamdaar-php/constants.php";
-    require_once ROOT_DIR . "/utils.php";
-    require_once ROOT_DIR . "/views/k_auth.php";
+    require_once "../constants.php";
+    require_once "../utils.php";
+    require_once "k_auth.php";
 
     if(already_logged_in())
         header("location:profile.php");

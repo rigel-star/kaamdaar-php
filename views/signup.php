@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 
-    require_once '/Applications/XAMPP/htdocs/kaamdaar-php/utils.php';
+    require_once "../utils.php";
     require_once ROOT_DIR . "/controllers/db/db_kaamdaar.php";
     require_once ROOT_DIR . "/models/user.php";
 
@@ -29,18 +29,22 @@
 			$lname = $_POST['lname'];
 			$phone = $_POST['phone'];
 			$password = $_POST['password'];
-			$password = $_POST['gender'];
-
-			$loc = get_user_location();
+			$gender = $_POST['gender'];
 			$date = date('Y-m-d H:i:s');
+			$lat = $_POST['lat'];
+			$lon = $_POST['lon'];
+			$address = $_POST['address'];
 
-			$new_user = new User(
-								0, $fname, 
-								$lname, $phone, 
-								$password, "M", 
+			$new_user = new Model\User(
+								0, 
+								$fname, 
+								$lname, 
+								$phone, 
+								$password,
+								$gender, 
 								$date, 
-								$loc['country']. ', ' .$loc['city'], 
-								$loc['lat']. ', '. $loc['lon']
+								$address, 
+								$lat. ', '. $lon
 							);
 
 			$kdb = new KaamdaarDBHandler();
@@ -51,12 +55,9 @@
 			$user_pass = $user->password;
 			$user_id = $user->id;
 
-			$cookie_time = time() + (86400 * 30 * 12);
-            $HOME_URL = "/";
-
-            setcookie('user_phone', $user_phone, $cookie_time, $HOME_URL);
-            setcookie('user_pass', $user_pass, $cookie_time, $HOME_URL);
-            setcookie('user_id', $user->id, $cookie_time, $HOME_URL);
+            setcookie('user_phone', $user_phone, DEF_COOKIE_TIME, HOME_URL);
+            setcookie('user_pass', $user_pass, DEF_COOKIE_TIME, HOME_URL);
+            setcookie('user_id', $user->id, DEF_COOKIE_TIME, HOME_URL);
             $_SESSION['user_phone'] = $user_phone;
             $_SESSION['user_pass'] = $user_pass;
             $_SESSION['user_id'] = $user->id;
@@ -130,16 +131,17 @@
 		  outline: none;
 		}
 	</style>
+
+	<script type="text/javascript" src="./utils.js"></script>
 </head>
 <body>
 	<?php if(isset($errmsg)){ ?>
 		<span id="errmsg"><?php echo $errmsg ?></span>
 	<?php } ?>
-</body>
 	<div>
 		<fieldset>
 			<h1>Registration</h1>
-			<form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+			<form method="POST" action="verify-phone.php">
 				<label for="fname">First name:</label>
 				<input class="input_tag" type="text" name="fname" required>
 
@@ -199,6 +201,23 @@
 			           	}
 			     	?>
 			    </span><br>
+
+				<?php 
+				$lat_lon = get_user_location();
+				$lat = $lat_lon['lat'];
+				$lon = $lat_lon['lon'];
+				?>
+
+				<input id="lat" type="hidden" name="lat" value="<?php echo $lat; ?>"/>
+				<input id="lon" type="hidden" name="lon" value="<?php echo $lon; ?>"/>
+				<input id="location" type="hidden" name="address"/>
+				
+				<script>
+					document.getElementById("location").value = getUserAddressByLatLon({
+						latitude: <?php echo $lat; ?>,
+						longitude: <?php echo $lon; ?>
+					});
+				</script>
 
 				<input id="register" class="button_r" type="submit" name="submit" value="Register">
 	    		<input id="reset" class="button_r" type="reset" name="reset" value="Reset">
