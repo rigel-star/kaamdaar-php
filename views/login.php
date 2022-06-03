@@ -16,89 +16,112 @@
     <link rel="stylesheet" href="">
 
     <style>
-        div {
-            position: absolute;
-            left: 380px;
-            top: 80px;
-            width: auto;
+        *{
+            font-family:Helvetica ;
         }
+         .container{
+    position: absolute;
+    background-color: #ffff;
+    width: 420px;
+    height: 480px;
+    left: 35%;
+    top: 20%;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 9px rgb(184, 184, 184),
+                -1px -1px 5px rgb(184, 184, 184);
+}
 
-        div h1 {
-            text-align: center;
-        }
+ div h1 {
+   text-align: center;
+}
 
-        div label {
-            display: inline-block;
-            margin: 22px;
-            width: 60px;
-        }
 
-        form last-child {
-            position: relative;
-            height: 100px;
-        }
+#btn_l {
+    margin: 10px ;
+    padding: 15px;
+    width: 95%;
+    border-radius: 5px;
+    background-color: rgb(255, 185,70);
+    color: #000;
+    font-size: 20px;
+    border: none;
+}
 
-        #btn_l {
+.rem_me {
+     position: relative;
+     left: 10px;
+     display: inline-block;
+}
 
-            position: relative;
-            margin: 10px;
-            left: 175px;
-            border-radius: 5px;
-            height: 30px;
-            width: 60px;
-            color: white;
-            background-color: #2196f3;
-        }
+ form .input_tag {
+    margin: 10px;
+    margin-top: 20px;
+    padding: 20px;
+    width: 85%;
+    background-color: #ffff;
+    outline: none;
+    border: 1px solid rgb(184, 184, 184);
+    border-radius: 5px;
+    font-size: 15px;      
+}
 
-        .rem_me {
-            position: relative;
-            display: inline-block;
-        }
+.ca{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 95px;
+    width: 50%;
+    text-decoration: none;
+    margin-bottom: 20px;
+    padding: 10px;
+   /* background-color: #42b72a;*/
+    border-radius: 5px;
+}
 
-        form .input_tag {
-          border-top-style: hidden;
-          border-right-style: hidden;
-          border-left-style: hidden;
-          border-bottom-style: groove;
-        }
+.pca{
+    text-decoration: none;
+    background: none;
+    color: #000;
+    font-size: 17px;
+    
+}
+                  
+.error{
+    color: red;
+    position: relative;
+    left: 15%;
+    font-family:sans-serif;
+}
 
-        .input_tag:focus {
-          outline: none;
-        }
+#rm{
+    padding: 10px;
+    margin: 5px;
+}        
 
-        #btn_l:hover {
-            background-color: green;
-        }
+#login_failed {
+   text-align: center;
+   color: red;
+}
 
-        .error{
-            color: red;
-        }
+form p {
+  display:inline-block ;
+  position:relative ;
+  left: 23px;
+  padding: 2px;
+}
 
-        #login_failed {
-            text-align: center;
-            color: red;
-        }
+form a {
+  text-decoration: none;
+}
 
-        form p {
-            display:inline-block ;
-            position:relative ;
-            left: 23px;
-            padding: 2px;
-        }
+a:hover {
+  color:green;
+   text-decoration: underline;
+}
 
-        form a {
-            text-decoration: none;
-        }
+</style>
 
-        a:visited {
-            color: blue;
-        }
-
-        a:hover {
-            color: green;
-            text-decoration: underline;
-        }
-    </style>
 </head>
 <body>
 
@@ -119,10 +142,10 @@
             return;
 
         if(!isset($_POST['phone']) || empty(trim($_POST['phone'])))
-            $error['phone'] = "Enter your phone";
+            $error['phone'] = "Please enter your phone to proceed";
 
         if(!isset($_POST['password']) || empty(trim($_POST['password'])))
-            $error['password'] = "Enter your password";
+            $error['password'] = "Please enter password to proceed";
 
         if(!count($error))
         {
@@ -167,12 +190,10 @@
     ?>
 
     <div class="container">
-        <fieldset>
         <form class="login-form" action="<?php echo $_SERVER['PHP_SELF'] ?>" 
             method="POST">
             <h1>Login</h1>
-            <label for="phone">Phone:</label>
-                <input class="input_tag" type="text" placeholder="Phone" name="phone">
+                <input class="input_tag" type="text" placeholder="Enter your phone" name="phone"><br>
                 <?php 
                     if(isset($error['phone'])) { 
                 ?>
@@ -183,8 +204,8 @@
                     } 
                 ?>
                 <br>
-                <label for="password">Password:</label>
-                <input type="password" class="input_tag" placeholder="Password" name="password">
+                <input type="password" class="input_tag" placeholder="Enter your password" name="password">
+                <br>
                 <?php 
                     if(isset($error['password'])) { 
                 ?>
@@ -196,7 +217,7 @@
                 ?>
                 <br>
                 <input class="rem_me" type="checkbox" name="remember-me">
-                Remember Me
+                <span id="rm">Remember Me</span>
                 <br>
                 <?php 
                     if(isset($error['other'])) { 
@@ -209,9 +230,12 @@
                     } 
                 ?>
                 <input type="submit" name="login" value="Login" id="btn_l">
+                <hr style="width:85%">
+                <div class="ca">
+                <a href="" class="pca">Create Account</a>
+        </div>
         </form>
-        <a href="signup.php">Create an account</a>
-        </fieldset>
+        
     </div>
 </body>
 </html>
