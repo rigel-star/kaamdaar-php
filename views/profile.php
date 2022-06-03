@@ -2,9 +2,9 @@
 	require_once '../constants.php';
     require_once "k_auth.php";
 
-    if(!already_logged_in()) header('location:login.php');
-
 	session_start();
+	if(!isset($_SESSION['user_phone'])) header('location:login.php');
+
 	require_once '../utils.php';
 	require_once ROOT_DIR . "controllers/db/db_kaamdaar.php";
 	require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
@@ -80,7 +80,7 @@
 					</div>
 					<?php 
 						$korm = new KaamdaarORM();
-						$uid = $_COOKIE['user_id'];
+						$uid = $_SESSION['user_id'];
 						$user = $korm->getUserByID((int) $uid);
 					?>
 					<div class="profile-content">

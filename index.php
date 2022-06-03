@@ -16,7 +16,12 @@
 		putenv("FIREBASE_AUTH_TOKEN=AIzaSyD9-kR5IW-5shei47uNPaWXbVs8wM8X40A");
 
 		if(already_logged_in())
-			header("location:views/profile.php");
+		{
+			session_start();
+			$_SESSION['user_phone'] = $_COOKIE['user_phone'];
+			$_SESSION['user_id'] = $_COOKIE['user_id'];
+			header("location:profile.php");
+		}
 		else
 			header("location:views/login.php");
 	?>

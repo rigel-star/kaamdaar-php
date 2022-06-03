@@ -1,0 +1,117 @@
+*
+{
+    font-family:Helvetica ;
+}
+ 
+.container
+{
+    position: absolute;
+    background-color: #ffff;
+    width: 420px;
+    height: 480px;
+    left: 35%;
+    top: 20%;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 9px rgb(184, 184, 184),
+            -1px -1px 5px rgb(184, 184, 184);
+}
+
+div h1 
+{
+    text-align: center;
+}
+
+
+#btn_l 
+{
+    margin: 10px ;
+    padding: 15px;
+    width: 95%;
+    border-radius: 5px;
+    background-color: rgb(255, 185,70);
+    color: #000;
+    font-size: 20px;
+    border: none;
+}
+
+.rem_me 
+{
+    position: relative;
+    left: 10px;
+    display: inline-block;
+}
+
+form .input_tag 
+{
+    margin: 10px;
+    margin-top: 20px;
+    padding: 20px;
+    width: 85%;
+    background-color: #ffff;
+    outline: none;
+    border: 1px solid rgb(184, 184, 184);
+    border-radius: 5px;
+    font-size: 15px;      
+}
+
+.ca
+{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 95px;
+    width: 50%;
+    text-decoration: none;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.pca
+{
+    text-decoration: none;
+    background: none;
+    color: #000;
+    font-size: 17px;
+
+}
+          
+.error
+{
+    color: red;
+    position: relative;
+    left: 15%;
+    font-family:sans-serif;
+}
+
+#rm
+{
+    padding: 10px;
+    margin: 5px;
+}        
+
+#login_failed 
+{
+    text-align: center;
+    color: red;
+}
+
+form p 
+{
+    display:inline-block ;
+    position:relative ;
+    left: 23px;
+    padding: 2px;
+}
+
+form a 
+{
+    text-decoration: none;
+}
+
+a:hover 
+{
+    color:green;
+    text-decoration: underline;
+}
