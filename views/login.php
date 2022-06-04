@@ -132,7 +132,7 @@
                 <input type="submit" name="login" value="Login" id="btn_l">
                 <hr style="width:85%">
                 <div class="ca">
-                    <a href="" class="pca">Create Account</a>
+                    <a href="signup.php" class="pca">Create Account</a>
                 </div>
             </form>
         </div>
