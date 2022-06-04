@@ -3,7 +3,7 @@
     require_once "k_auth.php";
 
 	session_start();
-	if(!isset($_SESSION['user_phone'])) header('location:login.php');
+	if(!isset($_SESSION['user_phone'])) header('location:login.php?route=add-business.php');
 
     require_once ROOT_DIR . "models/business-category.php";
 	require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";

@@ -5,21 +5,15 @@
     require_once "../utils.php";
     require_once "k_auth.php";
 
-    if(already_logged_in())
+    $route = "profile.php";
+    $redirected = False;
+    if(isset($_GET['route']))
     {
-        $_SESSION['user_phone'] = $_COOKIE['user_phone'];
-        $_SESSION['user_id'] = $_COOKIE['user_id'];
-        header("location:profile.php");
-    }
-    else if(isset($_SESSION['user_phone']))
-    {
-        header("location:profile.php");
+        $route = $_GET['route'];
+        $redirected = True;
     }
 
-    if(isset($_GET['redirect-to']))
-    {
-        
-    }
+    if(isset($_SESSION['user_phone'])) header("location:$route");
 ?>
 
 <!DOCTYPE html>
@@ -40,15 +34,16 @@
         {
             global $error;
             global $kdb;
+            global $route;
 
             if(!isset($_POST['login']))
                 return;
 
             if(!isset($_POST['phone']) || empty(trim($_POST['phone'])))
-                $error['phone'] = "Please enter your phone to proceed";
+                $error['phone'] = "Please enter your phone to proceed.";
 
             if(!isset($_POST['password']) || empty(trim($_POST['password'])))
-                $error['password'] = "Please enter password to proceed";
+                $error['password'] = "Please enter password to proceed.";
 
             if(!count($error))
             {
@@ -60,7 +55,7 @@
                 {
                     if(md5($user_pass) != md5($user->password))
                     {
-                        $error['password'] = "Invalid password";
+                        $error['password'] = "The password you've entered is incorrect.";
                         return;
                     }
 
@@ -76,11 +71,11 @@
                     $_SESSION['user_phone'] = $user_phone;
                     $_SESSION['user_id'] = $user->id;
 
-                    header("location:profile.php");
+                    header("location:" . $route);
                 }
                 else
                 {
-                    $error['other'] = "Phone number is not registered.";
+                    $error['phone'] = "Phone number is not registered. <a style='color: red' href='signup.php'><b>Register now.</b></a>";
                     return;
                 }
             }
@@ -89,50 +84,50 @@
         validate_login();
         ?>
 
+        <p style="<?php echo "display:" . ($redirected ? "block" : "none"); ?>" class="redirected-msg">&#9432; You must login to continue</p>
+
         <div class="container">
-            <p class="redirected-from"></p>
-            <form class="login-form" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+            <form class="login-form" action="<?php echo $_SERVER['PHP_SELF'] . "?route=$route"; ?>" method="POST">
                 <h1>Login</h1>
-                <input class="input_tag" type="text" placeholder="Enter your phone" name="phone"><br>
+                <?php $phone_value = isset($_POST['phone']) ? $_POST['phone'] : ''; ?>
+                <input class="user-phone" type="text" placeholder="Enter your phone" name="phone" value="<?php echo $phone_value;?>">
                 <?php 
                     if(isset($error['phone'])) { 
                 ?>
-                        <span class="error"> 
-                            <?php echo $error['phone']; ?>
-                        </span>
+                    <span class="error"> 
+                        <?php echo $error['phone']; ?>
+                    </span>
                 <?php 
-                    } 
+                    }
+                    
                 ?>
-                <br>
-                <input type="password" class="input_tag" placeholder="Enter your password" name="password">
-                <br>
+
+                <?php $pass_value = isset($_POST['password']) ? $_POST['password'] : ''; ?>
+                <input type="password" class="user-pass" placeholder="Enter your password" name="password" value="<?php echo $pass_value; ?>">
                 <?php 
                     if(isset($error['password'])) { 
                 ?>
-                        <span class="error"> 
-                            <?php echo $error['password']; ?>
-                        </span>
+                    <span class="error"> 
+                        <?php echo $error['password']; ?>
+                    </span>
                 <?php 
-                    } 
+                    }
                 ?>
+
+                <div>
+                    <input class="remember-me" type="checkbox" name="remember-me">
+                    <span id="rm">Remember Me</span>
+                </div>
+
+                <input type="submit" name="login" value="Login" id="login-btn">
                 <br>
-                <input class="rem_me" type="checkbox" name="remember-me">
-                <span id="rm">Remember Me</span>
-                <br>
-                <?php 
-                    if(isset($error['other'])) { 
-                ?>
-                        <span class="error"> 
-                            <?php echo $error['other']; ?>
-                        </span>
-                        <br>
-                <?php 
-                    } 
-                ?>
-                <input type="submit" name="login" value="Login" id="btn_l">
+
+                <a class="acnt-recover" href="recover.php">Forgot password?</a>
+
                 <hr style="width:85%">
-                <div class="ca">
-                    <a href="" class="pca">Create Account</a>
+
+                <div class="create-acnt">
+                    <a href="signup.php" class="create-acnt-btn">Create account</a>
                 </div>
             </form>
         </div>

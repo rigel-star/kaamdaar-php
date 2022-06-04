@@ -1,6 +1,6 @@
 *
 {
-    font-family:Helvetica ;
+    font-family: Helvetica;
 }
  
 .container
@@ -8,13 +8,12 @@
     position: absolute;
     background-color: #ffff;
     width: 420px;
-    height: 480px;
+    height: 460px;
     left: 35%;
     top: 20%;
     margin: 10px;
     border-radius: 10px;
-    box-shadow: 2px 2px 9px rgb(184, 184, 184),
-            -1px -1px 5px rgb(184, 184, 184);
+    box-shadow: 2px 2px 9px rgb(184, 184, 184), -1px -1px 5px rgb(184, 184, 184);
 }
 
 div h1 
@@ -22,10 +21,9 @@ div h1
     text-align: center;
 }
 
-
-#btn_l 
+#login-btn
 {
-    margin: 10px ;
+    margin: 10px 10px 10px 10px;
     padding: 15px;
     width: 95%;
     border-radius: 5px;
@@ -35,60 +33,61 @@ div h1
     border: none;
 }
 
-.rem_me 
+.remember-me
 {
     position: relative;
     left: 10px;
-    display: inline-block;
 }
 
-form .input_tag 
+.user-phone, .user-pass
 {
-    margin: 10px;
-    margin-top: 20px;
+    margin: 0 10px 10px 10px;
     padding: 20px;
     width: 85%;
-    background-color: #ffff;
+    background-color: white;
     outline: none;
     border: 1px solid rgb(184, 184, 184);
     border-radius: 5px;
     font-size: 15px;      
 }
 
-.ca
+.create-acnt
 {
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 95px;
+    margin: 5px 0 20px 95px;
     width: 50%;
     text-decoration: none;
     margin-bottom: 20px;
     padding: 10px;
-    border-radius: 5px;
 }
 
-.pca
+.create-acnt-btn
 {
     text-decoration: none;
     background: none;
     color: #000;
     font-size: 17px;
+}
 
+.acnt-recover
+{
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
 }
           
 .error
 {
+    display: block;
+    text-align: center;
     color: red;
-    position: relative;
-    left: 15%;
-    font-family:sans-serif;
+    font-family: sans-serif;
+    margin: 0 0 20px 10px;
 }
 
 #rm
 {
-    padding: 10px;
-    margin: 5px;
+    padding: 0 10px 10px 10px;
 }        
 
 #login_failed 
@@ -112,6 +111,24 @@ form a
 
 a:hover 
 {
-    color:green;
     text-decoration: underline;
+}
+
+.redirected-msg
+{
+    font-size: 1em;
+    font-weight: 400;
+    text-align: start;
+    display: inline-block;
+    color: black;
+    width: 420px;
+    height: 40px;
+    position: absolute;
+    top: 110px;
+    left: 35%;
+    margin: 10px 10px 5px 5px;
+    padding-left: 5px;
+    border: 1px solid rgb(255, 185,70);
+    border-radius: 4px;
+    line-height: 40px;
 }

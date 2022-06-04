@@ -2,7 +2,7 @@
     require_once "k_auth.php";
 
     session_start();
-	if(!isset($_SESSION['user_phone'])) header('location:login.php');
+	if(!isset($_SESSION['user_phone'])) header('location:login.php?route=bprofile.php');
 
     require_once "../controllers/db/kaamdaar_orm.php";
     require_once "../models/business-profile.php";
