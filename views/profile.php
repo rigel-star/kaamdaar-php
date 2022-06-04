@@ -3,7 +3,7 @@
     require_once "k_auth.php";
 
 	session_start();
-	if(!isset($_SESSION['user_phone'])) header('location:login.php');
+	if(!isset($_SESSION['user_phone'])) header('location:login.php?redirect-to=profile');
 
 	require_once '../utils.php';
 	require_once ROOT_DIR . "controllers/db/db_kaamdaar.php";

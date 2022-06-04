@@ -15,6 +15,11 @@
     {
         header("location:profile.php");
     }
+
+    if(isset($_GET['redirect-to']))
+    {
+        
+    }
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +90,7 @@
         ?>
 
         <div class="container">
+            <p class="redirected-from"></p>
             <form class="login-form" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
                 <h1>Login</h1>
                 <input class="input_tag" type="text" placeholder="Enter your phone" name="phone"><br>

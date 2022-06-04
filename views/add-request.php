@@ -57,6 +57,8 @@
 					<div id="request">
 						<?php 
 						$categories = $orm->getBusinessCategories();
+						session_start();
+						$_SESSION['redirect-to'] = 'profile.php';
 						?>
 
 						<div class="business-cat-list">
@@ -64,7 +66,7 @@
 							foreach($categories as $category)
 							{
 							?>
-								<div class="bcli">
+								<div class="bcli" onclick="location.href='location-finder.php'">
 									<div class="bcli-root">
 										<img id="bcli-icon" width="50px" height="50px" src='<?php echo $category->cat_icon; ?>' alt='Icon'/>
 										<p id="bcli-name"><?php echo $category->cat_name; ?></p>
