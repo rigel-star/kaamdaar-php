@@ -5,23 +5,86 @@
     require_once ROOT_DIR . "/controllers/db/db_kaamdaar.php";
     require_once ROOT_DIR . "/models/user.php";
 
-	function validate_regestration()
+	function identify_phone($phone)
 	{
-		$error = [];
+		$codes = [
+			'977' => "np",
+			'1' => 'us',
+			'2' => 'uk'
+		];
+
+		$numeric_codes = array_keys($codes);
+		implode('|', $numeric_codes);
+
+		$pattern = "{(\+". implode('|', $numeric_codes) .")(?:\s*-?\s*)?([0-9]{10})}";
+		$valid = preg_match($pattern, $phone, $matches);
+		if(!$valid) return False;
+
+		return [$codes[substr($matches[1], 1)], $matches[2]];
+	}
+
+	function valid_password($pass)
+	{
+		if(strlen($pass) < 6)
+			return False;
+		else 
+		{	
+			$lowAlpha = False;
+			$capAlpha = False;
+			$numeric = False;
+			foreach(str_split($pass) as $char)
+			{
+				if(is_numeric($char)) $numeric = True;
+				else if(ctype_lower($char)) $lowAlpha = True;
+				else if(ctype_upper($char)) $capAlpha = True;
+			}
+
+			if(!(function($arr) {
+				foreach($arr as $item)
+					if(!$item) return False;
+				return True;
+			})([$lowAlpha, $capAlpha, $numeric]))
+				return False;
+		}
+		return True;
+	}
+
+	$error = [];
+
+	/* 
+		PHP IIFE for validating regestration.
+	*/
+	(function ()
+	{
+		global $error;
+
 		if(!isset($_POST['submit']))
 			return;
 
-		if(empty(trim($_POST['fname'])))
-			$error['fname'] = "Enter a valid first name";
+		if(!isset($_POST['fname']) || empty(trim($_POST['fname'])))
+			$error['name'] = "First name not valid.";
 
-		if(empty(trim($_POST['lname'])))
-			$error['lname'] = "Enter a valid last name";
+		if(!isset($_POST['lname']) || empty(trim($_POST['lname'])))
+			$error['name'] = "Last name not valid.";
 
-		if(empty(trim($_POST['phone'])))
-			$error['phone'] = "Enter a valid phone";
+		if(isset($_POST['phone']) && !empty(trim($_POST['phone'])))
+		{
+			$phone = $_POST['phone'];
+			$info = identify_phone($phone);
 
-		if(empty(trim($_POST['password'])))
-			$error['password'] = "Enter password";
+			if(!$info)
+				$error['phone'] = "Please enter valid phone number.";
+		}
+		else $error['phone'] = "Please enter phone number.";
+
+		if(!isset($_POST['password']) || empty(trim($_POST['password'])))
+			$error['password'] = "Password can't be empty";
+
+		if(!valid_password($_POST['password']))
+			$error['password'] = "Password has to be at least of length 6 with one or more numeric value and capital and small letter.";
+
+		if(!isset($_POST['gender']))
+			$error['gender'] = "Select gender";
 
 		if(!count($error))
 		{
@@ -44,194 +107,119 @@
 								$gender, 
 								$date, 
 								$address, 
-								$lat. ', '. $lon
+								$lat. ', '. $lon,
+								''
 							);
 
-			$kdb = new KaamdaarDBHandler();
-			$kdb->addUser($new_user);
-			$kdb->close();
+			// $kdb = new KaamdaarDBHandler();
+			// $kdb->addUser($new_user);
+			// $kdb->close();
 
-			$user_phone = $user->phone;
-			$user_pass = $user->password;
-			$user_id = $user->id;
+			$_SESSION['u_id'] = $user->id;
+			$_SESSION['u_fname'] = $user->fname;
+			$_SESSION['u_fname'] = $user->fname;
+            $_SESSION['u_phone'] = $user->phone;
+			$_SESSION['u_password'] = $user->password;
+			$_SESSION['u_gedner'] = $user->gender;
+			$_SESSION['u_date'] = $user->dateJoined;
+			$_SESSION['u_location'] = $user->location;
+			$_SESSION['u_latlong'] = $user->locLatLong;
+			$_SESSION['u_image'] = $user->image;
 
-            setcookie('user_phone', $user_phone, DEF_COOKIE_TIME, HOME_URL);
-            setcookie('user_pass', $user_pass, DEF_COOKIE_TIME, HOME_URL);
-            setcookie('user_id', $user->id, DEF_COOKIE_TIME, HOME_URL);
-            $_SESSION['user_phone'] = $user_phone;
-            $_SESSION['user_pass'] = $user_pass;
-            $_SESSION['user_id'] = $user->id;
-
-			header('location:profile.php');
+			header('location:verify-phone.php');
 		}
-	}
-
-	validate_regestration();
+	})();
 ?>
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>User</title>
-	<style type="text/css">
-		*{
-			font-family:Helvetica;
-		}
-		.label {
-			display: inline-block;
-			font-size:1.5em;
-			padding: 12px;
-			width: 30%;
-			font-family: Roboto;
-		}
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Signup - Kaamdaar</title>
+		<link rel="stylesheet" href="../static/css/signup.css">
+		<script type="text/javascript" src="./utils.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Signup</h1>
+			<hr>
 
-	.container{
-    position: absolute;
-    background-color: #ffff;
-    width: 500px;
-    height: 500px;
-    left: 35%;
-    top: 15%;
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 2px 2px 9px rgb(184, 184, 184),
-            -1px -1px 5px rgb(184, 184, 184);
-}
+			<form method="POST" action="<?php echo 'verify-phone.php';//echo $_SERVER['PHP_SELF']; ?>">
+				<div class="ifc-group ifcg-1">
+					<div class="fullname-field">
+						<div class="ifc">
+							<input placeholder="First name" class="inputtext if-text fname" type="text" name="fname" value="<?php echo isset($_POST['fname']) ? $_POST['fname'] : ''; ?>">
+						</div>
+						<div class="ifc">
+							<input placeholder="Last name" class="inputtext if-text lname" type="text" name="lname" value="<?php echo isset($_POST['lname']) ? $_POST['lname'] : ''; ?>">
+						</div>
+					</div>
+					<?php if(isset($error['name'])) { ?>
+						<span class="error">
+							<?php echo $error['name']; ?>
+						</span>
+					<?php } ?>
+				</div>
 
-.input_tag {
-  width: 50%;
-  height: 25px;
-  margin-top: 5px;
-  text-indent: 5px;
-  font-size: 12.6pt;
-  border-radius: 5px;
-  border: solid 1.5px #D3D3D3;
-  
-}
-input[type=text]:hover{
-  box-shadow: 0 0 5pt 0.5pt #D3D3D3;
-}
-input[type=text]:focus {
-  box-shadow: 0 0 5pt 2pt #D3D3D3;
-  outline-width: 0px;
-}
+				<div class="ifc-group">
+					<div class="ifc">
+						<input placeholder="Phone" class="inputtext if-text phone" type="text" name="phone" value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : ''; ?>">
+					</div>
+					<?php if(isset($error['phone'])) { ?>
+						<span class="error">
+							<?php echo $error['phone']; ?>
+						</span>
+					<?php } ?>
+				</div>
 
-		span {
-			color: red;
-		}
+				<div class="ifc-group">
+					<div class="ifc">
+						<input placeholder="New password" class="inputtext if-text password" type="password" name="password" value="<?php echo isset($_POST['password']) ? $_POST['password'] : ''; ?>">
+					</div>
+					<?php if(isset($error['password'])) { ?>
+						<span class="error">
+							<?php echo $error['password']; ?>
+						</span>
+					<?php } ?>
+				</div>
 
-		#errmsg {
-		    color: red;
-		}
+				<div class="ifc-group ifcg-4">
+					<label class="ifc-label">Gender</label>
+					<div>
+						<div class="ifc if-radio">
+							<span class="ifc-radio-label">Male </span><input class="inputradio male" type="radio" name="gender" value="M">
+						</div>
+						<div class="ifc if-radio">
+							<span class="ifc-radio-label">Female </span><input class="inputradio female" type="radio" name="gender" value="F">
+						</div>
+						<div class="ifc if-radio">
+							<span class="ifc-radio-label">Other </span><input class="inputradio other" type="radio" name="gender" value="O">
+						</div>
+					</div>
+					<?php if(isset($error['gender'])) { ?>
+						<span class="error">
+							<?php echo $error['gender']; ?>
+						</span>
+					<?php } ?>
+				</div>
 
-		div {
-			position: absolute;
-			left: 380px;
-			top: 10px;
-			width: auto;
-		}
-
-		div h1 {
-			text-align: center;
-		}
-
-
-		.button_r {
-
-		    position: relative;
-		    margin: 10px;
-		    left: 30px;
-		    top: 40px;
-		    border-radius: 5px;
-		    height: 30px;
-		    width: 200px;
-		    color: white;
-			border:none;
-			font-size:1em;
-		    background-color:rgb(255,185,70);
-		}
-
-		.input_tag:focus {
-		  outline: none;
-		}
-	</style>
-
-	<script type="text/javascript" src="./utils.js"></script>
-</head>
-<body>
-	<?php if(isset($errmsg)){ ?>
-		<span id="errmsg"><?php echo $errmsg ?></span>
-	<?php } ?>
-	<div class="container">
-	        <h1>Registration</h1>
-			<hr style="width:80%">
-			<form method="POST" action="verify-phone.php">
-				<label for="fname" class="label">First name:</label>
-				<input class="input_tag" type="text" name="fname" >
-
-				<span>
-					<?php
-		           	if(isset($error['fname'])) {
-		           		echo $error['fname'];
-		           	}
-			     	?>
-			    </span><br>
-
-			    <label for="lname" class="label">Last name:</label>
-				<input class="input_tag" type="text" name="lname" >
-
-				<span>
-					<?php
-		           	if(isset($error['lname'])) {
-		           		echo $error['lname'];
-		           	}
-			     	?>
-			    </span><br>
-
-
-				<label for="phone" class="label">Phone:</label>
-				<input class="input_tag" type="text" name="phone" >
-
-				<span>
-					<?php
-		           		if(isset($error['phone'])) {
-		           			echo $error['phone'];
-		           		}
-			     	?>
-			    </span><br>
-
-				<label for="password" class="label">Password:</label>
-				<input class="input_tag" type="password" name="password" >
-
-				<span>
-					<?php
-			           if(isset($error['password'])) {
-			           		echo $error['password'];
-			        	}
-			    	?>
-			    </span><br>
-
-	    		<label class="label">Select Gender</label>
-		  		<input type="radio" name="gender" value="M"> Male
-
-		  		<input type="radio" name="gender" value="F">Female 
-
-		  		<input type="radio" name="gender" value="O">Others
-		  	
-		  		<span>
-		  			<?php
-			        	if(isset($error['gender'])) {
-			           		echo $error['gender'];
-			           	}
-			     	?>
-			    </span><br>
+				<script>
+					var elements = document.getElementsByClassName("if-radio");
+					for(let i = 0; i < elements.length; i++)
+					{
+						let element = elements.item(i);
+						element.addEventListener('click', () => {
+							let radio = element.getElementsByClassName('inputradio')[0];
+							radio.checked = true;
+						});
+					}
+				</script>
 
 				<?php 
-				$lat_lon = get_user_location();
-				$lat = $lat_lon['lat'];
-				$lon = $lat_lon['lon'];
+				// $lat_lon = get_user_location();
+				// $lat = $lat_lon['lat'];
+				// $lon = $lat_lon['lon'];
 				?>
 
 				<input id="lat" type="hidden" name="lat" value="<?php echo $lat; ?>"/>
@@ -239,15 +227,16 @@ input[type=text]:focus {
 				<input id="location" type="hidden" name="address"/>
 				
 				<script>
-					document.getElementById("location").value = getUserAddressByLatLon({
-						latitude: <?php echo $lat; ?>,
-						longitude: <?php echo $lon; ?>
-					});
+					/*document.getElementById("location").value = getUserAddressByLatLon({
+						latitude: <?php // echo $lat; ?>,
+						longitude: <?php // echo $lon; ?>
+					});*/
 				</script>
 
-				<input id="register" class="button_r" type="submit" name="submit" value="Register">
-	    		<input id="reset" class="button_r" type="reset" name="reset" value="Reset">
+				<input type="submit" name="submit" value="Signup" id="reg-btn">
 			</form>
-	</div>
-</body>
+
+			<a style="display: block; text-align: center; font-size: 20px; color: blue; text-decoration: none;" href="login.php">Already have an account?</a>
+		</div>
+	</body>
 </html>

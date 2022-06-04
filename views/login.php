@@ -19,7 +19,7 @@
 <!DOCTYPE html>
 <html>
     <head>    
-        <title>Kaamdaar - Login</title>
+        <title>Login - Kaamdaar</title>
         <link rel="stylesheet" href="../static/css/login.css">
     </head>
     <body>

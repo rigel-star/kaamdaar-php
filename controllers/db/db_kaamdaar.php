@@ -32,7 +32,8 @@
 				'u_gender',
 				'u_date', 
 				'u_location',
-				'u_loc_latlong'
+				'u_loc_latlong',
+				'u_image'
 			];
 
 			$field_values = [
@@ -43,7 +44,8 @@
 				$user->gender, 
 				$user->dateJoined, 
 				$user->location,
-				$user->locLatLong
+				$user->locLatLong,
+				$user->image
 			];
 
 			return $this->insertIntoTable(USER_TABLE, $field_names, $field_values, $format);
