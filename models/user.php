@@ -12,6 +12,7 @@ class User
 	public $dateJoined = "";
 	public $location = "";
 	public $locLatLong = "";
+	public $image;
 
 	public function __construct(
 		int $id,
@@ -22,7 +23,8 @@ class User
 		string $gender,
 		string $dateJoined, 
 		string $location,
-		string $locLatLong
+		string $locLatLong,
+		string $image
 	)
 	{
 		$this->id = $id;
@@ -34,6 +36,7 @@ class User
 		$this->dateJoined = $dateJoined;
 		$this->location = $location;
 		$this->locLatLong = $locLatLong;
+		$this->image = $image;
 	}
 }
 ?>
