@@ -61,7 +61,7 @@
                 exit();
             }
 
-            $this->connection->autocommit(false);
+            $this->connection->autocommit(true);
         }
 
         public function close()
@@ -122,6 +122,35 @@
             return $result;
         }
 
+        public function addNewUser(User $user)
+        {
+            $SQL = "INSERT INTO 
+                    users(
+                        u_fname, 
+                        u_lname, 
+                        u_phone, 
+                        u_password, 
+                        u_gender, 
+                        u_date,
+                        u_location, 
+                        u_latlong, 
+                        u_image
+                    ) 
+                    VALUE(
+                        '$user->fname', 
+                        '$user->lname',
+                        '$user->phone',
+                        '$user->password',
+                        '$user->gender',
+                        '$user->dateJoined',
+                        '$user->location',
+                        '$user->locLatLong',
+                        ''
+                    );";
+
+            $this->connection->query($SQL);
+        }
+
         public function getUserByID($uid)
         {
             $user = null;
@@ -138,7 +167,8 @@
                     $row["U_GENDER"],
                     $row["U_DATE"],
                     $row["U_LOCATION"],
-                    $row["U_LATLONG"]
+                    $row["U_LATLONG"],
+                    $row['U_IMAGE']
                 );
             }
             return $user;
@@ -160,7 +190,8 @@
                     $row["U_GENDER"],
                     $row["U_DATE"],
                     $row["U_LOCATION"],
-                    $row["U_LATLONG"]
+                    $row["U_LATLONG"],
+                    $row['U_IMAGE']
                 );
             }
             return $user;

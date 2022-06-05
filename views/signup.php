@@ -2,37 +2,55 @@
 	session_start();
 
 	require_once "../utils.php";
-    require_once ROOT_DIR . "/controllers/db/db_kaamdaar.php";
+    require_once ROOT_DIR . "/controllers/db/kaamdaar_orm.php";
     require_once ROOT_DIR . "/models/user.php";
 
 	use Model\User;
 
 	$verified = 0;
+	$session_id = '';
 	if(isset($_GET['verified']))
 		$verified = $_GET['verified'];
 
+	if(isset($_GET['vpsi']))
+		$session_id = $_GET['vpsi'];
+
 	if($verified == '1')
 	{
-		$new_user = new User(
-			0, 
-			$_SESSION['fname'], 
-			$_SESSION['lname'], 
-			$_SESSION['phone'], 
-			$_SESSION['password'],
-			$_SESSION['gender'], 
-			$_SESSION['date'], 
-			$_SESSION['location'], 
-			$_SESSION['latlon'],
-			''
-		);
+		if(isset($_SESSION['vp-session-id']))
+		{
+			$new_user = new User(
+				0, 
+				$_SESSION['fname'], 
+				$_SESSION['lname'], 
+				$_SESSION['phone'], 
+				$_SESSION['password'],
+				$_SESSION['gender'], 
+				$_SESSION['date'], 
+				$_SESSION['location'], 
+				$_SESSION['latlon'],
+				''
+			);
 
-		$kdb = new KaamdaarDBHandler();
-		$kdb->addUser($new_user);
-		$id = $kdb->insert_id; // equiv to 'SELECT LAST_INSERT_ID();'
-		$kdb->close();
+			$orm = new KaamdaarORM();
+			$orm->addNewUser($new_user);
+			$id = $kdb->insert_id; // equiv to 'SELECT LAST_INSERT_ID();'
+			$orm->close();
 
-		$_SESSION['id'] = $id;
-		header('location:profile.php');
+			$_SESSION['user_phone'] = $_SESSION['phone'];
+			$_SESSION['user_id'] = $id;
+
+			$fields = ['fname', 'lname', 'phone', 'password', 'gender', 'date', 'location', 'latlon'];
+			foreach($fields as $field)
+				unset($_SESSION[$field]);
+				
+			header('location:profile.php');
+		}
+		else 
+		{
+			require_once("./error/access-error.html");
+        	die();
+		}
 	}
 
 	function identify_phone(string $phone)
@@ -124,6 +142,7 @@
 			$_SESSION['location'] = $_POST['address'];
 			$_SESSION['latlon'] = $_POST['lat'] . ',' . $_POST['lon'];
 			$_SESSION['image'] = '';
+			$_SESSION['vp-session-id'] = uniqid();
 
 			header('location:verify-phone.php?redirect=signup.php');
 		}
