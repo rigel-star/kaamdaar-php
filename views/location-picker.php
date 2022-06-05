@@ -99,7 +99,7 @@
         <div class="map" id="map"></div>
 
         <div class="modal" id="modal">
-            <?php require_once './modal/' . $route; ?>
+            <?php require_once './modal/lp/' . $route; ?>
         </div>
 
         <script>
