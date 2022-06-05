@@ -90,3 +90,20 @@ a
     height: auto;
     border: 0.02em solid grey;
 }
+
+.error-field
+{
+    display: none;
+    width: 100%;
+    border: 1px solid;
+}
+
+#error-head, #error-body
+{
+    padding: 5px;
+}
+
+#error-head
+{
+    background-color: rgba(255, 92, 92, 0.3);
+}

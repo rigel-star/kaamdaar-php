@@ -5,6 +5,8 @@
 	require_once ROOT_DIR . "/models/business-profile.php";
 	require_once "kdb_constants.php";
 
+	use Model\{User, BusinessProfile};
+
 	const all_business_tables = array('plumber', 'carpenter');
 
 	final class KaamdaarDBHandler extends MySQLDBHandler
@@ -22,7 +24,7 @@
 
 		public function addUser(User $user) : bool
 		{
-			$format = "ssssssss";
+			$format = "sssssssss";
 
 			$field_names = [
 				'u_fname', 

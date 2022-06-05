@@ -1,26 +1,53 @@
 <?php 
 	session_start();
 
-    require_once "../utils.php";
+	require_once "../utils.php";
     require_once ROOT_DIR . "/controllers/db/db_kaamdaar.php";
     require_once ROOT_DIR . "/models/user.php";
 
-	function identify_phone($phone)
+	use Model\User;
+
+	$verified = 0;
+	if(isset($_GET['verified']))
+		$verified = $_GET['verified'];
+
+	if($verified == '1')
 	{
-		$codes = [
-			'977' => "np",
-			'1' => 'us',
-			'2' => 'uk'
+		$new_user = new User(
+			0, 
+			$_SESSION['fname'], 
+			$_SESSION['lname'], 
+			$_SESSION['phone'], 
+			$_SESSION['password'],
+			$_SESSION['gender'], 
+			$_SESSION['date'], 
+			$_SESSION['location'], 
+			$_SESSION['latlon'],
+			''
+		);
+
+		$kdb = new KaamdaarDBHandler();
+		$kdb->addUser($new_user);
+		$id = $kdb->insert_id; // equiv to 'SELECT LAST_INSERT_ID();'
+		$kdb->close();
+
+		$_SESSION['id'] = $id;
+		header('location:profile.php');
+	}
+
+	function identify_phone(string $phone)
+	{
+		$country_codes = [
+			977, 1, 2
 		];
 
-		$numeric_codes = array_keys($codes);
-		implode('|', $numeric_codes);
-
-		$pattern = "{(\+". implode('|', $numeric_codes) .")(?:\s*-?\s*)?([0-9]{10})}";
+		$pattern = "{(\+". implode('|', $country_codes) .")(?:\s*-?\s*)?([0-9]{10})}";
 		$valid = preg_match($pattern, $phone, $matches);
 		if(!$valid) return False;
 
-		return [$codes[substr($matches[1], 1)], $matches[2]];
+		$country_code = $matches[1];
+		$phone_number = $matches[2];
+		return [$country_code, $phone_number];
 	}
 
 	function valid_password($pass)
@@ -88,45 +115,17 @@
 
 		if(!count($error))
 		{
-			$fname = $_POST['fname'];
-			$lname = $_POST['lname'];
-			$phone = $_POST['phone'];
-			$password = $_POST['password'];
-			$gender = $_POST['gender'];
-			$date = date('Y-m-d H:i:s');
-			$lat = $_POST['lat'];
-			$lon = $_POST['lon'];
-			$address = $_POST['address'];
+			$_SESSION['fname'] = $_POST['fname'];
+			$_SESSION['lname'] = $_POST['lname'];
+            $_SESSION['phone'] = $_POST['phone'];
+			$_SESSION['password'] = $_POST['password'];
+			$_SESSION['gender'] = $_POST['gender'];
+			$_SESSION['date'] = date('Y-m-d H:i:s');
+			$_SESSION['location'] = $_POST['address'];
+			$_SESSION['latlon'] = $_POST['lat'] . ',' . $_POST['lon'];
+			$_SESSION['image'] = '';
 
-			$new_user = new Model\User(
-								0, 
-								$fname, 
-								$lname, 
-								$phone, 
-								$password,
-								$gender, 
-								$date, 
-								$address, 
-								$lat. ', '. $lon,
-								''
-							);
-
-			// $kdb = new KaamdaarDBHandler();
-			// $kdb->addUser($new_user);
-			// $kdb->close();
-
-			$_SESSION['u_id'] = $user->id;
-			$_SESSION['u_fname'] = $user->fname;
-			$_SESSION['u_fname'] = $user->fname;
-            $_SESSION['u_phone'] = $user->phone;
-			$_SESSION['u_password'] = $user->password;
-			$_SESSION['u_gedner'] = $user->gender;
-			$_SESSION['u_date'] = $user->dateJoined;
-			$_SESSION['u_location'] = $user->location;
-			$_SESSION['u_latlong'] = $user->locLatLong;
-			$_SESSION['u_image'] = $user->image;
-
-			header('location:verify-phone.php');
+			header('location:verify-phone.php?redirect=signup.php');
 		}
 	})();
 ?>
@@ -145,7 +144,7 @@
 			<h1>Signup</h1>
 			<hr>
 
-			<form method="POST" action="<?php echo 'verify-phone.php';//echo $_SERVER['PHP_SELF']; ?>">
+			<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 				<div class="ifc-group ifcg-1">
 					<div class="fullname-field">
 						<div class="ifc">
@@ -217,9 +216,9 @@
 				</script>
 
 				<?php 
-				// $lat_lon = get_user_location();
-				// $lat = $lat_lon['lat'];
-				// $lon = $lat_lon['lon'];
+				$lat_lon = get_user_location();
+				$lat = $lat_lon['lat'];
+				$lon = $lat_lon['lon'];
 				?>
 
 				<input id="lat" type="hidden" name="lat" value="<?php echo $lat; ?>"/>
@@ -227,10 +226,10 @@
 				<input id="location" type="hidden" name="address"/>
 				
 				<script>
-					/*document.getElementById("location").value = getUserAddressByLatLon({
-						latitude: <?php // echo $lat; ?>,
-						longitude: <?php // echo $lon; ?>
-					});*/
+					document.getElementById("location").value = getUserAddressByLatLon({
+						latitude: <?php  echo $lat; ?>,
+						longitude: <?php echo $lon; ?>
+					});
 				</script>
 
 				<input type="submit" name="submit" value="Signup" id="reg-btn">
