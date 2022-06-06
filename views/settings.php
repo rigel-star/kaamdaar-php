@@ -62,15 +62,83 @@
                             </div>
                         </div>
                     </div>
-                    <div class="setting-list">
-                        <div class="setting">
-                            <div class="setting-text">
+                    <div class="settings-container">
+                        <div class="settings-category">
+                            <div class="category-title">
                                 <p>
-                                    Setting text
+                                    Theme
                                 </p>
                             </div>
-                            <div class="setting-action">
-                                <button>Setting action</button>
+                            <div class="settings-list">
+                                <div class="setting">
+                                    <div class="setting-text">
+                                        <div class="setting-title">
+                                            <p>
+                                                Dark theme
+                                            </p>
+                                        </div>
+                                        <div class="setting-description">
+                                            <p>
+                                                Enable dark theme.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="setting-action">
+                                        <input type="checkbox" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-category">
+                            <div class="category-title">
+                                <p>
+                                    Map
+                                </p>
+                            </div>
+                            <div class="settings-list">
+                                <div class="setting">
+                                    <div class="setting-text">
+                                        <div class="setting-title">
+                                            <p>
+                                                Fixed request location
+                                            </p>
+                                        </div>
+                                        <div class="setting-description">
+                                            <p>
+                                                Using fixed location sets your request location same as your profile location. Thus, you don't have to choose loction on map everytime you make a request.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="setting-action">
+                                        <input type="checkbox" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-category">
+                            <div class="category-title">
+                                <p>
+                                    Delete Account
+                                </p>
+                            </div>
+                            <div class="settings-list">
+                                <div class="setting">
+                                    <div class="setting-text">
+                                        <div class="setting-title">
+                                            <p>
+                                                
+                                            </p>
+                                        </div>
+                                        <div class="setting-description">
+                                            <p>
+                                                
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="setting-action">
+                                        <button class="delete-acnt-btn">Delete account</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -79,3 +147,4 @@
         </div>
     </body>
 </html>
+
