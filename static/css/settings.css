@@ -75,7 +75,7 @@ body {
     font-weight: 300;
 }
 
-.setting-action input[type=checkbox], button
+.setting-action input[type=checkbox]
 {
     position: relative;
     top: 50%;
@@ -88,10 +88,15 @@ body {
 
 .delete-acnt-btn 
 {
+    position: relative;
+    top: 50%;
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
     color: red;
     border: none;
     background-color: white;    
     cursor: pointer;
-    font-size: 12px;
+    font-size: 16px;
     transition: color 0.15s;
 }
