@@ -1,6 +1,8 @@
 const MAPBOX_TOKEN = "pk.eyJ1Ijoia2FhbWRhYXIiLCJhIjoiY2wwNWhwNjl5MDhjMjNjbnoxajMxOXExMCJ9.KDuSWfD7invXCiRTg_WMfg";
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
+var longlat;
+
 function initMap(start)
 {
 	const map = new mapboxgl.Map({
@@ -38,6 +40,7 @@ function initMap(start)
 	map.on("click", (e) => {
 		let lonLat = e.lngLat;
 		pin.setLngLat(lonLat);
+		longlat = lonLat;
 		mapFlyTo(map, pin.getLngLat());
 	});
 
@@ -48,6 +51,7 @@ function initMap(start)
 
 	map.on("dragend", (e) => {
 		currentLocation.style.animation = "ripple 1s ease-out";
+		longlat = map.getCenter();
 	});
 
 	pin.on("dragend", (e) => {
@@ -71,6 +75,25 @@ function animatePinDrop(pin)
 
 }
 
+function reverseGeocode()
+{
+	let geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longlat.lng},${longlat.lat}.json?access_token=${MAPBOX_TOKEN}`;
+	let xhr = new XMLHttpRequest();
+
+	var location = "";
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == XMLHttpRequest.DONE)
+		{
+			var data = JSON.parse(xhr.responseText);
+			location = data.features[0].place_name;
+		}
+	}
+
+	xhr.open("GET", geocodeUrl, false);
+	xhr.send();
+	return location;
+}
+
 function createMarker(map, latlong)
 {
 	const el = document.createElement('div');
@@ -86,6 +109,7 @@ function createMarker(map, latlong)
 function onLocationAccessSuccess(pos)
 {
 	const userLoc = [pos.coords.longitude, pos.coords.latitude];
+	longlat = userLoc;
 	initMap(userLoc);
 }
 
