@@ -57,10 +57,11 @@ function initMap(start)
 
 function mapFlyTo(map, loc)
 {
+	let zoom = map.getZoom();
 	map.flyTo({
 		center: loc,
-		zoom: 15,
-		speed: 0.2,
+		zoom: zoom,
+		speed: 0.5,
 		curve: 1
 	});
 }

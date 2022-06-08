@@ -18,6 +18,18 @@
     color: blue;
 }
 
+.nav-link-active
+{
+    color: blue;
+    background-color: #E1EDFF;
+    display: block;
+    height: 40px;
+    border-radius: 0 8px 8px 0;
+    margin-left: 0px;
+    transform: translateX(-20px);
+    padding: 10px 0 0 20px;
+}
+
 .page-head 
 {
     display: grid;

@@ -48,10 +48,10 @@
                     <a href="notifications.php" class="nav-link"><i class="fa fa-bell" style="font-size:24px"></i> Notifications</a>
                     <hr>
                     <a href="add-request.php" class="nav-link">Add new request</a>
-                    <a href="#" class="nav-link">Add new business</a>
+                    <a href="#" class="nav-link"><span class="nav-link-active">Add new business</span></a>
                     <hr>
                     <a href="logout.php" class="nav-link"><i class="fa fa-sign-out" style="font-size:24px"></i>Logout</a>
-                    <a href="#" class="nav-link"><i class="fa fa-cog" style="font-size:24px"></i> Settings</a>
+                    <a href="settings.php" class="nav-link"><i class="fa fa-cog" style="font-size:24px"></i> Settings</a>
                     <a href="#" class="nav-link"><i class="fa fa-print" style="font-size:24px"></i> Privacy policy</a>
                 </div>
                 <div class="page-content">

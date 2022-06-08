@@ -94,11 +94,12 @@ body
 .pin-control
 {
     margin-top: 10px;
+    width: 100%;
 }
 
 .pin-to-current
 {
-    width: 350px;
+    width: 100%;
     background-color: white;
     border: 1px solid rgb(255, 185, 70);
     padding: 10px;

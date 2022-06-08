@@ -25,7 +25,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
     	<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
-		<script src="../static/js/profile-map.js" defer></script>
+		<script src="../static/js/map/profile-map.js" defer></script>
 		
 		<title>Profile</title>
 
@@ -64,7 +64,7 @@
 					<a href="add-business.php" class="nav-link">Add new business</a>
 					<hr>
 					<a href="logout.php" class="nav-link"><i class="fa fa-sign-out" style="font-size:24px"></i>Logout</a>
-					<a href="#" class="nav-link"><i class="fa fa-cog" style="font-size:24px"></i> Settings</a>
+					<a href="settings.php" class="nav-link"><i class="fa fa-cog" style="font-size:24px"></i> Settings</a>
 					<a href="#" class="nav-link"><i class="fa fa-print" style="font-size:24px"></i> Privacy policy</a>
 				</div>
 				<div class="page-content">
