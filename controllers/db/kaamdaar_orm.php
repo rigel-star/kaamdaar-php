@@ -1,5 +1,5 @@
 <?php
-    require_once "../../constants.php";
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/kaamdaar-php/constants.php";
     require_once ROOT_DIR . "models/user.php";
     require_once ROOT_DIR . "models/business-profile.php";
     require_once ROOT_DIR . "models/business.php";
