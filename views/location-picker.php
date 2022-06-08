@@ -19,9 +19,9 @@
         <title>Location Picker</title>
         <link rel="stylesheet" href="../static/css/location-picker.css">
         <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-        <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+        <!-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
     	<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
-        <script src="../static/js/map/location-picker.js" defer></script>
+        <script src="../static/js/map/location-picker.js" defer></script> -->
     </head>
     <body>
         <div class="control">
@@ -38,18 +38,18 @@
 
             <div class="rfloat">
                 <button class="map-btn cancel-btn">Cancel</button>
-                <button class="map-btn done-btn" onclick="document.getElementById('modal').style.display = 'block'">Done</button>
+                <button class="map-btn done-btn" onclick="showModal()">Done</button>
             </div>
         </div>
 
         <div class="map" id="map"></div>
 
         <div class="modal" id="modal">
-            <?php require_once './modal/lp/' . $route; ?>
+            
         </div>
 
         <script>
-            var modal = document.getElementById('modal');
+            var showModal = () => document.getElementById('modal').style.display = "block";
 
             window.onclick = (e) => {
                 if(window.event.target == modal)
