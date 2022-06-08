@@ -1,10 +1,11 @@
 <?php
-    require_once "../constants.php";
+    require_once "../../constants.php";
     require_once ROOT_DIR . "models/user.php";
     require_once ROOT_DIR . "models/business-profile.php";
     require_once ROOT_DIR . "models/business.php";
+    require_once ROOT_DIR . "models/request.php";
 
-    use Model\{User, Business, BusinessProfile, BusinessCategory};
+    use Model\{User, Business, BusinessProfile, BusinessCategory, Request};
 
     class ResultSet implements Iterator, Countable
     {
@@ -148,6 +149,29 @@
                         ''
                     );";
 
+            $this->connection->query($SQL);
+        }
+
+        public function addNewRequest(Request $request)
+        {
+            $SQL = "INSERT INTO 
+                        request(
+                            REQUEST_LOCATION, 
+                            REQUEST_LATLONG, 
+                            U_ID, 
+                            REQUEST_TYPE, 
+                            REQUEST_STATUS, 
+                            REQUEST_TIME
+                        ) 
+                        VALUES(
+                            '$request->location',
+                            '$request->latlon',
+                            $request->uid,
+                            $request->type,
+                            $request->status,
+                            $request->time
+                        );";
+                        
             $this->connection->query($SQL);
         }
 
