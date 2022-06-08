@@ -145,7 +145,34 @@
             </ul>
         </div>
         <div class="req-send">
-            <button class="req-send-btn">Send request</button>
+            <button id="req-send-btn" class="req-send-btn">Send request</button>
         </div>
     </div>
 </div>
+
+<script defer>
+    var sendButton = undefined;
+    window.onload = function() {
+        sendButton = document.getElementById("req-send-btn");
+        sendButton.addEventListener("click", (e) => addNewRequest());
+    }
+
+    function addNewRequest()
+    {
+        if(!sendButton) return;
+
+        sendButton.disabled = true;
+
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(xhttp.readyState == XMLHttpRequest.DONE)
+            {
+                if(xhttp.status != 200)
+                    sendButton.disabled = false;
+            }
+        };
+
+        xhttp.open("GET", "./modal/lp/insert-req.php?type=10&location=Ktm&lat=45&lon=65", true);
+        xhttp.send();
+    }
+</script>
