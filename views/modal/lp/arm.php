@@ -1,12 +1,13 @@
 <style>
-    .modal-body 
-    {
-        height: 300px;
-    }
-
-    .send-req-btn 
-    {
-
+    .modal-content {
+        position: fixed;
+        bottom: 0;
+        background-color: #fefefe;
+        width: 100%;
+        -webkit-animation-name: slideIn;
+        -webkit-animation-duration: 0.4s;
+        animation-name: slideIn;
+        animation-duration: 0.4s
     }
 </style>
 
