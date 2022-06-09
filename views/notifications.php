@@ -9,6 +9,8 @@
 	session_start();
 	if(!isset($_SESSION['user_phone'])) header('location:login.php?route=notifications.php');
 
+    require_once("request-constants.php");
+
     $orm = new KaamdaarORM();
 ?>
 
@@ -63,7 +65,7 @@
                         </div>
                     </div>
                     <?php 
-                        $all_notifs = $orm->fetchRequestNotifications(1); 
+                        $all_notifs = $orm->fetchRequestNotifications(1);
                         if(count($all_notifs) <= 0)
                         {
                             echo "<b>No new notifications</b>";
@@ -85,11 +87,11 @@
                                     </div>
                                     <div class="nli-2">
                                         <p id="nli-name"><?php echo $user->fname . ' ' . $user->lname; ?></p>
-                                        <p id="nli-type-name"><?php echo $request->type; ?></p>
+                                        <p id="nli-type-name"><?php echo REQUEST_TYPE_NAMES[$request->type]; ?></p>
                                         <div class="nli-2-2">
                                             <span id="nli-time"><?php echo $request->time; ?></span>
                                             <span style="color: #A19D9D">&#8226;</span>
-                                            <span id="nli-status"><?php echo $request->status; ?></span>
+                                            <span class="nli-status nli-status-<?php echo $request->status == 0 ? "pending" : "fulfilled"; ?>"><?php echo REQUEST_STATUS[$request->status]; ?></span>
                                         </div>
                                         <button id="nli-view-btn">View</button>
                                     </div>
