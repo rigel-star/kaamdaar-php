@@ -17,8 +17,8 @@ a
 
 .notif-container
 {
-    position: absolute;
-    width: 375;
+    position: sticky;
+    width: 375px;
     height: 500px;
     background-color: #FFFFFF;
     box-shadow: var(--app-basic-shadow);
