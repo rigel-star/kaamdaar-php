@@ -21,6 +21,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="../static/css/base/layout.css">
 		<link rel="stylesheet" href="../static/css/profile.css">
+        <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,11 +31,19 @@
 		<!-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
     	<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
 		<script src="../static/js/map/profile-map.js" defer></script> -->
+        <script src="../static/js/modal.js"></script>
 		
 		<title>Profile</title>
 	</head>
 	<body>
 		<div class="container">
+
+            <div id="notif-modal" class="modal notif-modal">
+                <?php 
+                    require_once("./modal/notif-modal.php");
+                ?>
+            </div>
+
             <div class="container-head">
                 <div class="container-head-pt-1">
                     <h1>Kaamdaar</h1>
@@ -42,7 +51,7 @@
                 </div>
                 <div class="container-head-pt-2">
                     <div class="head-icons">
-                        <div class="head-icon-section head-notif-section">
+                        <div class="head-icon-section head-notif-section" onclick="showModal('notif-modal');">
                             <span class="notif-count">
                                 3
                             </span>

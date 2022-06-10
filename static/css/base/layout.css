@@ -219,7 +219,7 @@ body
 
 .modal
 {
-    z-index: 1001;
+    z-index: 999;
     display: none;
     position: absolute;
     top: 0;

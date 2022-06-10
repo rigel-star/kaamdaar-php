@@ -17,12 +17,21 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="../static/js/modal.js"></script>
 		
 		<link rel="stylesheet" href="../static/css/base/layout.css">
 		<link rel="stylesheet" href="../static/css/add-request.css">
+        <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
 	</head>
 	<body>
 		<div class="container">
+
+            <div id="notif-modal" class="modal notif-modal">
+                <?php 
+                    require_once("./modal/notif-modal.php");
+                ?>
+            </div>
+
             <div class="container-head">
                 <div class="container-head-pt-1">
                     <h1>Kaamdaar</h1>
@@ -30,7 +39,7 @@
                 </div>
                 <div class="container-head-pt-2">
                     <div class="head-icons">
-                        <div class="head-icon-section head-notif-section">
+                        <div class="head-icon-section head-notif-section" onclick="showModal('notif-modal');">
                             <span class="notif-count">
                                 3
                             </span>
