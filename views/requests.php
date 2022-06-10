@@ -63,7 +63,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="nav-link nav-link-active">
+                                <li class="nav-link">
                                     <div class="nav-link-root">
                                         <div class="nav-link-icon">
                                             <img class="nav-link-icon-norm" src="https://img.icons8.com/ios-glyphs/344/briefcase.png" alt="business icon">
@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="nav-link">
+                                <li class="nav-link nav-link-active">
                                     <div class="nav-link-root">
                                         <div class="nav-link-icon">
                                             <!-- <img class="nav-link-icon-norm" src="https://img.icons8.com/fluency/344/paper-plane.png" alt=""> -->
