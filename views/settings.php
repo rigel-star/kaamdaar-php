@@ -200,7 +200,7 @@
                                         </div>
                                         <div class="setting-description">
                                             <p>
-                                                Using fixed location sets your request location same as your profile location. Thus, you don't have to choose loction on map everytime you make a request.
+                                                Using fixed location sets your request location same as your profile location. Thus, you don't have to choose location on map everytime you make a request.
                                             </p>
                                         </div>
                                     </div>
