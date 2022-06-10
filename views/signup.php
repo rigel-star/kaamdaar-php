@@ -40,6 +40,9 @@
 			$_SESSION['user_phone'] = $_SESSION['phone'];
 			$_SESSION['user_id'] = $id;
 
+			//dummy image
+			$_SESSION['user_image'] = 'https://jenmulligandesign.com/wp-content/uploads/2017/04/unsplash-free-stock-photos-download.jpg';
+
 			$fields = ['fname', 'lname', 'phone', 'password', 'gender', 'date', 'location', 'latlon'];
 			foreach($fields as $field)
 				unset($_SESSION[$field]);

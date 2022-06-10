@@ -20,6 +20,8 @@
 			session_start();
 			$_SESSION['user_phone'] = $_COOKIE['user_phone'];
 			$_SESSION['user_id'] = $_COOKIE['user_id'];
+			$_SESSION['user_image'] = $_COOKIE['user_image'];
+
 			header("location:views/profile.php");
 		}
 		else
