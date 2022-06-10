@@ -66,10 +66,12 @@
                         $HOME_URL = "/";
                         setcookie('user_phone', $user_phone, $cookie_time, $HOME_URL);
                         setcookie('user_id', $user->id, $cookie_time, $HOME_URL);
+                        setcookie('user_image', $user->image, $cookie_time, $HOME_URL);
                     }
 
                     $_SESSION['user_phone'] = $user_phone;
                     $_SESSION['user_id'] = $user->id;
+                    $_SESSION['user_image'] = $user->image;
 
                     header("location:" . $route);
                 }
