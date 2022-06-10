@@ -22,13 +22,15 @@
                 </div>
                 <div class="container-head-pt-2">
                     <div class="head-icons">
-                        <div class="head-notif-section">
+                        <div class="head-icon-section head-notif-section">
                             <span class="notif-count">
                                 3
                             </span>
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
-                        <img class="head-icon profile-icon" src="https://thumbs.dreamstime.com/b/portrait-young-happy-girl-summer-hat-isolated-over-blue-background-looking-camera-131690490.jpg" alt="Profile">
+                        <div class="head-icon-section head-profile-section">
+                            <img class="head-icon profile-icon" src="https://thumbs.dreamstime.com/b/portrait-young-happy-girl-summer-hat-isolated-over-blue-background-looking-camera-131690490.jpg" alt="Profile">
+                        </div>
                     </div>
                 </div>
             </div>
