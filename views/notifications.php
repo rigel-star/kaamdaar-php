@@ -1,9 +1,17 @@
 <?php 
 	require_once '../constants.php';
     require_once "k_auth.php";
+    require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
+    require_once ROOT_DIR . "models/request-notification.php";
+
+    use Model\RequestNotification;
 
 	session_start();
 	if(!isset($_SESSION['user_phone'])) header('location:login.php?route=notifications.php');
+
+    require_once("request-constants.php");
+
+    $orm = new KaamdaarORM();
 ?>
 
 <!DOCTYPE html>
@@ -56,42 +64,40 @@
                             </div>
                         </div>
                     </div>
+                    <?php 
+                        $all_notifs = $orm->fetchRequestNotifications(1);
+                        if(count($all_notifs) <= 0)
+                        {
+                            echo "<b>No new notifications</b>";
+                            die();
+                        }
+                    ?>
                     <div class="notif-list-container">
                         <ul class="notif-list">
+                            <?php 
+                            foreach($all_notifs as $notif) 
+                            { 
+                                $request = $notif->request;
+                                $user = $notif->user;
+                            ?>
                             <li class="nli">
                                 <div class="nli-root">
                                     <div class="nli-1">
                                         <img id="nli-img" src="../static/images/profile.jpg" alt="Profile">
                                     </div>
                                     <div class="nli-2">
-                                        <p id="nli-name">Pragati Karmacharya</p>
-                                        <p id="nli-type-name">Carpenter Request</p>
+                                        <p id="nli-name"><?php echo $user->fname . ' ' . $user->lname; ?></p>
+                                        <p id="nli-type-name"><?php echo REQUEST_TYPE_NAMES[$request->type]; ?></p>
                                         <div class="nli-2-2">
-                                            <span id="nli-time">2 mins ago</span>
+                                            <span id="nli-time"><?php echo $request->time; ?></span>
                                             <span style="color: #A19D9D">&#8226;</span>
-                                            <span id="nli-status">Pending</span>
+                                            <span class="nli-status nli-status-<?php echo $request->status == 0 ? "pending" : "fulfilled"; ?>"><?php echo REQUEST_STATUS[$request->status]; ?></span>
                                         </div>
                                         <button id="nli-view-btn">View</button>
                                     </div>
                                 </div>
                             </li>
-                            <li class="nli">
-                                <div class="nli-root">
-                                    <div class="nli-1">
-                                        <img id="nli-img" src="../static/images/profile.jpg" alt="Profile">
-                                    </div>
-                                    <div class="nli-2">
-                                        <p id="nli-name">Pragati Karmacharya</p>
-                                        <p id="nli-type-name">Carpenter Request</p>
-                                        <div class="nli-2-2">
-                                            <span id="nli-time">2 mins ago</span>
-                                            <span style="color: #A19D9D">&#8226;</span>
-                                            <span id="nli-status">Pending</span>
-                                        </div>
-                                        <button id="nli-view-btn">View</button>
-                                    </div>
-                                </div>
-                            </li>
+                            <?php } ?>
                         </ul>
                     </div>
                 </div>

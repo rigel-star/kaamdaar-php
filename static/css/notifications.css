@@ -77,11 +77,20 @@ body {
     font-weight: 350;
 }
 
-#nli-status
+.nli-status 
 {
     font-size: 20px;
-    color: #DC0404;
     font-weight: 350;
+}
+
+.nli-status-pending
+{
+    color: #DC0404;
+}
+
+.nli-status-fulfilled
+{
+    color: green;
 }
 
 #nli-view-btn 
