@@ -49,7 +49,7 @@
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
                         <div class="head-icon-section head-profile-section">
-                            <img class="head-icon profile-icon" src="https://thumbs.dreamstime.com/b/portrait-young-happy-girl-summer-hat-isolated-over-blue-background-looking-camera-131690490.jpg" alt="Profile">
+                            <img class="head-icon profile-icon" src="<?php echo $_SESSION['user_image']; ?>" alt="Profile">
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                                 <li class="nav-link">
                                     <div class="nav-link-root">
                                         <div class="nav-link-icon">
-                                            <img class="nav-link-icon-round" src="https://thumbs.dreamstime.com/b/portrait-young-happy-girl-summer-hat-isolated-over-blue-background-looking-camera-131690490.jpg" alt="">
+                                            <img class="nav-link-icon-round" src="<?php echo $_SESSION['user_image']; ?>" alt="">
                                         </div>
                                         <div class="nav-link-text">
                                             <a href="profile.php">Profile</a>
