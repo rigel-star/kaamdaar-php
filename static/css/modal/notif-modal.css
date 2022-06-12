@@ -77,7 +77,6 @@ a
 
 .notif-head-icon
 {
-    padding: 10px;
     width: 50px;
     height: 50px;
     background-color: rgb(246, 245, 245);
@@ -88,6 +87,7 @@ a
 {
     height: 100%;
     width: 100%;
+    border-radius: 50%;
 }
 
 .notif-head-title
