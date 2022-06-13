@@ -1,6 +1,6 @@
 <?php 
 
-class Notification 
+abstract class Notification 
 {
     public int      $id;
     public string   $title;
