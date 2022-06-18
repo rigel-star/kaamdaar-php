@@ -180,7 +180,7 @@
         {
             $user = null;
             $result_set = $this->from("users")->fetch(null, ["U_ID" => $uid]);
-            if($result_set)
+            if($result_set && count($result_set))
             {
                 $row = $result_set->current();
                 $user = new User(
