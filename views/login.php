@@ -59,6 +59,12 @@
                         return;
                     }
 
+                    $business = $kdb->getBusinessProfile($user->id);
+
+                    $user_image = $user->image;
+                    if(empty(trim($user_image)))
+                        $user_image = "https://www.pngitem.com/pimgs/m/146-1468843_profile-icon-orange-png-transparent-png.png";
+
                     if(isset($_POST['remember-me']))
                     {
                         $cookie_time = time() + (86400 * 30 * 12);
@@ -66,12 +72,24 @@
                         $HOME_URL = "/";
                         setcookie('user_phone', $user_phone, $cookie_time, $HOME_URL);
                         setcookie('user_id', $user->id, $cookie_time, $HOME_URL);
-                        setcookie('user_image', $user->image, $cookie_time, $HOME_URL);
+                        setcookie('user_image', $user_image, $cookie_time, $HOME_URL);
+
+                        if($business)
+                        {
+                            setcookie('business_id', $business->b_profile_id, $cookie_time);
+                            setcookie('business_name', $business->b_profile_name, $cookie_time);
+                        }
                     }
 
                     $_SESSION['user_phone'] = $user_phone;
                     $_SESSION['user_id'] = $user->id;
-                    $_SESSION['user_image'] = $user->image;
+                    $_SESSION['user_image'] = $user_image;
+
+                    if($business)
+                    {
+                        $_SESSION['business_id'] = $business->b_profile_id;
+                        $_SESSION['business_name'] = $business->b_profile_name;
+                    }
 
                     header("location:" . $route);
                 }
@@ -85,10 +103,9 @@
 
         validate_login();
         ?>
-
-        <p style="<?php echo "display:" . ($redirected ? "block" : "none"); ?>" class="redirected-msg">&#9432; You must login to continue</p>
-
         <div class="container">
+            <p style="<?php echo "display:" . ($redirected ? "block" : "none"); ?>" class="redirected-msg">&#9432; You must login to continue</p>
+
             <form class="login-form" action="<?php echo $_SERVER['PHP_SELF'] . "?route=$route"; ?>" method="POST">
                 <h1>Login</h1>
                 <?php $phone_value = isset($_POST['phone']) ? $_POST['phone'] : ''; ?>

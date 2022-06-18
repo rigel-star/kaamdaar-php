@@ -8,16 +8,17 @@
 	use Model\User;
 
 	$verified = 0;
-	$session_id = '';
+	$vpsi = '';
 	if(isset($_GET['verified']))
 		$verified = $_GET['verified'];
 
 	if(isset($_GET['vpsi']))
-		$session_id = $_GET['vpsi'];
+		$vpsi = $_GET['vpsi'];
 
 	if($verified == '1')
 	{
-		if(isset($_SESSION['vp-session-id']))
+		$session_id = $_SESSION['vp-session-id'];
+		if($session_id && $vpsi && ($session_id === $vpsi))
 		{
 			$new_user = new User(
 				0, 
@@ -34,7 +35,7 @@
 
 			$orm = new KaamdaarORM();
 			$orm->addNewUser($new_user);
-			$id = $kdb->insert_id; // equiv to 'SELECT LAST_INSERT_ID();'
+			$id = $orm->lastInsertId(); // equiv to 'SELECT LAST_INSERT_ID();'
 			$orm->close();
 
 			$_SESSION['user_phone'] = $_SESSION['phone'];

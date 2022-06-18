@@ -114,6 +114,11 @@
             return $this->fetch(null, null);
         }
 
+        public function lastInsertId()
+        {
+            return $this->connection->insert_id;
+        }
+
         private function array_map_assoc($func, array $arr)
         {
             $result = array();
@@ -180,7 +185,7 @@
         {
             $user = null;
             $result_set = $this->from("users")->fetch(null, ["U_ID" => $uid]);
-            if($result_set)
+            if($result_set && count($result_set))
             {
                 $row = $result_set->current();
                 $user = new User(
