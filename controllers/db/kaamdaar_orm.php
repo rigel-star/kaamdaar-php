@@ -114,6 +114,11 @@
             return $this->fetch(null, null);
         }
 
+        public function lastInsertId()
+        {
+            return $this->connection->insert_id;
+        }
+
         private function array_map_assoc($func, array $arr)
         {
             $result = array();
