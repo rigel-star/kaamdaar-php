@@ -10,8 +10,15 @@
 	require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
 
     $korm = new KaamdaarORM();
-    $uid = $_SESSION['user_id'];
-    $user = $korm->getUserByID($uid);
+    $phone = $_SESSION['user_phone'];
+    $user = $korm->getUserByPhone($phone);
+    $uid = $user->id;
+    $business_id = null;
+
+    if(isset($_SESSION['business_id']))
+    {
+        $business_id = $_SESSION['business_id'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -199,13 +206,13 @@
 								<h4>Insights</h4>
 								<div>
 									<p>
-										<?php $business_count = $korm->rawQuery("select count(*) as bcount from business where business_id = $uid")->current(); ?>
-										<h3><?php echo $business_count['bcount']; ?></h3>
+										<?php $business_count = $korm->rawQuery("select count(*) as bcount from business where business_id = '$business_id';")->current(); ?>
+										<h3><?php echo $business_id ? $business_count['bcount'] : "0"; ?></h3>
 										business(es)
 									</p>
 									<p>
-										<?php $business_count = $korm->rawQuery("select count(*) as bcount from request where request_id = $uid")->current(); ?>
-										<h3><?php echo $business_count['bcount']; ?></h3>
+										<?php $request_count = $korm->rawQuery("select count(*) as rcount from request where u_id = '$uid';")->current(); ?>
+										<h3><?php echo $request_count['rcount']; ?></h3>
 										<br>
 										Requests
 									</p>
