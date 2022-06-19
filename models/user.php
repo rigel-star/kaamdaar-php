@@ -15,7 +15,7 @@ class User
 	public $image;
 
 	public function __construct(
-		int $id,
+		string $id,
 		string $fname, 
 		string $lname, 
 		string $phone,
