@@ -6,7 +6,7 @@
 		header("location:$url.php");
 	}
 
-	$static_file_dir = "./static/";
+	$static_file_dir = ROOT_DIR . "static/";
 
 	function change_static_file_dir($new_path) : void
 	{
