@@ -133,6 +133,7 @@
         {
             $SQL = "INSERT INTO 
                     users(
+                        u_id,
                         u_fname, 
                         u_lname, 
                         u_phone, 
@@ -144,6 +145,7 @@
                         u_image
                     ) 
                     VALUE(
+                        '$user->id',
                         '$user->fname', 
                         '$user->lname',
                         '$user->phone',
@@ -175,7 +177,7 @@
                             $request->uid,
                             $request->type,
                             $request->status,
-                            $request->time
+                            '$request->time'
                         );";
                         
             $this->connection->query($SQL);
