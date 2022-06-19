@@ -97,7 +97,7 @@
             {
                 $SQL .= " WHERE " . implode(" and ", $this->array_map_assoc(
                     function($key, $value) {
-                        return "$key=$value";
+                        return "`$key`='$value'";
                     }, 
                 $where_clauses));
             }
@@ -237,12 +237,10 @@
 
         public function getBusinessProfile($uid)
         {
-            $SQL = "SELECT * FROM business_profile WHERE U_ID = $uid";
-            $result = $this->connection->query($SQL);
-
-            if($result->num_rows > 0)
+            $result = $this->from('business_profile')->fetch(null, ["U_ID" => "$uid"]);
+            if($result && count($result))
             {
-                $row = $result->fetch_assoc();
+                $row = $result->current();
                 $profile = new BusinessProfile(
                     $row['B_PROFILE_ID'],
                     $row['B_PROFILE_NAME'],
