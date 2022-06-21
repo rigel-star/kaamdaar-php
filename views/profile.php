@@ -205,22 +205,20 @@
 							<div class="profile-stat pdiv">
 								<h4>Insights</h4>
 								<div>
-									<p>
-										<?php $business_count = $korm->rawQuery("select count(*) as bcount from business where business_id = '$business_id';")->current(); ?>
-										<h3><?php echo $business_id ? $business_count['bcount'] : "0"; ?></h3>
-										business(es)
-									</p>
-									<p>
-										<?php $request_count = $korm->rawQuery("select count(*) as rcount from request where u_id = '$uid';")->current(); ?>
+                                    <div class="profile-stat-item profile-stat-1">
+                                        <?php $business_count = $korm->rawQuery("select count(*) as bcount from business where business_id = '$business_id';")->current(); ?>
+                                        <h3><?php echo $business_id ? $business_count['bcount'] : "0"; ?></h3>
+                                        <p>business(es)</p>
+                                    </div>
+                                    <div class="profile-stat-item profile-stat-2">
+                                        <?php $request_count = $korm->rawQuery("select count(*) as rcount from request where u_id = '$uid';")->current(); ?>
 										<h3><?php echo $request_count['rcount']; ?></h3>
-										<br>
-										Requests
-									</p>
-									<p>
+										<p>Request(s)</p>
+                                    </div>
+									<div class="profile-stat-item profile-stat-3">
 										<h3>1</h3>
-										<br>
-										Ratings
-									</p>
+										<p>Rating(s)</p>
+                                    </div>
 								</div>
 							</div>
 						</div>
