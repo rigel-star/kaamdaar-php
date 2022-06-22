@@ -223,7 +223,7 @@
 
                     if(count($businesses) < 1)
                     {
-                        echo "You don't own any business. <a href='#'>Start</a> by creating one.";
+                        echo "You don't own any business. <a href='add-business.php'>Start</a> by creating one.";
                         die('');
                     }
 

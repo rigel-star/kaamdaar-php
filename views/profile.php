@@ -58,10 +58,8 @@
                 </div>
                 <div class="container-head-pt-2">
                     <div class="head-icons">
-                        <div class="head-icon-section head-notif-section" onclick="showModal('notif-modal');">
-                            <span class="notif-count">
-                                3
-                            </span>
+                        <div class="head-icon-section head-notif-section" onclick="showNotificationModal();">
+                            <span id="notif-count" class="notif-count"></span>
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
                         <div class="head-icon-section head-profile-section">
@@ -258,22 +256,251 @@
 								</ul>
 							</div>
 
-							<?php $user_loc = get_user_location(); ?>
 							<div class="profile-map pdiv">
 								<h4>You on map</h4>
 								<p>Drag and drop to change your location</p>
 								<div class="map" id="map"></div>
 							</div>
-
-							<script type="text/javascript">
-								let latLong = <?php echo $user_loc['lat'] . " " . $user_loc['long']; ?>
-								let markerArray = [[<?php echo $user_loc['long']; ?>, <?php echo $user_loc['lat']; ?>]];
-								console.log("Hello");
-							</script>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+        <script>
+            (function updateNotifCount()
+            {
+                let countContainer = document.getElementById("notif-count");
+                let xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE)
+                    {
+                        if(xhr.status == 200)
+                        {
+                            var count = JSON.parse(xhr.responseText)?.notif_count;
+                            if(!count || count == "0")
+                                countContainer.style.display = "none";
+                            else 
+                            {
+                                countContainer.style.display = "block";
+                                countContainer.innerText = count;
+                            }
+                        }
+                    }
+                }
+
+                xhr.open("GET", "./modal/fetch-notifs.php?count=10000000000&uid=<?php $_SESSION['user_id']; ?>&action=count", true);
+                xhr.send();
+
+                setInterval(() => { 
+                    xhr.open("GET", "./modal/fetch-notifs.php?count=9999999999&uid=<?php $_SESSION['user_id']; ?>&action=count", true);
+                    xhr.send();
+                }, 10000);
+            })();
+
+            function createNotification(data)
+            {
+                let notifRoot = document.createElement("div");
+                notifRoot.classList.add("notif-root", data.status == "0" ? "notif-unread" : "notif-read");
+
+                let notifHead = document.createElement("div");
+                notifHead.classList.add('notif-head');
+
+                let notifHeadIcon = document.createElement("div");
+                notifHeadIcon.classList.add('notif-head-icon');
+
+                let notifHeadIconImg = document.createElement("img");
+                notifHeadIconImg.classList.add('notif-head-icon-img');
+                notifHeadIconImg.src = data.icon;
+
+                let notifHeadTitle = document.createElement("div");
+                notifHeadTitle.classList.add('notif-head-title');
+
+                let notifProfile = document.createElement("p");
+                notifProfile.classList.add('notif-profile');
+                notifProfile.innerText = data.profile;
+
+                let notifTitle = document.createElement("p");
+                notifTitle.classList.add('notif-title');
+                notifTitle.innerText = data.title;
+
+                let notifBody = document.createElement("div");
+                notifBody.classList.add('notif-body');
+
+                let notifDesc = document.createElement("p");
+                notifDesc.classList.add('notif-desc');
+                notifDesc.innerText = data.description;
+
+                let notifDate = document.createElement("p");
+                notifDate.classList.add('notif-date');
+                notifDate.innerText = data.time;
+
+                notifHeadIcon.appendChild(notifHeadIconImg);
+                notifHeadTitle.appendChild(notifProfile);
+                notifHeadTitle.appendChild(notifTitle);
+                notifHead.appendChild(notifHeadIcon);
+                notifHead.appendChild(notifHeadTitle);
+
+                notifBody.appendChild(notifDesc);
+                notifBody.appendChild(notifDate);
+
+                notifRoot.appendChild(notifHead);
+                notifRoot.appendChild(notifBody);
+
+                return notifRoot;
+            }
+
+            function createRequestNotification(data)
+            {
+                let notifItem = document.createElement("li");
+                notifItem.classList.add("notif");
+
+                let notif = createNotification(data);
+                let actionBar = document.createElement("div");
+                actionBar.classList.add('notif-action-bar');
+
+                let offer = document.createElement('button');
+                offer.innerText = "Offer service";
+                offer.classList.add('notif-btn', "notif-offer-btn");
+
+                offer.addEventListener("click", () => {
+                    $.ajax({
+                        url: `./offer-service.php?rec-id=${data.userId}&req-id=${data.requestId}&bus-id=1`,
+                        success: () => {
+                            console.log("OK");
+                        },
+                        error: () => {
+                            console.log("bad");
+                        }
+                    });
+                });
+
+                actionBar.appendChild(offer);
+
+                if(data.status == "1")
+                    offer.disabled = true;
+
+                notif.appendChild(actionBar);
+                notifItem.appendChild(notif);
+                return notif;
+            }
+
+            function createResponseNotification(type, data)
+            {
+                let notifItem = document.createElement("li");
+                notifItem.classList.add("notif");
+
+                let notif = createNotification(data);
+                let actionBar = document.createElement("div");
+                actionBar.classList.add('notif-action-bar');
+
+                if(type === "res-res")
+                {
+                    let viewDetails = document.createElement('button');
+                    viewDetails.innerText = "View details";
+                    viewDetails.classList.add('notif-btn', 'notif-view-details-btn');
+                    actionBar.appendChild(viewDetails);
+
+                    if(data.status == "1")
+                        viewDetails.disabled = true;
+                }
+                else if(type === "req-res")
+                {
+                    let accept = document.createElement("button");
+                    accept.innerText = "Accept";
+                    accept.classList.add('notif-btn', 'notif-accept-btn');
+
+                    let reject = document.createElement("button");
+                    reject.innerText = "Reject";
+                    reject.classList.add('notif-btn', 'notif-reject-btn');
+
+                    actionBar.appendChild(reject);
+                    actionBar.appendChild(accept);
+
+                    if(data.status == "1")
+                    {
+                        reject.disabled = true;
+                        accept.disabled = true;
+                    }
+                }
+
+                notif.appendChild(actionBar);
+                notifItem.append(notif);
+                return notif;
+            }
+
+            function showNotificationModal()
+            {
+                let modal = document.getElementById("notif-modal");
+                modal.style.display = "block";
+
+                let notifList = document.getElementsByClassName("notif-list")[0];
+
+                let xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == XMLHttpRequest.DONE)
+                    {
+                        if(xhr.status == 200)
+                        {
+                            const notifications = JSON.parse(xhr.responseText);
+                            if(notifications.length < 1)
+                            {
+                                let noNotifMsg = document.getElementsByClassName("no-notif-msg")[0];
+                                noNotifMsg.style.display = "block";
+                            }
+
+                            for(const notification of notifications)
+                            {
+                                const notifModel = {
+                                    icon: notification.ICON,
+                                    profile: notification.PROFILE,
+                                    title: notification.TITLE,
+                                    description: notification.DESCRIPTION,
+                                    time: notification.TIME,
+                                    status: notification.STATUS,
+                                    requestId: notification.REQUEST_ID
+                                }
+
+                                const notifType = notification.NOTIF_TYPE;
+                                if(notifType === "REQUEST")
+                                {
+                                    notifModel.userId = notification.USER_ID;
+                                    let notif = createRequestNotification(notifModel);
+                                    notifList.appendChild(notif);
+                                }
+                                else if(notifType === 'RESPONSE')
+                                {
+                                    notifModel.receiver = notification.SENDER;
+                                    notifModel.sender = notification.RECEIVER;
+
+                                    let notif;
+                                    const responseType = notification.RESPONSE_TYPE;
+                                    if(responseType == "0")
+                                        notif = createResponseNotification("req-res", notifModel);
+                                    else if(responseType == "1")
+                                        notif = createResponseNotification("res-res", notifModel);
+
+                                    notifList.appendChild(notif);
+                                } 
+                            }
+                        }
+                    }
+                }
+
+                xhr.open("GET", "./modal/fetch-notifs.php?count=5&uid=1&action=fetch", true);
+                xhr.send();
+
+                window.onclick = (event) => {
+                    if(event.target == modal)
+                    {
+                        modal.style.display = "none";
+                        while(notifList.firstChild)
+                        {
+                            notifList.removeChild(notifList.firstChild);
+                        }
+                    }
+                };
+            }
+        </script>
 	</body>
 </html>
