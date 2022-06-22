@@ -256,23 +256,15 @@
 
         public function getAllRequests($uid)
         {
-            $result_set = $this->from("request")->fetch(null, ["U_ID" => "$uid"]);
+            $SQL = "SELECT * FROM request r INNER JOIN br_category brc ON r.REQUEST_TYPE = brc.BR_CAT_ID ORDER BY r.REQUEST_TIME DESC;";
+            $result_set = new ResultSet($this->connection->query($SQL));
+
             if($result_set && count($result_set))
             {
                 $all_requests = [];
                 foreach($result_set as $result)
                 {
-                    $request = new Request(
-                        $result['REQUEST_ID'],
-                        $result['REQUEST_LOCATION'],
-                        $result['REQUEST_LATLONG'],
-                        $result['REQUEST_TYPE'],
-                        $result['REQUEST_STATUS'],
-                        $result['REQUEST_TIME'],
-                        $result['REQUEST_URGENCY'],
-                        $result['U_ID']
-                    );
-                    array_push($all_requests, $request);
+                    array_push($all_requests, $result);
                 }
                 return $all_requests;
             }
