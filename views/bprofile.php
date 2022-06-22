@@ -187,13 +187,14 @@
                     </div>
                 </div>
                 <div class="page-content">
+                    <?php if(!$bp) { ?>
+                            <div class='no-bprofile-msg'>
+                                <p>You haven't set up your business profile.</p>
+                                <button class="setup-business-btn" onclick="location.href = 'create-business-profile.php';">Setup</button>
+                            </div>
                     <?php 
-                        if(!$bp)
-                        {
-                            echo "You haven't set up your business profile. <a href='#'>Setup</a> new profile.";
-                            die('');
-                        }
-                    ?>
+                        die();
+                    } ?>
 
                     <div class="business-profile">
                         <div class="profile-top pdiv">

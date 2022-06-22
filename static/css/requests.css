@@ -1,33 +1,35 @@
-.new-r-btn {
-    background-color: rgb(106, 168, 255);
-    color: white;
-    transition: color 0.15s;
-    border: none;
-    width: 100px;
-    height: 40px;
-    font-size: 1.2em;
-    border-radius: 10px;
-    float: right;
+* 
+{
+    box-sizing: border-box;
 }
 
-.new-r-btn:hover {
-    opacity: 0.8;
+:root
+{
+    --app-body-bg-color: #DAE0E6;
+    --app-line-color: #939393;
+    --app-radius-round: 50%;
+    --app-basic-border-radius: 8px;
+    --app-basic-box-shadow: 0 1px 2px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
+    --app-theme-color: rgb(255, 185, 70);
 }
 
-.rl {
+.req-list-container
+{
+    padding: 10px;
+}
+
+.req-list {
     list-style-type: none;
 }
 
-.rli {
+.req-list-item {
     width: inherit;
     padding: 5px;
     margin-bottom: 10px;
 }
 
 .rli-root {
-    border-width: 0.01em;
-    border-style: solid;
-    border-color: black;
+    box-shadow: var(--app-basic-box-shadow);
     padding: 10px 5px 20px 5px;
 }
 
@@ -38,6 +40,12 @@
     width: 100%;
     padding: 10px;
     float: left;
+}
+
+.request-icon
+{
+    width: 40px;
+    height: 40px;
 }
 
 .td-icon {

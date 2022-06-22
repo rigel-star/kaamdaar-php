@@ -97,7 +97,7 @@
             {
                 $SQL .= " WHERE " . implode(" and ", $this->array_map_assoc(
                     function($key, $value) {
-                        return "$key=$value";
+                        return "`$key`='$value'";
                     }, 
                 $where_clauses));
             }
@@ -237,12 +237,10 @@
 
         public function getBusinessProfile($uid)
         {
-            $SQL = "SELECT * FROM business_profile WHERE U_ID = $uid";
-            $result = $this->connection->query($SQL);
-
-            if($result->num_rows > 0)
+            $result = $this->from('business_profile')->fetch(null, ["U_ID" => "$uid"]);
+            if($result && count($result))
             {
-                $row = $result->fetch_assoc();
+                $row = $result->current();
                 $profile = new BusinessProfile(
                     $row['B_PROFILE_ID'],
                     $row['B_PROFILE_NAME'],
@@ -256,9 +254,26 @@
             return null;
         }
 
+        public function getAllRequests($uid)
+        {
+            $SQL = "SELECT * FROM request r INNER JOIN br_category brc ON r.REQUEST_TYPE = brc.BR_CAT_ID ORDER BY r.REQUEST_TIME DESC;";
+            $result_set = new ResultSet($this->connection->query($SQL));
+
+            if($result_set && count($result_set))
+            {
+                $all_requests = [];
+                foreach($result_set as $result)
+                {
+                    array_push($all_requests, $result);
+                }
+                return $all_requests;
+            }
+            return [];
+        }
+
         public function getAllBusinessInfo($bid)
         {
-            $SQL = "SELECT b.business_id AS business_id, b.b_profile_id AS business_profile_id, cat.b_cat_name AS business_type, info.b_info_revenue AS business_revenue, info.b_info_rating AS business_rating, info.b_info_total AS business_total FROM business b INNER JOIN business_category as cat on cat.b_cat_id = b.business_type INNER JOIN business_info AS info ON b.business_id = info.business_id WHERE b.b_profile_id = $bid;";
+            $SQL = "SELECT b.business_id AS business_id, b.b_profile_id AS business_profile_id, cat.b_cat_name AS business_type, info.b_info_revenue AS business_revenue, info.b_info_rating AS business_rating, info.b_info_total AS business_total FROM business b INNER JOIN business_category as cat on cat.b_cat_id = b.business_type INNER JOIN business_info AS info ON b.business_id = info.business_id WHERE b.b_profile_id = '$bid';";
             $result_set = new ResultSet($this->connection->query($SQL));
 
             if(!count($result_set)) return [];
@@ -292,7 +307,7 @@
 
         public function fetchRequestNotifications($bid)
         {
-            $SQL = "SELECT business_type, business_start_date FROM business WHERE b_profile_id = $bid;"; //get all the business types and the date they started which are owned by the provided business id
+            $SQL = "SELECT business_type, business_start_date FROM business WHERE b_profile_id = '$bid';"; //get all the business types and the date they started which are owned by the provided business id
             $result_set = new ResultSet($this->connection->query($SQL));
 
             $notifications = [];

@@ -1,9 +1,13 @@
 <?php 
 	require_once '../constants.php';
     require_once "k_auth.php";
+    require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
+    require_once "./request-constants.php";
 
 	session_start();
 	if(!isset($_SESSION['user_phone'])) header('location:login.php');
+
+    $orm = new KaamdaarORM();
 ?>
 
 <!DOCTYPE html>
@@ -177,41 +181,48 @@
                     </div>
                 </div>
                 <div class="page-content">
-                    <div>
-                        Sort by
-                        <select name="" id="">
-                            <option value="" disabled selected>
-                                Sort by
-                            </option>
-                            <option value="date">
-                                Date
-                            </option>
-                        </select>
+                    <?php 
+                        $all_requests = $orm->getAllRequests($_SESSION['user_id']);
+                    ?>
+                    <div class="req-list-container">
+                        <div class="sort">
+                            Sort by
+                            <select name="" id="">
+                                <option value="" disabled selected>
+                                    Sort by
+                                </option>
+                                <option value="date">
+                                    Date
+                                </option>
+                            </select>
+                        </div>
+                        <ul class="req-list">
+                            <?php foreach($all_requests as $request) { ?>
+                            <li class="req-list-item">
+                                <div class="rli-root">
+                                    <div class="rli-head">
+                                        <img id="request-icon" class="request-icon" src="<?php echo $request['BR_CAT_ICON']; ?>" alt="request icon">
+                                        <span>
+                                            <strong><?php echo $request['BR_CAT_NAME']; ?></strong>
+                                            <span class="u-lvl"><?php echo $request['REQUEST_URGENCY']; ?></span>
+                                        </span>
+                                        <div class="act-btns">
+                                            <button class="view-on-map-btn">View on map <i class="fa fa-map" style="font-size:20px;"></i></button>
+                                            <i class="fa fa-ellipsis-v td-icon" style="font-size:24px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="rli-body">
+                                        <div class="req-info">
+                                            <span><?php echo date('M j Y g:i A', strtotime($request['REQUEST_TIME'])); ?></span>
+                                            &#8226;
+                                            <span><?php echo $request['REQUEST_LOCATION'];; ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php } ?>
+                        </ul>
                     </div>
-                    <ul class="rl">
-                        <li class="rli">
-                            <div class="rli-root">
-                                <div class="rli-head">
-                                    <span><i class="fa fa-laptop" aria-hidden="true"></i></span>
-                                    <span>
-                                        <strong>Dummy Request Name</strong>
-                                        <span class="u-lvl">Urgency</span>
-                                    </span>
-                                    <div class="act-btns">
-                                        <button class="view-on-map-btn">View on map <i class="fa fa-map" style="font-size:20px;"></i></button>
-                                        <i class="fa fa-ellipsis-v td-icon" style="font-size:24px"></i>
-                                    </div>
-                                </div>
-                                <div class="rli-body">
-                                    <div class="req-info">
-                                        <span>4 min ago</span>
-                                        &#8226;
-                                        <span>Sankhamul, Lalitpur</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
