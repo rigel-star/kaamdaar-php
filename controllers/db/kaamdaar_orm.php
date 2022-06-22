@@ -265,11 +265,11 @@
                     $request = new Request(
                         $result['REQUEST_ID'],
                         $result['REQUEST_LOCATION'],
-                        $result['REQEST_LATLONG'],
-                        $result['REQUEST_TYPE'],
+                        $result['REQUEST_LATLONG'],
                         $result['REQUEST_TYPE'],
                         $result['REQUEST_STATUS'],
                         $result['REQUEST_TIME'],
+                        $result['REQUEST_URGENCY'],
                         $result['U_ID']
                     );
                     array_push($all_requests, $request);
