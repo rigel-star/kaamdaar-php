@@ -195,7 +195,7 @@
                                         <img id="request-icon" class="request-icon" src="<?php echo $request['BR_CAT_ICON']; ?>" alt="request icon">
                                         <span>
                                             <strong><?php echo $request['BR_CAT_NAME']; ?></strong>
-                                            <span class="u-lvl"><?php echo $request['REQUEST_URGENCY']; ?></span>
+                                            <span class="u-lvl"><?php echo $request['REQUEST_URGENCY'] == "1" ? "Urgent" : ""; ?></span>
                                         </span>
                                         <div class="act-btns">
                                             <button class="view-on-map-btn">View on map <i class="fa fa-map" style="font-size:20px;"></i></button>
