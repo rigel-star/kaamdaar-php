@@ -11,6 +11,7 @@
     use Model\{BusinessCategory};
 
 	$orm = new KaamdaarORM();
+    $business_profile = $orm->getBusinessProfile($_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html>
@@ -177,12 +178,35 @@
                     <?php 
 						$categories = $orm->getBusinessCategories();
 					?>
+                    <div class="confirm-business-modal" style="display: none;">
+                        <div class="cbm-content">
+                            <p id="modal-business-name"></p>
+                            <img id="modal-business-icon" src="" alt="">
+                            <div class="confirm-modal-btns rfloat">
+                                <button id="modal-cancel-btn">Cancel</button>
+                                <button id="modal-confirm-btn">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+
 					<div class="business-cat-list">
                         <?php 
                         foreach($categories as $category)
                         {
+                            if(isset($_SESSION['business_id']))
+                            {
+                                $onclick = "openConfirmModal({
+                                    id: '$category->cat_id',
+                                    name: '$category->cat_name',
+                                    icon: '$category->cat_icon'
+                                });";
+                            }
+                            else 
+                            {
+                                $onclick = "location.href = 'create-business-profile.php';";
+                            }
                         ?>
-                            <div class="bcli">
+                            <div class="bcli" onclick="<?php echo $onclick; ?>">
                                 <div class="bcli-root">
                                     <img id="bcli-icon" width="50px" height="50px" src='<?php echo $category->cat_icon; ?>' alt='Icon'/>
                                     <p id="bcli-name"><?php echo $category->cat_name; ?></p>
@@ -195,5 +219,39 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function openConfirmModal(businessCategory)
+            {
+                let name = document.getElementById("modal-business-name");
+                let icon = document.getElementById("modal-business-icon");
+
+                name.innerText = businessCategory.name;
+                icon.src = businessCategory.icon;
+
+                let modal = document.getElementsByClassName("confirm-business-modal")[0];
+                modal.style.display = "block";
+
+                document.getElementById("modal-cancel-btn").addEventListener("click", () => {
+                    modal.style.display = "none";
+                });
+
+                document.getElementById("modal-confirm-btn").addEventListener("click", () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = () => {
+                        if(xhr.readyState = XMLHttpRequest.DONE)
+                        {
+                            if(xhr.status == 200)
+                            {
+                                console.log(xhr.responseText);
+                            }
+                        }
+                    }
+
+                    xhr.open("GET", "", true);
+                    xhr.send();
+                });
+            }
+        </script>
     </body>
 </html>
