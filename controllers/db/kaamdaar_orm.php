@@ -254,6 +254,31 @@
             return null;
         }
 
+        public function getAllRequests($uid)
+        {
+            $result_set = $this->from("request")->fetch(null, ["U_ID" => "$uid"]);
+            if($result_set && count($result_set))
+            {
+                $all_requests = [];
+                foreach($result_set as $result)
+                {
+                    $request = new Request(
+                        $result['REQUEST_ID'],
+                        $result['REQUEST_LOCATION'],
+                        $result['REQEST_LATLONG'],
+                        $result['REQUEST_TYPE'],
+                        $result['REQUEST_TYPE'],
+                        $result['REQUEST_STATUS'],
+                        $result['REQUEST_TIME'],
+                        $result['U_ID']
+                    );
+                    array_push($all_requests, $request);
+                }
+                return $all_requests;
+            }
+            return [];
+        }
+
         public function getAllBusinessInfo($bid)
         {
             $SQL = "SELECT b.business_id AS business_id, b.b_profile_id AS business_profile_id, cat.b_cat_name AS business_type, info.b_info_revenue AS business_revenue, info.b_info_rating AS business_rating, info.b_info_total AS business_total FROM business b INNER JOIN business_category as cat on cat.b_cat_id = b.business_type INNER JOIN business_info AS info ON b.business_id = info.business_id WHERE b.b_profile_id = '$bid';";
