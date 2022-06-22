@@ -10,8 +10,9 @@ class Request
     public $status;
     public $time;
     public $uid;
+    public $urgency;
 
-    public function __construct($id, $location, $latlon, $type, $status, $time, $uid)
+    public function __construct($id, $location, $latlon, $type, $status, $time, $urgency, $uid)
     {
         $this->id = $id;
         $this->location = $location;
@@ -19,6 +20,7 @@ class Request
         $this->type = $type;
         $this->status = $status;
         $this->time = $time;
+        $this->urgency = $urgency;
         $this->uid = $uid;
     }
 }
