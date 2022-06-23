@@ -189,11 +189,16 @@
                         </div>
                     </div>
 
-					<div class="business-cat-list">
+                    <div id="addb-req-complete-msg" class="addb-req-complete-msg">
+                        <p id="req-complete-msg" class="req-complete-msg">
+                        </p>
+                    </div>
+
+					<ul class="business-cat-list">
                         <?php 
                         foreach($categories as $category)
                         {
-                            if(isset($_SESSION['business_id']))
+                            if($business_profile)
                             {
                                 $onclick = "openConfirmModal({
                                     id: '$category->cat_id',
@@ -202,20 +207,18 @@
                                 });";
                             }
                             else 
-                            {
-                                $onclick = "location.href = 'create-business-profile.php';";
-                            }
+                                $onclick = "location.href = 'create-business-profile.php?route=add-business.php';";
                         ?>
-                            <div class="bcli" onclick="<?php echo $onclick; ?>">
+                            <li class="bcli" onclick="<?php echo $onclick; ?>">
                                 <div class="bcli-root">
                                     <img id="bcli-icon" width="50px" height="50px" src='<?php echo $category->cat_icon; ?>' alt='Icon'/>
                                     <p id="bcli-name"><?php echo $category->cat_name; ?></p>
                                 </div>
-                            </div>
+                            </li>
                         <?php
                         }
                         ?>
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -232,25 +235,46 @@
                 let modal = document.getElementsByClassName("confirm-business-modal")[0];
                 modal.style.display = "block";
 
-                document.getElementById("modal-cancel-btn").addEventListener("click", () => {
+                let cancelBtn = document.getElementById("modal-cancel-btn");
+                cancelBtn.addEventListener("click", function closeModal() {
                     modal.style.display = "none";
+                    cancelBtn.removeEventListener("click", closeModal);
                 });
 
-                document.getElementById("modal-confirm-btn").addEventListener("click", () => {
-                    let xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = () => {
-                        if(xhr.readyState = XMLHttpRequest.DONE)
-                        {
-                            if(xhr.status == 200)
-                            {
-                                console.log(xhr.responseText);
-                            }
-                        }
+                let confirmBtn = document.getElementById("modal-confirm-btn");
+                confirmBtn.addEventListener("click", function addBusinessListener() {
+                    addNewBusiness(businessCategory.id);
+                    confirmBtn.removeEventListener("click", addBusinessListener);
+                });   
+            }
+
+            function addNewBusiness(businessType)
+            {
+                let xhr = new XMLHttpRequest();
+                xhr.timeout = 5000; // request times out in 5 seconds
+                xhr.responseType = "text"; // normal text
+
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState = XMLHttpRequest.DONE)
+                    {
+                        let msg = document.getElementById("req-complete-msg");
+                        if(xhr.status == 200)
+                            msg.innerHTML = "Business added!";
+                        else if(xhr.status == 500)
+                            msg.innerHTML = "Couldn't add business!";
+
+                        let msgContainer = document.getElementById("addb-req-complete-msg");
+                        msgContainer.style.display = "block";
+
+                        setTimeout(() => {
+                            msgContainer.style.display = "none";
+                        }, 2000);
                     }
+                }
 
-                    xhr.open("GET", "", true);
-                    xhr.send();
-                });
+                xhr.open("GET", `./modal/add-newb.php?type=${businessType}`, true);
+                xhr.send();
+                return;
             }
         </script>
     </body>
