@@ -4,6 +4,11 @@
     require_once "../utils.php";
     require_once ROOT_DIR . "/controllers/db/kaamdaar_orm.php";
     require_once ROOT_DIR . "/models/user.php";
+
+    $route = "bprofile.php";
+
+    if(isset($_GET['route']))
+        $route = $_GET['route'];
     
     $error = [];
 
@@ -11,6 +16,7 @@
     (function()
     {
         global $error;
+        global $route;
 
         if(!isset($_POST['create-business']))
             return;
@@ -38,7 +44,7 @@
             $orm->close();
 
             $_SESSION['business_id'] = $business_id;
-            header("location:bprofile.php");
+            header("location:$route");
         }
     })();
 ?>
