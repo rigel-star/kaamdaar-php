@@ -4,6 +4,11 @@
     require_once "../utils.php";
     require_once ROOT_DIR . "/controllers/db/kaamdaar_orm.php";
     require_once ROOT_DIR . "/models/user.php";
+
+    $route = "bprofile.php";
+
+    if(isset($_GET['route']))
+        $route = $_GET['route'];
     
     $error = [];
 
@@ -11,6 +16,7 @@
     (function()
     {
         global $error;
+        global $route;
 
         if(!isset($_POST['create-business']))
             return;
@@ -33,12 +39,12 @@
         {
             $orm = new KaamdaarORM();
             $business_id = random_uniqid("b.", 11);
-            $SQL = "INSERT INTO business_profile(B_PROFILE_ID, B_PROFILE_NAME, B_PROFILE_IMAGE, U_ID) VALUES('" . $business_id . "', '" . $name . "', '', '" . $_SESSION['user_id'] . "');";
+            $SQL = "INSERT INTO business_profile(B_PROFILE_ID, B_PROFILE_NAME, B_PROFILE_IMAGE, U_ID) VALUES('$business_id', '$name', '', '" . $_SESSION['user_id'] . "');";
             $orm->connection->query($SQL);
             $orm->close();
 
             $_SESSION['business_id'] = $business_id;
-            header("location:bprofile.php");
+            header("location:$route");
         }
     })();
 ?>

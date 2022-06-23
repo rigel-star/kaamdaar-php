@@ -174,7 +174,7 @@
                         VALUES(
                             '$request->location',
                             '$request->latlon',
-                            $request->uid,
+                            '$request->uid',
                             $request->type,
                             $request->status,
                             '$request->time'
@@ -231,7 +231,7 @@
 
         public function removeUserByID($uid)
         {
-            $SQL = "CALL remove_user($uid);";
+            $SQL = "CALL remove_user('$uid');";
             $this->connection->query($SQL);
         }
 
