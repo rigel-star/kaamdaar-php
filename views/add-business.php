@@ -281,7 +281,7 @@
                     }
                 }
 
-                xhr.open("GET", `./modal/add-newb.php?type=${businessType}`, true);
+                xhr.open("GET", `./add-newb.php?type=${businessType}`, true);
                 xhr.send();
                 return;
             }
