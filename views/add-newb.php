@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-require_once "../../constants.php";
+require_once "../constants.php";
 require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
 
 $type = $_GET['type'];
