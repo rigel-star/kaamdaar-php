@@ -33,7 +33,7 @@
         {
             $orm = new KaamdaarORM();
             $business_id = random_uniqid("b.", 11);
-            $SQL = "INSERT INTO business_profile(B_PROFILE_ID, B_PROFILE_NAME, B_PROFILE_IMAGE, U_ID) VALUES('" . $business_id . "', '" . $name . "', '', '" . $_SESSION['user_id'] . "');";
+            $SQL = "INSERT INTO business_profile(B_PROFILE_ID, B_PROFILE_NAME, B_PROFILE_IMAGE, U_ID) VALUES('$business_id', '$name', '', '" . $_SESSION['user_id'] . "');";
             $orm->connection->query($SQL);
             $orm->close();
 
