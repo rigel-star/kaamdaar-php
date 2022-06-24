@@ -69,6 +69,21 @@ class RequestNotification extends Notification
         this.requestId = requestId;
         this.userId = userId;
     }
+
+    createHTML()
+    {
+        let notif = super.createHTML();
+        let actionBar = document.createElement("div");
+        actionBar.classList.add('notif-action-bar');
+
+        let offer = document.createElement('button');
+        offer.innerText = "Offer service";
+        offer.classList.add('notif-btn', "notif-offer-btn");
+
+        actionBar.appendChild(offer);
+        notif.appendChild(actionBar);
+        return notif;
+    }
 }
 
 class ResponseNotification extends Notification
