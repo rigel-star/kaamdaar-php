@@ -66,6 +66,7 @@ function showNotificationModal()
                     const notifType = notification.NOTIF_TYPE;
                     if(notifType === "REQUEST")
                     {
+                        notifModel.userId = notification.USER_ID;
                         let notif = new RequestNotification(
                             notifModel.icon,
                             notifModel.profile,
@@ -73,42 +74,31 @@ function showNotificationModal()
                             notifModel.description,
                             notifModel.time,
                             notifModel.requestId,
-                            "u.43jhdw834w2"
+                            notifModel.status,
+                            notifModel.userId
                         );
                         notifItem.appendChild(notif.createHTML());
                     }
                     else if(notifType === 'RESPONSE')
                     {
+                        notifModel.sender = notification.SENDER;
                         const responseType = notification.RESPONSE_TYPE;
-                        let notif;
+                        let notif = new ResponseNotification(
+                            notifModel.icon,
+                            notifModel.profile,
+                            notifModel.title,
+                            notifModel.description,
+                            notifModel.time,
+                            notifModel.requestId,
+                            "", // response type
+                            notifModel.status,
+                            notifModel.sender
+                        );
                         if(responseType === "user-response")
-                        {
-                            notif = new ResponseNotification(
-                                notifModel.icon,
-                                notifModel.profile,
-                                notifModel.title,
-                                notifModel.description,
-                                notifModel.time,
-                                notifModel.requestId,
-                                "user-response",
-                                "0",
-                                "jkjkjkjk"
-                            );
-                        }
+                            notif.responseType = "user-response";
                         else if(responseType === "business-response")
-                        {
-                            notif = new ResponseNotification(
-                                notifModel.icon,
-                                notifModel.profile,
-                                notifModel.title,
-                                notifModel.description,
-                                notifModel.time,
-                                notifModel.requestId,
-                                "business-response",
-                                "0",
-                                "jkjkjkjk"
-                            );
-                        }
+                            notif.responseType = "business-response";
+
                         notifItem.appendChild(notif.createHTML());
                     }
 

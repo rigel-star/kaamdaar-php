@@ -74,15 +74,25 @@ class RequestNotification extends Notification
     createHTML()
     {
         let notif = super.createHTML();
-        let actionBar = document.createElement("div");
-        actionBar.classList.add('notif-action-bar');
+        if(this.requestStatus == "0") // 0 means request is pending
+        {
+            let actionBar = document.createElement("div");
+            actionBar.classList.add('notif-action-bar');
 
-        let offer = document.createElement('button');
-        offer.innerText = "Offer service";
-        offer.classList.add('notif-btn', "notif-offer-btn");
+            let offer = document.createElement('button');
+            offer.innerText = "Offer service";
+            offer.classList.add('notif-btn', "notif-offer-btn");
 
-        actionBar.appendChild(offer);
-        notif.appendChild(actionBar);
+            offer.addEventListener("click", () => {
+                console.log(this.userId);
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", `../../../kaamdaar-php/views/offer-service.php?req-id=${this.requestId}&rec-id=${this.userId}`, true);
+                xhr.send();
+            });
+
+            actionBar.appendChild(offer);
+            notif.appendChild(actionBar);
+        }
         return notif;
     }
 }
@@ -126,6 +136,19 @@ class ResponseNotification extends Notification
             {
                 actionBar.appendChild(reject);
                 actionBar.appendChild(accept);
+
+                let url = "";
+                accept.addEventListener("click", () => {
+                    url = `../../../kaamdaar-php/views/offer-response.php?rec-id=${this.senderId}&req-id=${this.requestId}&response-status=0`;
+                    console.log(url);
+                });
+                reject.addEventListener("click", () => {
+                    url = `../../../kaamdaar-php/views/offer-response.php?rec-id=${this.senderId}&req-id=${this.requestId}&response-status=1`
+                });
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", url, true);
+                xhr.send();
             }
         }
 
@@ -133,3 +156,22 @@ class ResponseNotification extends Notification
         return notif;
     }
 }
+
+/*
+offer.addEventListener("click", () => {
+                    $.ajax({
+                        url: `./offer-service.php?req-id=${data.requestId}&rec-id=${data.userId}`,
+                        success: () => {
+                            console.log("OK");
+                        },
+                        error: () => {
+                            console.log("bad");
+                        }
+                    });
+                });
+
+                function acceptRejectOffer(data, action)
+            {
+                
+            }
+*/
