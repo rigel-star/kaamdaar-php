@@ -1,12 +1,13 @@
 class Notification 
 {
-    constructor(icon, profile, title, description, date)
+    constructor(icon, profile, title, description, date, requestId)
     {
         this.icon = icon;
         this.profile = profile;
         this.title = title;
         this.description = description;
         this.date = date;
+        this.requestId = requestId;
     }
 
     createHTML()
@@ -65,8 +66,7 @@ class RequestNotification extends Notification
 {
     constructor(icon, profile, title, description, date, requestId, userId)
     {
-        super(icon, profile, title, description, date);
-        this.requestId = requestId;
+        super(icon, profile, title, description, date, requestId);
         this.userId = userId;
     }
 
@@ -88,9 +88,9 @@ class RequestNotification extends Notification
 
 class ResponseNotification extends Notification
 {
-    constructor(icon, profile, title, description, date, type, status, sender)
+    constructor(icon, profile, title, description, date, requestId, type, status, sender)
     {
-        super(icon, profile, title, description, date);
+        super(icon, profile, title, description, date, requestId);
         this.responseType = type;
         this.responseStatus = status;
         this.senderId = sender;
