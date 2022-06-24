@@ -1,7 +1,7 @@
 <?php
 	session_start();
 
-	$SESSION_COOKIE_NAMES = ['user_phone', 'user_pass', 'user_id'];
+	$SESSION_COOKIE_NAMES = ['user_phone', 'user_pass', 'user_id', 'business_id', 'business_name'];
 
 	foreach ($SESSION_COOKIE_NAMES as $name) {
 		if (isset($_COOKIE[$name])) 
