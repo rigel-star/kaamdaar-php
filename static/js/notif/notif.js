@@ -95,4 +95,40 @@ class ResponseNotification extends Notification
         this.responseStatus = status;
         this.senderId = sender;
     }
+
+    createHTML()
+    {
+        let notif = super.createHTML();
+        let actionBar = document.createElement("div");
+        actionBar.classList.add('notif-action-bar');
+
+        if(this.responseType === "business-response")
+        {
+            let viewDetails = document.createElement('button');
+            viewDetails.innerText = "View details";
+            viewDetails.classList.add('notif-btn', 'notif-view-details-btn');
+
+            if(this.responseStatus == "0") // if response is interactable
+                actionBar.appendChild(viewDetails);
+        }
+        else if(this.responseType === "user-response")
+        {
+            let accept = document.createElement("button");
+            accept.innerText = "Accept";
+            accept.classList.add('notif-btn', 'notif-accept-btn');
+
+            let reject = document.createElement("button");
+            reject.innerText = "Reject";
+            reject.classList.add('notif-btn', 'notif-reject-btn');
+
+            if(this.responseStatus == "0") // if response is interactable
+            {
+                actionBar.appendChild(reject);
+                actionBar.appendChild(accept);
+            }
+        }
+
+        notif.appendChild(actionBar);
+        return notif;
+    }
 }
