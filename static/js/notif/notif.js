@@ -64,10 +64,11 @@ class Notification
 
 class RequestNotification extends Notification
 {
-    constructor(icon, profile, title, description, date, requestId, userId)
+    constructor(icon, profile, title, description, date, requestId, requestStatus, userId)
     {
         super(icon, profile, title, description, date, requestId);
         this.userId = userId;
+        this.requestStatus = requestStatus;
     }
 
     createHTML()
