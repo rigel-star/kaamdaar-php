@@ -1,3 +1,7 @@
+<?php 
+$type = $_GET['reqtype'];
+?>
+
 <style>
     .modal-content {
         position: fixed;
@@ -172,7 +176,10 @@
             }
         };
 
-        xhttp.open("GET", "./modal/lp/insert-req.php?type=10&location=Ktm&lat=45&lon=65", true);
+        const lng = longlat.lng;
+        const lat = longlat.lat;
+        const url = `./insert-request.php?type=<?php echo $type; ?>&loc=${document.querySelector('.req-loc p').innerText}&lat=${lat}&lng=${lng}`;
+        xhttp.open("GET", url, true);
         xhttp.send();
     }
 </script>
