@@ -273,7 +273,7 @@
 
         public function getAllBusinessInfo($bid)
         {
-            $SQL = "SELECT b.business_id AS business_id, b.b_profile_id AS business_profile_id, cat.b_cat_name AS business_type, info.b_info_revenue AS business_revenue, info.b_info_rating AS business_rating, info.b_info_total AS business_total FROM business b INNER JOIN business_category as cat on cat.b_cat_id = b.business_type INNER JOIN business_info AS info ON b.business_id = info.business_id WHERE b.b_profile_id = '$bid';";
+            $SQL = "SELECT b.business_id AS business_id, b.b_profile_id AS business_profile_id, cat.br_cat_name AS business_type, info.b_info_revenue AS business_revenue, info.b_info_rating AS business_rating, info.b_info_total AS business_total FROM business b INNER JOIN br_category as cat on cat.br_cat_id = b.business_type INNER JOIN business_info AS info ON b.business_id = info.business_id WHERE b.b_profile_id = '$bid';";
             $result_set = new ResultSet($this->connection->query($SQL));
 
             if(!count($result_set)) return [];
