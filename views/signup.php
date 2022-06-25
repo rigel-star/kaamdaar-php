@@ -21,7 +21,7 @@
 		if($session_id && $vpsi && ($session_id === $vpsi))
 		{
 			$new_user = new User(
-				0, 
+				random_uniqid("u."), // utils.php
 				$_SESSION['fname'], 
 				$_SESSION['lname'], 
 				$_SESSION['phone'], 
@@ -39,7 +39,7 @@
 			$orm->close();
 
 			$_SESSION['user_phone'] = $_SESSION['phone'];
-			$_SESSION['user_id'] = $id;
+			$_SESSION['user_id'] = $new_user->id;
 
 			//dummy image
 			$_SESSION['user_image'] = 'https://jenmulligandesign.com/wp-content/uploads/2017/04/unsplash-free-stock-photos-download.jpg';

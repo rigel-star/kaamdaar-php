@@ -3,7 +3,14 @@ namespace Model;
 
 class BusinessProfile
 {
-    public function __construct($bid, $name, $bimage, $bloc, $blatlong, $uid)
+    public string $b_profile_id;
+    public string $b_profile_name;
+    public string $b_profile_image;
+    public string $b_profile_location;
+    public string $b_profile_latlong;
+    public string $u_id;
+
+    public function __construct(string $bid, string $name, string $bimage, string $bloc, string $blatlong, string $uid)
     {
         $this->b_profile_id = $bid;
         $this->b_profile_name = $name;

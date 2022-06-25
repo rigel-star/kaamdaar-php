@@ -11,6 +11,7 @@
     use Model\{BusinessCategory};
 
 	$orm = new KaamdaarORM();
+    $business_profile = $orm->getBusinessProfile($_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html>
@@ -177,23 +178,104 @@
                     <?php 
 						$categories = $orm->getBusinessCategories();
 					?>
-					<div class="business-cat-list">
+                    <div class="confirm-business-modal" style="display: none;">
+                        <div class="cbm-content">
+                            <p id="modal-business-name"></p>
+                            <img id="modal-business-icon" src="" alt="">
+                            <div class="confirm-modal-btns rfloat">
+                                <button id="modal-cancel-btn">Cancel</button>
+                                <button id="modal-confirm-btn">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="addb-req-complete-msg" class="addb-req-complete-msg">
+                        <p id="req-complete-msg" class="req-complete-msg">
+                        </p>
+                    </div>
+
+					<ul class="business-cat-list">
                         <?php 
                         foreach($categories as $category)
                         {
+                            if($business_profile)
+                            {
+                                $onclick = "openConfirmModal({
+                                    id: '$category->cat_id',
+                                    name: '$category->cat_name',
+                                    icon: '$category->cat_icon'
+                                });";
+                            }
+                            else 
+                                $onclick = "location.href = 'create-business-profile.php?route=add-business.php';";
                         ?>
-                            <div class="bcli">
+                            <li class="bcli" onclick="<?php echo $onclick; ?>">
                                 <div class="bcli-root">
                                     <img id="bcli-icon" width="50px" height="50px" src='<?php echo $category->cat_icon; ?>' alt='Icon'/>
                                     <p id="bcli-name"><?php echo $category->cat_name; ?></p>
                                 </div>
-                            </div>
+                            </li>
                         <?php
                         }
                         ?>
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
+
+        <script>
+            function openConfirmModal(businessCategory)
+            {
+                let name = document.getElementById("modal-business-name");
+                let icon = document.getElementById("modal-business-icon");
+
+                name.innerText = businessCategory.name;
+                icon.src = businessCategory.icon;
+
+                let modal = document.getElementsByClassName("confirm-business-modal")[0];
+                modal.style.display = "block";
+
+                let cancelBtn = document.getElementById("modal-cancel-btn");
+                cancelBtn.addEventListener("click", function closeModal() {
+                    modal.style.display = "none";
+                    cancelBtn.removeEventListener("click", closeModal);
+                });
+
+                let confirmBtn = document.getElementById("modal-confirm-btn");
+                confirmBtn.addEventListener("click", function addBusinessListener() {
+                    addNewBusiness(businessCategory.id);
+                    confirmBtn.removeEventListener("click", addBusinessListener);
+                });   
+            }
+
+            function addNewBusiness(businessType)
+            {
+                let xhr = new XMLHttpRequest();
+                xhr.timeout = 5000; // request times out in 5 seconds
+                xhr.responseType = "text"; // normal text
+
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState = XMLHttpRequest.DONE)
+                    {
+                        let msg = document.getElementById("req-complete-msg");
+                        if(xhr.status == 200)
+                            msg.innerHTML = "Business added!";
+                        else if(xhr.status == 500)
+                            msg.innerHTML = "Couldn't add business!";
+
+                        let msgContainer = document.getElementById("addb-req-complete-msg");
+                        msgContainer.style.display = "block";
+
+                        setTimeout(() => {
+                            msgContainer.style.display = "none";
+                        }, 2000);
+                    }
+                }
+
+                xhr.open("GET", `./add-newb.php?type=${businessType}`, true);
+                xhr.send();
+                return;
+            }
+        </script>
     </body>
 </html>
