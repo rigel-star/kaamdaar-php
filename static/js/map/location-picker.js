@@ -3,6 +3,16 @@ mapboxgl.accessToken = MAPBOX_TOKEN;
 
 var longlat;
 
+var showModal;
+(function initMapModal() {
+	showModal = () => document.getElementById('modal').style.display = "block";
+
+	window.onclick = (e) => {
+		if(window.event.target == modal)
+			modal.style.display = "none";
+	}
+})();
+
 function initMap(start)
 {
 	const map = new mapboxgl.Map({
@@ -31,12 +41,6 @@ function initMap(start)
 	var markerElem = document.getElementsByClassName(markerDetails[0])[0];
 	var pin = markerDetails[1];
 
-	let currentLocation = document.getElementsByClassName("pin-to-current")[0];
-	currentLocation.addEventListener("click", (e) => {
-		mapFlyTo(map, start);
-		pin.setLngLat(start);
-	});
-
 	map.on("click", (e) => {
 		let lonLat = e.lngLat;
 		pin.setLngLat(lonLat);
@@ -56,6 +60,7 @@ function initMap(start)
 
 	pin.on("dragend", (e) => {
 		mapFlyTo(map, pin.getLngLat());
+		showModal();
 	});
 }
 
