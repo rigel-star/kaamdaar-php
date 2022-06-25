@@ -5,6 +5,11 @@
     require_once ROOT_DIR . "/controllers/db/kaamdaar_orm.php";
     require_once ROOT_DIR . "/models/user.php";
 
+    $orm = new KaamdaarORM();
+    $bp = $orm->getBusinessProfile($_SESSION["user_id"]);
+    if($bp)
+        header("location:bprofile.php");
+
     $route = "bprofile.php";
 
     if(isset($_GET['route']))
@@ -74,7 +79,7 @@
                 <p>
                     Create business profile to expand your businesses
                 </p>
-                <form class="bc-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form class="bc-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                     <div class="bc-form-1">
                         <div class="input-section profile-name-section">
                             <label for="bname">Business name <span class="input-op">*</span></label>

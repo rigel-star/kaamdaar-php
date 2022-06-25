@@ -53,8 +53,53 @@
 
 #modal-business-icon
 {
-    width: 100px;
-    height: 100px;
+    position: absolute;
+    top:20%;
+    left:30%;
+    width: 200px;
+    height: 200px;
+}
+#modal-business-name{
+    text-align:center;
+    padding:5px;
+    height:35px;
+    font-size: 20px;
+    background-color: rgb(255, 185,70);
+}
+
+#modal-cancel-btn{
+    position:absolute;
+    width:150px;
+    border-radius: 10px;
+    border: 1px solid whitesmoke;
+    height:40px;
+    top:80%;
+    left:15%;
+    color:White;
+    margin:10px;
+    font-size: 20px;
+    background-color: red;
+}
+#modal-confirm-btn{
+    position:absolute;
+    width:150px;
+    border-radius: 10px;
+    border: 1px solid whitesmoke;
+    height:40px;
+    top:80%;
+    left:55%;
+    color:White;
+    margin:10px;
+    font-size: 20px;
+    background-color: rgb(255, 185,70);
+}
+
+#modal-confirm-btn:hover , #modal-cancel-btn:hover{
+    opacity:0.8;
+}
+
+#modal-confirm-btn:hover {
+    color:greenyellow;
 }
 
 .addb-req-complete-msg
