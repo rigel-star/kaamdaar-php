@@ -28,6 +28,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="../static/css/base/layout.css">
 		<link rel="stylesheet" href="../static/css/profile.css">
+        <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,11 +38,20 @@
 		<!-- <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
     	<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
 		<script src="../static/js/map/profile-map.js" defer></script> -->
-		
-		<title>Profile</title>
+        <script src="../static/js/modal.js"></script>
+        <script src="../static/js/notif/notif.js"></script>
+        
+        <title>Profile</title>
 	</head>
 	<body>
 		<div class="container">
+
+            <div id="notif-modal" class="modal notif-modal">
+                <?php 
+                    require_once("./modal/notif-modal.php");
+                ?>
+            </div>
+
             <div class="container-head">
                 <div class="container-head-pt-1">
                     <h1>Kaamdaar</h1>
@@ -49,10 +59,8 @@
                 </div>
                 <div class="container-head-pt-2">
                     <div class="head-icons">
-                        <div class="head-icon-section head-notif-section">
-                            <span class="notif-count">
-                                3
-                            </span>
+                        <div class="head-icon-section head-notif-section" onclick="showNotificationModal(); //showNotificationModal function is inside notif-modal.js">
+                            <span id="notif-count" class="notif-count"></span>
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
                         <div class="head-icon-section head-profile-section">
@@ -249,22 +257,20 @@
 								</ul>
 							</div>
 
-							<?php $user_loc = get_user_location(); ?>
 							<div class="profile-map pdiv">
 								<h4>You on map</h4>
 								<p>Drag and drop to change your location</p>
 								<div class="map" id="map"></div>
 							</div>
-
-							<script type="text/javascript">
-								let latLong = <?php echo $user_loc['lat'] . " " . $user_loc['long']; ?>
-								let markerArray = [[<?php echo $user_loc['long']; ?>, <?php echo $user_loc['lat']; ?>]];
-								console.log("Hello");
-							</script>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+        <script src="../static/js/notif/notif-modal.js"></script>
+        <script defer>
+            updateNotifCount();
+        </script>
 	</body>
 </html>
