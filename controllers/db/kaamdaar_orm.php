@@ -256,7 +256,7 @@
 
         public function getAllRequests($uid)
         {
-            $SQL = "SELECT * FROM request r INNER JOIN br_category brc ON r.REQUEST_TYPE = brc.BR_CAT_ID ORDER BY r.REQUEST_TIME DESC;";
+            $SQL = "SELECT * FROM request r INNER JOIN br_category brc ON r.REQUEST_TYPE = brc.BR_CAT_ID WHERE r.U_ID = '$uid' ORDER BY r.REQUEST_TIME DESC;";
             $result_set = new ResultSet($this->connection->query($SQL));
 
             if($result_set && count($result_set))
