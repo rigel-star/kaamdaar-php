@@ -1,11 +1,14 @@
 const MAPBOX_TOKEN = "pk.eyJ1Ijoia2FhbWRhYXIiLCJhIjoiY2wwNWhwNjl5MDhjMjNjbnoxajMxOXExMCJ9.KDuSWfD7invXCiRTg_WMfg";
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
-var longlat;
-
 var showModal;
+var reqLocation = document.querySelector(".req-loc p");
+
 (function initMapModal() {
-	showModal = () => document.getElementById('modal').style.display = "block";
+	showModal = () => 
+	{
+		document.getElementById('modal').style.display = "block";
+	}
 
 	window.onclick = (e) => {
 		if(window.event.target == modal)
@@ -21,6 +24,8 @@ function initMap(start)
 		center: start,
 		zoom: 15
 	});
+
+	longlat = map.getCenter();
 
 	map.addControl(new mapboxgl.NavigationControl({
 			visualizePitch: true
@@ -42,24 +47,24 @@ function initMap(start)
 	var pin = markerDetails[1];
 
 	map.on("click", (e) => {
-		let lonLat = e.lngLat;
-		pin.setLngLat(lonLat);
-		longlat = lonLat;
+		longlat = e.lngLat;
+		pin.setLngLat(longlat);
 		mapFlyTo(map, pin.getLngLat());
 	});
 
 	map.on("drag", (e) => {
-		let lonLat = map.getCenter();
-		pin.setLngLat(lonLat);
+		longlat = map.getCenter();
+		pin.setLngLat(longlat);
 	});
 
 	map.on("dragend", (e) => {
-		currentLocation.style.animation = "ripple 1s ease-out";
 		longlat = map.getCenter();
 	});
 
 	pin.on("dragend", (e) => {
-		mapFlyTo(map, pin.getLngLat());
+		longlat = pin.getLngLat();
+		mapFlyTo(map, longlat);
+		reqLocation.innerText = reverseGeocode();
 		showModal();
 	});
 }
@@ -90,7 +95,7 @@ function reverseGeocode()
 		if(xhr.readyState == XMLHttpRequest.DONE)
 		{
 			var data = JSON.parse(xhr.responseText);
-			location = data.features[0].place_name;
+			location = data.features[0]?.place_name;
 		}
 	}
 
