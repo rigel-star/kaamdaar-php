@@ -86,7 +86,7 @@ class RequestNotification extends Notification
             offer.addEventListener("click", () => {
                 console.log(this.userId);
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", `../../../kaamdaar-php/views/offer-service.php?req-id=${this.requestId}&rec-id=${this.userId}`, true);
+                xhr.open("GET", `./offer-service.php?req-id=${this.requestId}&rec-id=${this.userId}`, true);
                 xhr.send();
             });
 
@@ -137,18 +137,21 @@ class ResponseNotification extends Notification
                 actionBar.appendChild(reject);
                 actionBar.appendChild(accept);
 
-                let url = "";
-                accept.addEventListener("click", () => {
-                    url = `../../../kaamdaar-php/views/offer-response.php?rec-id=${this.senderId}&req-id=${this.requestId}&response-status=0`;
-                    console.log(url);
-                });
-                reject.addEventListener("click", () => {
-                    url = `../../../kaamdaar-php/views/offer-response.php?rec-id=${this.senderId}&req-id=${this.requestId}&response-status=1`
-                });
+                const offerResponse = (response) => {
+                    let responseStatusId;
+                    if(response === "reject")
+                        responseStatusId = 1;
+                    else if(response === "accept")
+                        responseStatusId = 0;
 
-                let xhr = new XMLHttpRequest();
-                xhr.open("GET", url, true);
-                xhr.send();
+                    let url = `./offer-response.php?rec-id=${this.senderId}&req-id=${this.requestId}&response-status=${responseStatusId}`;
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true);
+                    xhr.send();
+                }
+
+                accept.addEventListener("click", () => offerResponse("accept"));
+                reject.addEventListener("click", () => offerResponse("reject"));
             }
         }
 
