@@ -209,6 +209,17 @@
                         </div>
                     </div>
 
+                    <div class="business-options" style="display: none;">
+                        <ul class="bo-list" style="list-style-type: none;">
+                            <li id="bo-delete" class="bo-item bo-delete">
+                                <i class="fa fa-eye-slash" style="font-size:24px"></i> Suspend business
+                            </li>
+                            <li id="bo-delete" class="bo-item bo-delete">
+                                <i class="fa fa-trash" style="font-size:24px"></i> Close business
+                            </li>
+                        </ul>
+                    </div>
+
                     <script>
                         var businessTypes = [];
                         var totalServed = [];
@@ -240,7 +251,7 @@
                                     <span>
                                         <strong><?php echo ucwords($type);?></strong>
                                     </span>
-                                    <i class="fa fa-ellipsis-v td-icon" style="font-size:24px"></i>
+                                    <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" id="td-icon" onclick="showBusinessOptions('<?php echo $bus->business_id; ?>');"></i>
                                 </div>
                                 <div class="bli-stat">
                                     <div class="bli-st-i bli-total">
@@ -299,6 +310,23 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
         <script src="business-chart.js"></script>
         <script>
+            function showBusinessOptions(bid)
+            {
+                const X = `${(window.event.pageX - 200)}px`;
+                const Y = `${(window.event.pageY)}px`;
+                //console.log(window.event);
+                let boOptions = document.getElementsByClassName("business-options")[0];
+                boOptions.style.position = "absolute";
+                boOptions.style.left = X;
+                boOptions.style.top = Y;
+                boOptions.style.display = "block";
+
+                // window.onclick = (event) => {
+                //     if(event.target != boOptions)
+                //         boOptions.style.display = "none";
+                // };
+            }
+
             let label = "Total Served";
             let data = totalServed;
             const context = document.getElementById("business-analytics-chart").getContext("2d");
