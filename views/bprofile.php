@@ -211,8 +211,7 @@
 
                     <div class="close-business-modal">
                         <div class="close-business-modal--content">
-                            <p class="close-business-modal--msg">
-                                Are you sure you want to close this business? You will lose every details associated with this business and no longer receive notifications for this business. 
+                            <p id="close-business-modal--msg" class="close-business-modal--msg">
                             </p>
                             <div class="close-business-modal--acts rfloat">
                                 <button class="close-business-modal--button close-business-modal--cancel" onclick="document.getElementsByClassName('close-business-modal')[0].style.display = 'none';">CANCEL</button>
@@ -263,7 +262,7 @@
                                     <img src="<?php echo $business_icons[$type];?>" alt="Icon">
                                     <script>businessTypes.push("<?php echo $type; ?>");</script>
                                     <span>
-                                        <strong><?php echo ucwords($type);?></strong>
+                                        <strong><?php echo ucwords($type);?></strong> <span class="bli-status"><?php echo ($bus->business_status == "1" ? "<span>(Suspended)</span>" : ""); ?></span>
                                     </span>
                                     <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" id="td-icon" onclick="showBusinessOptions('<?php echo $bus->business_id; ?>');"></i>
                                 </div>
@@ -338,26 +337,53 @@
                 boOptions.style.top = Y;
 
                 let closeOption = document.getElementById("bo-close");
-                closeOption.addEventListener("click", () => {
-                    let closeModal = document.getElementsByClassName("close-business-modal")[0];
-                    closeModal.style.display = "block";
+                closeOption.addEventListener("click", () => openBusinessActionDialog("close", bid));
 
-                    let closeButton = document.getElementsByClassName("close-business-modal--ok")[0];
-                    closeButton.addEventListener("click", function closeBusiness() {
-                        closeButton.removeEventListener("click", closeBusiness);
-                        closeModal.style.display = "none";
-                    })
-
-                    window.onclick = (event) => {
-                        if(event.target == closeModal)
-                            closeModal.style.display = "none";
-                    }
-                });
+                let suspendOption = document.getElementById("bo-suspend");
+                suspendOption.addEventListener("click", () => openBusinessActionDialog("suspend", bid));
 
                 window.onclick = (event) => {
                     if(event.target == boOptionsContainer)
                         boOptionsContainer.style.display = "none";
                 };
+            }
+
+            function openBusinessActionDialog(action, bid)
+            {
+                let closeModal = document.getElementsByClassName("close-business-modal")[0];
+                let message = document.getElementById("close-business-modal--msg");
+                closeModal.style.display = "block";
+
+                let okButton = document.getElementsByClassName("close-business-modal--ok")[0];
+                let newStatus;
+                if(action === "suspend")
+                {
+                    message.innerText = "Are you sure you want to suspend this business? You can continue this business later.";
+                    okButton.innerText = "SUSPEND";
+                    newStatus = 1;
+                }
+                else if(action === "close")
+                {
+                    message.innerText = "Are you sure you want to close this business? You will lose every details associated with this business and no longer receive notifications for this business.";
+                    okButton.innerText = "CLOSE";
+                    newStatus = 2;
+                }
+
+                okButton.addEventListener("click", function closeBusiness() {
+                    let xhr = new XMLHttpRequest();
+                    const url = `./business/update-business-status.php?bid=${bid}&status=${newStatus}`;
+                    console.log(url);
+                    xhr.open("GET", url, true);
+                    xhr.send();
+
+                    okButton.removeEventListener("click", closeBusiness);
+                    window.location.reload();
+                })
+
+                window.onclick = (event) => {
+                    if(event.target == closeModal)
+                        closeModal.style.display = "none";
+                }
             }
 
             let label = "Total Served";
