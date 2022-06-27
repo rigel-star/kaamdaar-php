@@ -10,9 +10,76 @@
     transform: translateX(-50%) translateY(-50%);
 }
 
-.business-options
+.rfloat
+{
+    float: right;
+}
+
+.close-business-modal
 {
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 1001;
+}
+
+.close-business-modal--content
+{
+    background-color: #FFFFFF;
+    padding: 20px;
+    height: auto;
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.close-business-modal--msg
+{
+    padding: 5px;
+    border-bottom: 0.02em solid #939393;
+}
+
+.close-business-modal--acts
+{
+    margin-top: 10px;
+}
+
+.close-business-modal--button
+{
+    background-color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+}
+
+.close-business-modal--cancel
+{
+    margin-right: 1em;
+}
+
+.close-business-modal--ok
+{
+    color: rgb(255, 185, 70);
+}
+
+.business-options-container
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.business-options
+{
     background-color: #FFFFFF;
     width: 200px;
     min-height: 40px;
@@ -26,6 +93,7 @@
     border-bottom: 0.02em solid #939393;
     vertical-align: middle;
     line-height: 40px;
+    cursor: pointer;
 }
 
 .bo-item:last-child

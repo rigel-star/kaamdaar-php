@@ -209,15 +209,29 @@
                         </div>
                     </div>
 
-                    <div class="business-options" style="display: none;">
-                        <ul class="bo-list" style="list-style-type: none;">
-                            <li id="bo-delete" class="bo-item bo-delete">
-                                <i class="fa fa-eye-slash" style="font-size:24px"></i> Suspend business
-                            </li>
-                            <li id="bo-delete" class="bo-item bo-delete">
-                                <i class="fa fa-trash" style="font-size:24px"></i> Close business
-                            </li>
-                        </ul>
+                    <div class="close-business-modal">
+                        <div class="close-business-modal--content">
+                            <p class="close-business-modal--msg">
+                                Are you sure you want to close this business? You will lose every details associated with this business and no longer receive notifications for this business. 
+                            </p>
+                            <div class="close-business-modal--acts rfloat">
+                                <button class="close-business-modal--button close-business-modal--cancel" onclick="document.getElementsByClassName('close-business-modal')[0].style.display = 'none';">CANCEL</button>
+                                <button class="close-business-modal--button close-business-modal--ok">CLOSE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="business-options-container" class="business-options-container" style="display: none;">
+                        <div id="business-options" class="business-options">
+                            <ul class="bo-list" style="list-style-type: none;">
+                                <li id="bo-suspend" class="bo-item bo-suspend">
+                                    <i class="fa fa-eye-slash" style="font-size:24px"></i> Suspend business
+                                </li>
+                                <li id="bo-close" class="bo-item bo-close">
+                                    <i class="fa fa-trash" style="font-size:24px"></i> Close business
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                     <script>
@@ -312,19 +326,38 @@
         <script>
             function showBusinessOptions(bid)
             {
+                let boOptionsContainer = document.getElementById("business-options-container");
+                boOptionsContainer.style.display = "block";
+
                 const X = `${(window.event.pageX - 200)}px`;
                 const Y = `${(window.event.pageY)}px`;
-                //console.log(window.event);
-                let boOptions = document.getElementsByClassName("business-options")[0];
+                
+                let boOptions = document.getElementById("business-options");
                 boOptions.style.position = "absolute";
                 boOptions.style.left = X;
                 boOptions.style.top = Y;
-                boOptions.style.display = "block";
 
-                // window.onclick = (event) => {
-                //     if(event.target != boOptions)
-                //         boOptions.style.display = "none";
-                // };
+                let closeOption = document.getElementById("bo-close");
+                closeOption.addEventListener("click", () => {
+                    let closeModal = document.getElementsByClassName("close-business-modal")[0];
+                    closeModal.style.display = "block";
+
+                    let closeButton = document.getElementsByClassName("close-business-modal--ok")[0];
+                    closeButton.addEventListener("click", function closeBusiness() {
+                        closeButton.removeEventListener("click", closeBusiness);
+                        closeModal.style.display = "none";
+                    })
+
+                    window.onclick = (event) => {
+                        if(event.target == closeModal)
+                            closeModal.style.display = "none";
+                    }
+                });
+
+                window.onclick = (event) => {
+                    if(event.target == boOptionsContainer)
+                        boOptionsContainer.style.display = "none";
+                };
             }
 
             let label = "Total Served";
