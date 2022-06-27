@@ -151,6 +151,21 @@ $business_id = $_SESSION['business_id'];
     }
 })();
 
-$notif_count = count($notifications);
-echo json_encode(array_slice($notifications, 0, $count > $notif_count ? $notif_count : $count));
+/* Sort notifications*/
+function sort_notifs_by_date($notifications)
+{
+    usort($notifications, function($notif1, $notif2) // function timestamp_compare
+    {
+        $timestamp1 = strtotime($notif1['TIME']);
+        $timestamp2 = strtotime($notif2['TIME']);
+        return $timestamp2 - $timestamp1;
+    });
+
+    return $notifications;
+}
+
+$sorted = sort_notifs_by_date($notifications);
+$notif_count = count($sorted);
+
+echo json_encode(array_slice($sorted, 0, $count > $notif_count ? $notif_count : $count));
 ?>
