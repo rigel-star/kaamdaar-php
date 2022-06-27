@@ -214,7 +214,9 @@
 								<h4>Insights</h4>
 								<div>
                                     <div class="profile-stat-item profile-stat-1">
-                                        <?php $business_count = $korm->rawQuery("select count(*) as bcount from business where business_id = '$business_id';")->current(); ?>
+                                        <?php 
+                                        $sql = "select count(*) as bcount from business where b_profile_id = '$business_id' and business_status != 2;";
+                                        $business_count = $korm->rawQuery($sql)->current(); ?>
                                         <h3><?php echo $business_id ? $business_count['bcount'] : "0"; ?></h3>
                                         <p>business(es)</p>
                                     </div>
