@@ -181,6 +181,27 @@
                     </div>
                 </div>
                 <div class="page-content">
+                    <div class="delete-request-modal" style="display: none">
+                        <div class="delete-request-modal--content">
+                            <p id="delete-request-modal--msg" class="delete-request-modal--msg">
+                            </p>
+                            <div class="delete-request-modal--acts rfloat">
+                                <button class="delete-request-modal--button delete-request-modal--cancel" onclick="document.getElementsByClassName('delete-request-modal')[0].style.display = 'none';">CANCEL</button>
+                                <button class="delete-request-modal--button delete-request-modal--ok">CLOSE</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="request-options-container" class="request-options-container" style="display: none;">
+                        <div id="request-options" class="request-options">
+                            <ul class="ro-list" style="list-style-type: none;">
+                                <li id="ro-delete" class="ro-item ro-delete">
+                                    <i class="fa fa-trash" style="font-size:24px"></i> Delete request
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <?php 
                         $all_requests = $orm->getAllRequests($_SESSION['user_id']);
                     ?>
@@ -208,7 +229,7 @@
                                         </span>
                                         <div class="act-btns">
                                             <button class="view-on-map-btn">View on map <i class="fa fa-map" style="font-size:20px;"></i></button>
-                                            <i class="fa fa-ellipsis-v td-icon" style="font-size:24px"></i>
+                                            <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" onclick="showRequestOptions(<?php echo $request['REQUEST_ID']; ?>);"></i>
                                         </div>
                                     </div>
                                     <div class="rli-body">
@@ -226,5 +247,57 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function showRequestOptions(rid)
+            {
+                let reqOptionsContainer = document.getElementById("request-options-container");
+                reqOptionsContainer.style.display = "block";
+
+                const X = `${(window.event.pageX - 200)}px`;
+                const Y = `${(window.event.pageY)}px`;
+                
+                let reqOptions = document.getElementById("request-options");
+                reqOptions.style.position = "absolute";
+                reqOptions.style.left = X;
+                reqOptions.style.top = Y;
+
+                let closeOption = document.getElementById("ro-delete");
+                closeOption.addEventListener("click", () => openRequestDeleteDialog(rid));
+
+                window.onclick = (event) => {
+                    if(event.target == reqOptionsContainer)
+                        reqOptionsContainer.style.display = "none";
+                };
+            }
+
+            function openRequestDeleteDialog(rid)
+            {
+                let closeModal = document.getElementsByClassName("delete-request-modal")[0];
+                let message = document.getElementById("delete-request-modal--msg");
+                closeModal.style.display = "block";
+
+                let okButton = document.getElementsByClassName("delete-request-modal--ok")[0];
+                let newStatus;
+                message.innerText = "Are you sure you want to delete this request?";
+                okButton.innerText = "DELETE";
+                newStatus = 2;
+
+                okButton.addEventListener("click", function deleteRequest() {
+                    let xhr = new XMLHttpRequest();
+                    const url = `./request/update-request-status.php?rid=${rid}`;
+                    xhr.open("GET", url, true);
+                    xhr.send();
+
+                    okButton.removeEventListener("click", deleteRequest);
+                    window.location.reload();
+                })
+
+                window.onclick = (event) => {
+                    if(event.target == closeModal)
+                        closeModal.style.display = "none";
+                }
+            }
+        </script>
     </body>
 </html>
