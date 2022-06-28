@@ -15,6 +15,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
+        <script src="../static/js/modal.js"></script>
+        <script src="../static/js/notif/notif.js"></script>
+
         <title>Settings</title>
     </head>
     <body>
@@ -27,9 +30,7 @@
                 <div class="container-head-pt-2">
                     <div class="head-icons">
                         <div class="head-icon-section head-notif-section">
-                            <span class="notif-count">
-                                3
-                            </span>
+                            <span class="notif-count" id="notif-count"></span>
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
                         <div class="head-icon-section head-profile-section">
@@ -244,6 +245,10 @@
                 </div>
             </div>
         </div>
+
+        <script src="../static/js/notif/notif-modal.js"></script>
+        <script defer>
+            updateNotifCount();
+        </script>
     </body>
 </html>
-

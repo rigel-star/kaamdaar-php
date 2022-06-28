@@ -33,6 +33,9 @@
 		<link rel="stylesheet" href="../static/css/business.css">
         <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
 
+        <script src="../static/js/modal.js"></script>
+        <script src="../static/js/notif/notif.js"></script>
+
 		<title>Business Profile</title>
 	</head>
 
@@ -53,9 +56,7 @@
                 <div class="container-head-pt-2">
                     <div class="head-icons">
                         <div class="head-icon-section head-notif-section" onclick="showModal('notif-modal');">
-                            <span class="notif-count">
-                                3
-                            </span>
+                            <span id="notif-count" class="notif-count"></span>
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
                         <div class="head-icon-section head-profile-section">
@@ -411,6 +412,11 @@
                 }
                 updateChart(chart, label, businessTypes, data);
             });
+        </script>
+
+        <script src="../static/js/notif/notif-modal.js"></script>
+        <script defer>
+            updateNotifCount();
         </script>
     </body>
 </html>

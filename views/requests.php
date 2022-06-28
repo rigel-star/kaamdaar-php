@@ -27,6 +27,10 @@
 		<link rel="stylesheet" href="../static/css/requests.css">
         <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
 
+        <script src="../static/js/modal.js"></script>
+        <script src="../static/js/notif/notif.js"></script>
+        <script src="./utils.js"></script>
+
 		<title>Your requests</title>
 	</head>
 
@@ -47,9 +51,7 @@
                 <div class="container-head-pt-2">
                     <div class="head-icons">
                         <div class="head-icon-section head-notif-section" onclick="showModal('notif-modal');">
-                            <span class="notif-count">
-                                3
-                            </span>
+                            <span class="notif-count" id="notif-count"></span>
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
                         <div class="head-icon-section head-profile-section">
@@ -234,9 +236,13 @@
                                     </div>
                                     <div class="rli-body">
                                         <div class="req-info">
-                                            <span><?php echo date('M j Y g:i A', strtotime($request['REQUEST_TIME'])); ?></span>
+                                            <span id="req-info--date"><?php echo $request['REQUEST_TIME']; ?></span>
+                                            <script>
+                                                let date = document.getElementById("req-info--date");
+                                                date.innerText = `${timeSince(new Date(date.innerText))} ago`;
+                                            </script>
                                             &#8226;
-                                            <span><?php echo $request['REQUEST_LOCATION'];; ?></span>
+                                            <span id="req-info--loc"><?php echo $request['REQUEST_LOCATION'];; ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -248,7 +254,11 @@
             </div>
         </div>
 
+        <script src="../static/js/notif/notif-modal.js"></script>
+
         <script>
+            updateNotifCount();
+
             function showRequestOptions(rid)
             {
                 let reqOptionsContainer = document.getElementById("request-options-container");
@@ -278,10 +288,8 @@
                 closeModal.style.display = "block";
 
                 let okButton = document.getElementsByClassName("delete-request-modal--ok")[0];
-                let newStatus;
                 message.innerText = "Are you sure you want to delete this request?";
                 okButton.innerText = "DELETE";
-                newStatus = 2;
 
                 okButton.addEventListener("click", function deleteRequest() {
                     let xhr = new XMLHttpRequest();

@@ -24,11 +24,13 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="../static/js/modal.js"></script>
 		
         <link rel="stylesheet" href="../static/css/base/layout.css">
 		<link rel="stylesheet" href="../static/css/add-business.css">
         <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
+
+        <script src="../static/js/modal.js"></script>
+        <script src="../static/js/notif/notif.js"></script>
 
 		<title>Add business</title>
 	</head>
@@ -50,9 +52,7 @@
                 <div class="container-head-pt-2">
                     <div class="head-icons">
                         <div class="head-icon-section head-notif-section" onclick="showModal('notif-modal');">
-                            <span class="notif-count">
-                                3
-                            </span>
+                            <span id="notif-count" class="notif-count"></span>
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
                         <div class="head-icon-section head-profile-section">
@@ -285,6 +285,11 @@
                 xhr.send();
                 return;
             }
+        </script>
+
+        <script src="../static/js/notif/notif-modal.js"></script>
+        <script defer>
+            updateNotifCount();
         </script>
     </body>
 </html>
