@@ -130,5 +130,5 @@
 
 @keyframes slideIn {
     from {bottom: -300px; opacity: 0}
-    to {bottom: 40px; opacity: 1}
+    to {bottom: 80px; opacity: 1}
 }
