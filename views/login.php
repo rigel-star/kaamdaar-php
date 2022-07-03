@@ -103,9 +103,8 @@
 
         validate_login();
         ?>
+        <p style="<?php echo "display:" . ($redirected ? "block" : "none"); ?>" class="redirected-msg">&#9432; You must login to continue</p>
         <div class="container">
-            <p style="<?php echo "display:" . ($redirected ? "block" : "none"); ?>" class="redirected-msg">&#9432; You must login to continue</p>
-
             <form class="login-form" action="<?php echo $_SERVER['PHP_SELF'] . "?route=$route"; ?>" method="POST">
                 <h1>Login</h1>
                 <?php $phone_value = isset($_POST['phone']) ? $_POST['phone'] : ''; ?>
