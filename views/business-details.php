@@ -16,7 +16,8 @@ $SQL = "SELECT
                 bp.B_PROFILE_NAME AS bname, 
                 bp.B_PROFILE_IMAGE AS bimage, 
                 br.BR_CAT_NAME AS bcatname,
-                bi.B_INFO_RATING AS brating
+                br.BR_CAT_ICON AS bcaticon, 
+                bi.B_INFO_RATING AS brating 
                 FROM business_profile bp 
                 NATURAL JOIN business b 
                 INNER JOIN br_category br 
@@ -27,6 +28,7 @@ $SQL = "SELECT
                 AND b.BUSINESS_TYPE = '$business_type';";
 
 $results = $orm->connection->query($SQL);
+$business_details = [];
 if($results)
 {
     $business_details = $results->fetch_assoc();
@@ -45,8 +47,8 @@ if($results)
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="../static/css/base/layout.css">
-        <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
         <link rel="stylesheet" href="../static/css/business-details.css">
+        <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
 
         <script src="../static/js/modal.js"></script>
         <script src="../static/js/notif/notif.js"></script>
@@ -107,6 +109,7 @@ if($results)
                         </div>
                         <div class="business-info--s1--r">
                             <div>
+                                <img width="100px" height="100px" src="<?php echo $business_details['bcaticon']; ?>" alt="">
                                 <p>
                                     <?php echo $business_details['bcatname']; ?>
                                 </p>
@@ -132,9 +135,6 @@ if($results)
         <script src="../static/js/notif/notif-modal.js"></script>
         <script defer>
             updateNotifCount();
-
-            let businessInfoTop = document.querySelector("business-info--top");
-            businessInfoTop.style.backgroundImage = "url(<?php echo $business_details['bimage']; ?>)";
 
             function offerResponse(response)
             {
