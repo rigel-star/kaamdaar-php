@@ -18,8 +18,8 @@ class Notification
         let notifHead = document.createElement("div");
         notifHead.classList.add('notif-head');
 
-        let notifHeadIcon = document.createElement("div");
-        notifHeadIcon.classList.add('notif-head-icon');
+        this.notifHeadIcon = document.createElement("div");
+        this.notifHeadIcon.classList.add('notif-head-icon');
 
         let notifHeadIconImg = document.createElement("img");
         notifHeadIconImg.classList.add('notif-head-icon-img');
@@ -47,10 +47,10 @@ class Notification
         notifDate.classList.add('notif-date');
         notifDate.innerText = this.date;
 
-        notifHeadIcon.appendChild(notifHeadIconImg);
+        this.notifHeadIcon.appendChild(notifHeadIconImg);
         notifHeadTitle.appendChild(notifProfile);
         notifHeadTitle.appendChild(notifTitle);
-        notifHead.appendChild(notifHeadIcon);
+        notifHead.appendChild(this.notifHeadIcon);
         notifHead.appendChild(notifHeadTitle);
 
         notifBody.appendChild(notifDesc);
@@ -153,6 +153,11 @@ class ResponseNotification extends Notification
                 accept.addEventListener("click", () => offerResponse("accept"));
                 reject.addEventListener("click", () => offerResponse("reject"));
             }
+
+            this.notifHeadIcon.style.cursor = "pointer";
+            this.notifHeadIcon.addEventListener("click", () => {
+                location.href = `./business-details.php?bpid=${this.senderId}&rid=${this.requestId}`;
+            });
         }
 
         notif.appendChild(actionBar);
