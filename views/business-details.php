@@ -43,7 +43,7 @@ if($results)
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?php echo $business_details['bname']; ?></title>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="../static/css/base/layout.css">
@@ -79,7 +79,11 @@ if($results)
                 </div>
             </div>
             <div class="container--body">
-                <div class="business-info--banner"></div>
+                <div style="display: none;" id="business-info--banner-modal">
+                    <i class="fa-solid fa-xmark business-info--close-modal round-elem" onclick="document.getElementById('business-info--banner-modal').style.display = 'none';"></i>
+                    <img id="business-info--banner-modal--image" src="https://ied.eu/wp-content/uploads/2016/03/solution.jpg" alt="">
+                </div>
+                <div class="business-info--banner" onclick="document.getElementById('business-info--banner-modal').style.display = 'block';"></div>
                 <div class="business-info">
                     <div class="business-info--s1">
                         <div class="business-info--s1--l">
@@ -123,31 +127,6 @@ if($results)
                                     </span>
                                 </div>
                                 <ul id="birr--f-list" class="birr--f-list" style="list-style-type: none;">
-                                    <li class="birr--f-list--item">
-                                        <div class="birr--fli--root">
-                                            <div class="birr--fli--root--head">
-                                                <img class="birr--fli--icon round-elem" src="https://i.pinimg.com/474x/ee/60/0b/ee600b5178e4f1648fd1e8623f049611.jpg" alt="Review Icon">
-                                                <div class="birr--fli-nr">
-                                                    <p class="birr--fli--name">Ramesh Poudel</p>
-                                                    <div class="birr--fli--rating">
-                                                        <div class="birr--fli--rating-stars">
-                                                            <i class='fa fa-star app-fa-star'></i>
-                                                            <i class='fa fa-star app-fa-star'></i>
-                                                            <i class='fa fa-star app-fa-star'></i>
-                                                            <i class='fa fa-star app-fa-star'></i>
-                                                            <i class='fa fa-star app-fa-star'></i>
-                                                        </div>
-                                                        <div class="birr--fli--rating-date">
-                                                            <span>June 16 2002</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="birr--fli--root--body">
-                                                <p class="birr--fli--desc">Guy did poor job fixing my Dell Inspiron laptop. Ban him.</p>
-                                            </div>
-                                        </div>
-                                    </li>
                                     <li class="birr--f-list--item">
                                         <div class="birr--fli--root">
                                             <div class="birr--fli--root--head">
