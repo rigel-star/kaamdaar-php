@@ -83,7 +83,7 @@ if($results)
                 <div class="business-info">
                     <div class="business-info--s1">
                         <div class="business-info--s1--l">
-                            <div class="business-info--s1--l--1">
+                            <div class="business-info--s1--l--1 bottom-bordered">
                                 <img class="business-info--profile" src="<?php echo $business_details['bimage']; ?>" alt="Business profile">
                                 <div>
                                     <span style="display: block;" class="business-info--name"><?php echo $business_details['bname']; ?></span>
@@ -100,32 +100,97 @@ if($results)
                                 </div>
                             </div>
                             <div class="business-info--desc">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae quis in expedita, dignissimos eligendi suscipit pariatur iusto magni non voluptatibus dolorum magnam eaque repudiandae voluptas fuga! Illum, ad eum. Recusandae!
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae quis in expedita, dignissimos eligendi suscipit pariatur iusto magni non voluptatibus dolorum magnam eaque repudiandae voluptas fuga! Illum, ad eum. Recusandae!
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae quis in expedita, dignissimos eligendi suscipit pariatur iusto magni non voluptatibus dolorum magnam eaque repudiandae voluptas fuga! Illum, ad eum. Recusandae!
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae quis in expedita, dignissimos eligendi suscipit pariatur iusto magni non voluptatibus dolorum magnam eaque repudiandae voluptas fuga! Illum, ad eum. Recusandae!
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae quis in expedita, dignissimos eligendi suscipit pariatur iusto magni non voluptatibus dolorum magnam eaque repudiandae voluptas fuga! Illum, ad eum. Recusandae!
+                                I am an experienced computer repairer with 2 years of experience. 
+                                I mainly work with Dell laptops. I did computer engineering degree from the one and only, IOE.
+                                I love working with hardwares.
+                                Things that i've learned over the years:
+                                1) I have become good at fixing laptops
+                            </div>
+                            <div class="business-info--rr">
+                                <!-- ratings and reviews -->
+                                <h2 id="rr-title" class="bottom-bordered">Ratings and reviews</h2>
+                                <div id="birr--summary">
+                                    <p><?php echo $rating; ?></p>
+                                    <div>
+                                        <i class='fa fa-star app-fa-star'></i>
+                                        <i class='fa fa-star app-fa-star'></i>
+                                        <i class='fa fa-star app-fa-star'></i>
+                                        <i class='fa fa-star app-fa-star'></i>
+                                        <i class='fa fa-star app-fa-star'></i>
+                                    </div>
+                                    <span>
+                                        2 reviews
+                                    </span>
+                                </div>
+                                <ul id="birr--f-list" class="birr--f-list" style="list-style-type: none;">
+                                    <li class="birr--f-list--item">
+                                        <div class="birr--fli--root">
+                                            <div class="birr--fli--root--head">
+                                                <img class="birr--fli--icon round-elem" src="https://i.pinimg.com/474x/ee/60/0b/ee600b5178e4f1648fd1e8623f049611.jpg" alt="Review Icon">
+                                                <div class="birr--fli-nr">
+                                                    <p class="birr--fli--name">Ramesh Poudel</p>
+                                                    <div class="birr--fli--rating">
+                                                        <div class="birr--fli--rating-stars">
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                        </div>
+                                                        <div class="birr--fli--rating-date">
+                                                            <span>June 16 2002</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="birr--fli--root--body">
+                                                <p class="birr--fli--desc">Guy did poor job fixing my Dell Inspiron laptop. Ban him.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="birr--f-list--item">
+                                        <div class="birr--fli--root">
+                                            <div class="birr--fli--root--head">
+                                                <img class="birr--fli--icon round-elem" src="https://i.pinimg.com/474x/ee/60/0b/ee600b5178e4f1648fd1e8623f049611.jpg" alt="Review Icon">
+                                                <div class="birr--fli-nr">
+                                                    <p class="birr--fli--name">Ramesh Poudel</p>
+                                                    <div class="birr--fli--rating">
+                                                        <div class="birr--fli--rating-stars">
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                            <i class='fa fa-star app-fa-star'></i>
+                                                        </div>
+                                                        <div class="birr--fli--rating-date">
+                                                            <span>June 16 2002</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="birr--fli--root--body">
+                                                <p class="birr--fli--desc">Guy did poor job fixing my Dell Inspiron laptop. Ban him.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <button id="birr--see-all">See all reviews</button>
                             </div>
                         </div>
                         <div class="business-info--s1--r">
-                            <div>
-                                <img width="100px" height="100px" src="<?php echo $business_details['bcaticon']; ?>" alt="">
-                                <p>
+                            <div class="bottom-bordered" style="padding-bottom: 10px;">
+                                <img id="business-info--cat-icon" width="100px" height="100px" style="margin-left: auto; margin-right: auto;" src="<?php echo $business_details['bcaticon']; ?>" alt="">
+                                <p id="business-info--cat-name">
                                     <?php echo $business_details['bcatname']; ?>
                                 </p>
-                                <p class="business-info--pricing">
-                                    Rs. 100 hour
-                                </p>
                             </div>
+                            <p class="business-info--pricing" id="business-info--pricing">
+                                Rs. <b>100 hr</b>
+                            </p>
                             <div class="business-info--buttons">
+                                <button class="business-info--button business-info--reject" id="business-info--reject" onclick="offerResponse(1);">Decline</button>
                                 <button class="business-info--button business-info--accept" id="business-info--accept" onclick="offerResponse(0);">Accept</button>
-                                <button class="business-info--button business-info--reject" id="business-info--reject" onclick="offerResponse(1);">Reject</button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="business-info--s2">
-                        <div class="business-info--activities">
-
                         </div>
                     </div>
                 </div>
