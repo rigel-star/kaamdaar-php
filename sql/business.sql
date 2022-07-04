@@ -61,3 +61,15 @@ BEGIN
 END%%
 DELIMITER ;
 -------------------------------------------------------------------------
+
+create table business_feedbacks(
+	FEEDBACK_ID INT PRIMARY KEY AUTO_INCREMENT, 
+	FEEDBACK_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+	FEEDBACK_MESSAGE VARCHAR(500) NOT NULL, 
+	FEEDBACK_RATING INT NOT NULL, 
+	BUSINESS_ID INT NOT NULL, 
+	U_ID CHAR(13) NOT NULL, 
+	CONSTRAINT business_feedbacks_feedback_rating_ck CHECK(FEEDBACK_RATING IN (1, 2, 3, 4, 5)), 
+	CONSTRAINT business_feedbacks_business_id_fk FOREIGN KEY(BUSINESS_ID) REFERENCES business(BUSINESS_ID), 
+	CONSTRAINT business_feedbacks_u_id_fk FOREIGN KEY(U_ID) REFERENCES users(U_ID)
+);
