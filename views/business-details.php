@@ -4,13 +4,31 @@ session_start();
 require_once "../constants.php";
 require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
 
+if(!isset($_GET['bpid']) || !isset($_GET['rid']))
+{
+    require_once("./error/404.html");
+    die();
+}
+
 $bprofile_id = $_GET['bpid'];
 $request_id = $_GET['rid'];
+$uid = $_SESSION['user_id'];
 
 $orm = new KaamdaarORM();
 
-$SQL = "SELECT REQUEST_TYPE AS `type` FROM request WHERE REQUEST_ID = '$request_id';";
-$business_type = $orm->connection->query($SQL)->fetch_assoc()['type'];
+$SQL = "SELECT REQUEST_TYPE AS `type` FROM request WHERE REQUEST_ID = '$request_id' AND U_ID = '$uid';";
+$results = $orm->connection->query($SQL);
+if($results)
+{
+    $business = $results->fetch_assoc();
+    if($business)
+        $business_type = $business['type'];
+    else 
+    {
+        require_once("./error/access-error.html");
+        die();
+    }
+}
 
 $SQL = "SELECT 
                 bp.B_PROFILE_NAME AS bname, 
@@ -33,6 +51,12 @@ if($results)
 {
     $business_details = $results->fetch_assoc();
 }
+
+if(!$business_details || !count($business_details))
+{
+    require_once("./error/access-error.html");
+    die();
+}
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +74,6 @@ if($results)
         <link rel="stylesheet" href="../static/css/business-details.css">
         <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
 
-        <script src="../static/js/modal.js"></script>
         <script src="../static/js/notif/notif.js"></script>
     </head>
     <body>
@@ -68,7 +91,7 @@ if($results)
                 </div>
                 <div class="container-head-pt-2">
                     <div class="head-icons">
-                        <div class="head-icon-section head-notif-section" onclick="showModal('notif-modal');">
+                        <div class="head-icon-section head-notif-section" onclick="showNotificationModal();">
                             <span id="notif-count" class="notif-count"></span>
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
