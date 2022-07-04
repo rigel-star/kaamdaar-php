@@ -38,7 +38,6 @@
 		<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
     	<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script> -->
 		<!-- <script src="../static/js/map/profile-map.js" defer></script> -->
-        <script src="../static/js/modal.js"></script>
         <script src="../static/js/notif/notif.js"></script>
         
         <title>Profile</title>

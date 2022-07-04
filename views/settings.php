@@ -9,19 +9,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../static/css/base/layout.css">
         <link rel="stylesheet" href="../static/css/settings.css">
+        <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
-        <script src="../static/js/modal.js"></script>
         <script src="../static/js/notif/notif.js"></script>
 
         <title>Settings</title>
     </head>
     <body>
         <div class="container">
+            <div id="notif-modal" class="modal notif-modal">
+                <?php 
+                    require_once("./modal/notif-modal.php");
+                ?>
+            </div>
+
             <div class="container-head">
                 <div class="container-head-pt-1">
                     <h1>Kaamdaar</h1>
@@ -29,7 +35,7 @@
                 </div>
                 <div class="container-head-pt-2">
                     <div class="head-icons">
-                        <div class="head-icon-section head-notif-section">
+                        <div class="head-icon-section head-notif-section" onclick="showNotificationModal();">
                             <span class="notif-count" id="notif-count"></span>
                             <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
                         </div>
