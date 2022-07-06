@@ -273,7 +273,7 @@
 
         public function getAllBusinessInfo($bid)
         {
-            $SQL = "SELECT b.business_id AS business_id, b.b_profile_id AS business_profile_id, cat.br_cat_name AS business_type, info.b_info_revenue AS business_revenue, info.b_info_rating AS business_rating, info.b_info_total AS business_total, b.business_status AS business_status FROM business b INNER JOIN br_category as cat on cat.br_cat_id = b.business_type INNER JOIN business_info AS info ON b.business_id = info.business_id WHERE b.b_profile_id = '$bid' AND b.business_status != 2;";
+            $SQL = "SELECT b.business_id AS business_id, b.b_profile_id AS business_profile_id, cat.br_cat_name AS business_type, info.b_info_revenue AS business_revenue, info.b_info_rating AS business_rating, info.b_info_total AS business_total, b.business_status AS business_status, b.business_start_date AS business_date FROM business b INNER JOIN br_category as cat on cat.br_cat_id = b.business_type INNER JOIN business_info AS info ON b.business_id = info.business_id WHERE b.b_profile_id = '$bid' AND b.business_status != 2;";
             $result_set = new ResultSet($this->connection->query($SQL));
 
             if(!count($result_set)) return [];
@@ -288,6 +288,7 @@
                     $result['business_revenue'],
                     $result['business_rating'],
                     $result['business_total'],
+                    $result['business_date'],
                     $result['business_status']
                 ));
             }
