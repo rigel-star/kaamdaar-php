@@ -272,35 +272,35 @@
                         <li class="bli">
                             <div class="bli-root">
                                 <div class="bli-head">
-                                    <?php $type = $bus->business_type;?>
-                                    <img src="<?php echo $business_icons[$type];?>" alt="Icon">
+                                    <?php $type = $bus['business_type']; ?>
+                                    <img width="64px" height="64px" src="<?php echo $bus['business_icon']; ?>" alt="Icon">
                                     <script>businessTypes.push("<?php echo $type; ?>");</script>
                                     <div>
                                         <p>
-                                            <strong><?php echo ucwords($type);?></strong> <span class="bli-status"><?php echo ($bus->business_status == "1" ? "<span>(Suspended)</span>" : ""); ?></span>
+                                            <strong><?php echo ucwords($type);?></strong> <span class="bli-status"><?php echo ($bus['business_status'] == "1" ? "<span>(Suspended)</span>" : ""); ?></span>
                                         </p>
                                         <p>
-                                            <?php echo $bus->business_date; ?>
+                                            <?php echo $bus['business_date']; ?>
                                         </p>
-                                        <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" id="td-icon" onclick="showBusinessOptions('<?php echo $bus->business_id; ?>');"></i>
+                                        <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" id="td-icon" onclick="showBusinessOptions('<?php echo $bus['business_id']; ?>');"></i>
                                     </div>
                                 </div>
                                 <div class="bli-stat">
                                     <div class="bli-st-i bli-total">
                                         <p>Total served</p>
-                                        <p><strong><?php echo $bus->business_total; ?></strong></p>
-                                        <script>totalServed.push([Number("<?php echo $bus->business_total;?>")]);</script>
+                                        <p><strong><?php echo $bus['business_total']; ?></strong></p>
+                                        <script>totalServed.push([Number("<?php echo $bus['business_total']; ?>")]);</script>
                                         <p>On last 30 days</p>
                                     </div>
                                     <div class="bli-st-i bli-rev">
                                         <p>Gross revenue</p>
-                                        <p><strong><?php echo $bus->business_revenue; ?></strong></p>
-                                        <script>revenue.push([Number("<?php echo $bus->business_revenue;?>")]);</script>
+                                        <p><strong><?php echo $bus['business_revenue']; ?></strong></p>
+                                        <script>revenue.push([Number("<?php echo $bus['business_revenue']; ?>")]);</script>
                                     </div>
                                     <div class="bli-st-i bli-rating">
                                         <p>Rating</p>
-                                        <p><strong><?php echo $bus->business_rating; ?></strong></p>
-                                        <script>rating.push([parseFloat("<?php echo $bus->business_total;?>")]);</script>
+                                        <p><strong><?php echo $bus['business_rating']; ?></strong></p>
+                                        <script>rating.push([parseFloat("<?php echo $bus['business_total']; ?>")]);</script>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>
