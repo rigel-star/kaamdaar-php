@@ -133,12 +133,15 @@ i.td-icon {
 
 .bl {
     list-style-type: none;
+    margin: 0 0 20px 0;
 }
 
 .bli {
+    margin: 20px 0 20px 0;
     width: inherit;
     padding: 5px;
     margin-bottom: 10px;
+    padding: 20px;
 }
 
 .bli-root {
@@ -151,6 +154,8 @@ i.td-icon {
     font-size: 25px;
     width: 100%;
     padding: 10px;
+    display: flex;
+    flex-direction: row;
 }
 
 .bli-status
@@ -191,15 +196,10 @@ i.td-icon {
     height: inherit;
 }
 
-.pdiv
-{
-    border: 1px solid black;
-    margin: 0 10px 15px 10px;
-}
-
 .profile-top 
 {
     height: 400px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);;
 }
 
 .pt-1 
@@ -213,22 +213,42 @@ i.td-icon {
 
 .pt-2 
 {
-    margin-left: 10px;
     display: flex;
     flex-direction: row;
 }
 
-.pt-2-1
+.profile-pic-placeholder
 {
-    margin: 10px 0 0 20px;
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(98, 175, 198);
+    color: #FFFFFF;
+    font-size: 50px;
+    line-height: 200px;
+    user-select: none;
 }
 
 .profile-pic
+{
+    border: 5px solid #FFFFFF;
+}
+
+.profile-pic, .profile-pic-placeholder
 {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     transform: translateY(-100px);
+    margin-left: 20px;
+}
+
+.profile-name
+{
+    font-family: Roboto;
+    font-size: 28px;
+    display: block;
+    font-weight: 600;
+    margin: 0 0 0 1em;
 }
 
 .profile-edit-btn
@@ -236,9 +256,14 @@ i.td-icon {
     width: 200px;
     height: 30px;
     font-size: 1em;
-    margin-top: 5px;
+    margin: 5px 0 0 1em;
     background-color: rgb(255, 185, 70);
     color: black;
     transition: color 0.15s;
     border: none;
+}
+
+.business-analytics
+{
+    padding: 20px;
 }
