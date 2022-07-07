@@ -141,11 +141,8 @@ i.td-icon {
     width: inherit;
     padding: 5px;
     margin-bottom: 10px;
-    padding: 20px;
-}
-
-.bli-root {
-    border-bottom: 1px solid black;
+    padding: 20px 20px 0 20px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 
 .bli-head {
@@ -156,6 +153,18 @@ i.td-icon {
     padding: 10px;
     display: flex;
     flex-direction: row;
+}
+
+.bli-head--1--1
+{
+    margin-left: 16px;
+    margin-top: 12px;
+}
+
+.bli-date
+{
+    font-size: 16px;
+    color: #b1b1b1;
 }
 
 .bli-status
@@ -174,7 +183,8 @@ i.td-icon {
 .bli-st-i {
     float: left;
     width: 33.33%;
-    padding: 10px 10px 20px 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
     height: max-content;
     height: 80px;
     font-weight: 300;
@@ -184,6 +194,14 @@ i.td-icon {
     border-right: 1px solid black;
     display: inline-block;
     height: inherit;
+}
+
+.bli-head--1
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .bli-rev {

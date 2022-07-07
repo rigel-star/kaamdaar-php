@@ -275,13 +275,15 @@
                                     <?php $type = $bus['business_type']; ?>
                                     <img width="64px" height="64px" src="<?php echo $bus['business_icon']; ?>" alt="Icon">
                                     <script>businessTypes.push("<?php echo $type; ?>");</script>
-                                    <div>
-                                        <p>
-                                            <strong><?php echo ucwords($type);?></strong> <span class="bli-status"><?php echo ($bus['business_status'] == "1" ? "<span>(Suspended)</span>" : ""); ?></span>
-                                        </p>
-                                        <p>
-                                            <?php echo $bus['business_date']; ?>
-                                        </p>
+                                    <div class="bli-head--1">
+                                        <div class="bli-head--1--1">
+                                            <p class="bli-name">
+                                                <strong><?php echo ucwords($type);?></strong> <span class="bli-status"><?php echo ($bus['business_status'] == "1" ? "<span>(Suspended)</span>" : ""); ?></span>
+                                            </p>
+                                            <p class="bli-date">
+                                                <?php echo date('d M Y', strtotime($bus['business_date'])); ?>
+                                            </p>
+                                        </div>
                                         <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" id="td-icon" onclick="showBusinessOptions('<?php echo $bus['business_id']; ?>');"></i>
                                     </div>
                                 </div>
