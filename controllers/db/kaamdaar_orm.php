@@ -256,7 +256,7 @@
 
         public function getAllRequests($uid)
         {
-            $SQL = "SELECT * FROM request r INNER JOIN br_category brc ON r.REQUEST_TYPE = brc.BR_CAT_ID WHERE r.U_ID = '$uid' AND r.REQUEST_STATUS = 0 ORDER BY r.REQUEST_TIME DESC;";
+            $SQL = "SELECT * FROM request r INNER JOIN br_category brc ON r.REQUEST_TYPE = brc.BR_CAT_ID WHERE r.U_ID = '$uid' ORDER BY r.REQUEST_TIME DESC;";
             $result_set = new ResultSet($this->connection->query($SQL));
 
             if($result_set && count($result_set))
@@ -273,25 +273,15 @@
 
         public function getAllBusinessInfo($bid)
         {
-            $SQL = "SELECT b.business_id AS business_id, b.b_profile_id AS business_profile_id, cat.br_cat_name AS business_type, info.b_info_revenue AS business_revenue, info.b_info_rating AS business_rating, info.b_info_total AS business_total, b.business_status AS business_status, b.business_start_date AS business_date FROM business b INNER JOIN br_category as cat on cat.br_cat_id = b.business_type INNER JOIN business_info AS info ON b.business_id = info.business_id WHERE b.b_profile_id = '$bid' AND b.business_status != 2;";
+            $SQL = "SELECT b.business_id AS business_id, b.b_profile_id AS business_profile_id, cat.br_cat_name AS business_type, info.b_info_revenue AS business_revenue, info.b_info_rating AS business_rating, info.b_info_total AS business_total, b.business_status AS business_status, b.business_start_date AS business_date, cat.BR_CAT_ICON AS business_icon FROM business b INNER JOIN br_category as cat on cat.br_cat_id = b.business_type INNER JOIN business_info AS info ON b.business_id = info.business_id WHERE b.b_profile_id = '$bid' AND b.business_status != 2;";
             $result_set = new ResultSet($this->connection->query($SQL));
 
             if(!count($result_set)) return [];
             
             $all_business = [];
             foreach($result_set as $result)
-            {
-                array_push($all_business, new Model\Business(
-                    $result['business_id'],
-                    $result['business_type'],
-                    $result['business_profile_id'],
-                    $result['business_revenue'],
-                    $result['business_rating'],
-                    $result['business_total'],
-                    $result['business_date'],
-                    $result['business_status']
-                ));
-            }
+                array_push($all_business, $result);
+                
             return $all_business;
         }
 

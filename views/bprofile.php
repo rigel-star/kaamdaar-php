@@ -199,9 +199,23 @@
                         <div class="profile-top pdiv">
                             <div class="pt-1"></div>
                             <div class="pt-2">
-                                <img class="profile-pic" src="../static/images/profile.jpg" alt="Profile pic">
+                                <?php if($bp->b_profile_image) { ?>
+                                    <img class="profile-pic" src="<?php echo $bp->b_profile_image; ?>" alt="Profile pic">
+                                <?php 
+                                    }
+                                    else 
+                                    { 
+                                        $name_array = explode(" ", $bp->b_profile_name);
+                                        $name_essentials = '';
+                                        foreach($name_array as $name_array_item)
+                                        {
+                                            $name_essentials .= $name_array_item[0];
+                                        }
+                                ?>
+                                    <span class="profile-pic-placeholder"><?php echo $name_essentials; ?></span>
+                                <?php } ?>
                                 <div class="pt-2-1">
-                                    <h2 class="profile-name"><?php echo $bp->b_profile_name; ?></h2>
+                                    <span class="profile-name"><?php echo $bp->b_profile_name; ?></span>
                                     <button class="profile-edit-btn">Edit your profile</button>
                                 </div>
                             </div>
@@ -257,30 +271,37 @@
                         <li class="bli">
                             <div class="bli-root">
                                 <div class="bli-head">
-                                    <?php $type = $bus->business_type;?>
-                                    <img src="<?php echo $business_icons[$type];?>" alt="Icon">
+                                    <?php $type = $bus['business_type']; ?>
+                                    <img width="64px" height="64px" src="<?php echo $bus['business_icon']; ?>" alt="Icon">
                                     <script>businessTypes.push("<?php echo $type; ?>");</script>
-                                    <span>
-                                        <strong><?php echo ucwords($type);?></strong> <span class="bli-status"><?php echo ($bus->business_status == "1" ? "<span>(Suspended)</span>" : ""); ?></span>
-                                    </span>
-                                    <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" id="td-icon" onclick="showBusinessOptions('<?php echo $bus->business_id; ?>');"></i>
+                                    <div class="bli-head--1">
+                                        <div class="bli-head--1--1">
+                                            <p class="bli-name">
+                                                <strong><?php echo ucwords($type);?></strong> <span class="bli-status"><?php echo ($bus['business_status'] == "1" ? "<span>(Suspended)</span>" : ""); ?></span>
+                                            </p>
+                                            <p class="bli-date">
+                                                <?php echo date('d M Y', strtotime($bus['business_date'])); ?>
+                                            </p>
+                                        </div>
+                                        <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" id="td-icon" onclick="showBusinessOptions('<?php echo $bus['business_id']; ?>');"></i>
+                                    </div>
                                 </div>
                                 <div class="bli-stat">
                                     <div class="bli-st-i bli-total">
                                         <p>Total served</p>
-                                        <p><strong><?php echo $bus->business_total; ?></strong></p>
-                                        <script>totalServed.push([Number("<?php echo $bus->business_total;?>")]);</script>
+                                        <p><strong><?php echo $bus['business_total']; ?></strong></p>
+                                        <script>totalServed.push([Number("<?php echo $bus['business_total']; ?>")]);</script>
                                         <p>On last 30 days</p>
                                     </div>
                                     <div class="bli-st-i bli-rev">
                                         <p>Gross revenue</p>
-                                        <p><strong><?php echo $bus->business_revenue; ?></strong></p>
-                                        <script>revenue.push([Number("<?php echo $bus->business_revenue;?>")]);</script>
+                                        <p><strong><?php echo $bus['business_revenue']; ?></strong></p>
+                                        <script>revenue.push([Number("<?php echo $bus['business_revenue']; ?>")]);</script>
                                     </div>
                                     <div class="bli-st-i bli-rating">
                                         <p>Rating</p>
-                                        <p><strong><?php echo $bus->business_rating; ?></strong></p>
-                                        <script>rating.push([parseFloat("<?php echo $bus->business_total;?>")]);</script>
+                                        <p><strong><?php echo $bus['business_rating']; ?></strong></p>
+                                        <script>rating.push([parseFloat("<?php echo $bus['business_total']; ?>")]);</script>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>
                                         <span class="fa fa-star checked"></span>
@@ -295,11 +316,12 @@
                     ?>
                     </ul>
 
-                    <div>
+                    <div style="padding: 20px;">
                         <h2><?php echo $totalBusinesses . " business" . ($totalBusinesses > 1 ? "es" : "");?></h2>
                     </div>
 
                     <div class="business-analytics">
+                        <h1>Business Analytics</h1>
                         <div>
                             <select name="chart-options" id="chart-options">
                                 <option value="rev">

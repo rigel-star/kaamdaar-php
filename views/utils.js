@@ -29,15 +29,15 @@ function timeSince(date) {
 
     interval = seconds / 86400;
     if (interval > 1)
-        return Math.floor(interval) + " days";
+        return Math.floor(interval) + "d";
 
     interval = seconds / 3600;
     if (interval > 1)
-        return Math.floor(interval) + " hours";
+        return Math.floor(interval) + "h";
 
     interval = seconds / 60;
     if (interval > 1)
-        return Math.floor(interval) + " minutes";
+        return Math.floor(interval) + "m";
 
-    return Math.floor(seconds) + " seconds";
+    return Math.floor(seconds) + "s";
 }
