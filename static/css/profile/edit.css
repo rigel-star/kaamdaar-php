@@ -2,6 +2,7 @@
 {
     --app-body-bg-color: #DAE0E6;
     --app-theme-color: rgb(255, 185, 70);
+    --app-basic-box-shadow: box-shadow: 0 1px 2px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
 }
 
 .profile-edit
@@ -84,4 +85,36 @@
     height: 40px;
     font-size: 1em;
     background-color: #FFFFFF;
+}
+
+.update-notif
+{
+    display: none;
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+    background-color: #FFFFFF;
+    width: 250px;
+    height: 50px;
+    border-radius: 8px;
+    box-shadow: var(--app-basic-box-shadow);
+    z-index: 1000;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    text-align: center;
+}
+
+#update-notif--msg
+{
+    height: 100%;
+    width: 100%;
+    line-height: 50px;
+    font-size: 1em;
+    text-align: center;
+    color: #000000;
+}
+
+@keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 40px; opacity: 1}
 }
