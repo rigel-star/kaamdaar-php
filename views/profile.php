@@ -199,7 +199,7 @@
 								<div class="pt-2-1">
 									<h2 class="profile-name"><?php echo $user->fname . " " . $user->lname;?></h2>
 									<p class="profile-loc"><?php echo $user->location; ?></p>
-									<button class="profile-edit-btn">Edit your profile</button>
+									<button onclick="location.href='./profile/edit.php';" class="profile-edit-btn">Edit your profile</button>
 								</div>
 							</div>
 						</div>
