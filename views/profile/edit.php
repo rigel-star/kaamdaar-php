@@ -47,8 +47,12 @@
                     <div class="profile-edit-details">
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                             <div class="profile-edit-details--sec profile-edit-details--fname">
-                                <label class="profile-edit--input-label">Full Name</label>
-                                <input placeholder="Full name" class="profile-edit--input" type="text" id="fname" name="fname">
+                                <label class="profile-edit--input-label">First Name</label>
+                                <input placeholder="First name" class="profile-edit--input" type="text" id="fname" name="fname" onchange="updateName('f');">
+                            </div>
+                            <div class="profile-edit-details--sec profile-edit-details--lname">
+                                <label class="profile-edit--input-label">Last Name</label>
+                                <input placeholder="Last name" class="profile-edit--input" type="text" id="lname" name="lname" onchange="updateName('l');">
                             </div>
                             <div class="profile-edit-details--phone">
                                 <label class="profile-edit-details--sec profile-edit--input-label">Phone</label>
@@ -74,6 +78,10 @@
                     </div>
                 </div>
             </div>
+
+            <div class="update-notif" id="update-notif">
+                <span id="update-notif--msg"></span>
+            </div>
         </div>
 
         <script src="../static/js/notif/notif-modal.js"></script>
@@ -84,16 +92,48 @@
             function updateGender()
             {
                 let newGender = document.getElementById('gender').value.charAt(0).toUpperCase();
+                updateField('U_GENDER', newGender, "Gender updated successfully");
+            }
 
+            function updateName(position)
+            {
+                switch(position)
+                {
+                    case "f":
+                        let newFname = document.getElementById("fname").value;
+                        updateField('U_FNAME', newFname, "First name updated")
+                        break;
+
+                    case "l":
+                        let newLname = document.getElementById("lname").value;
+                        updateField('U_LNAME', newLname, "Last name updated");
+                        break;
+                }
+            }
+
+            function updateField(key, value, msg)
+            {
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", `./profile/update-profile.php?field=U_GENDER&value=${newGender}`, true);
+                xhr.open("GET", `./profile/update-profile.php?field=${key}&value=${value}`, true);
 
                 xhr.onreadystatechange = function() {
                     if(xhr.readyState == XMLHttpRequest.DONE)
                     {
+                        let updateMsgContainer = document.getElementById("update-notif");
+                        updateMsgContainer.style.display = "block";
+
+                        let updateMessage = document.getElementById("update-notif--msg");
+
                         if(xhr.status == 200)
                         {
-                            console.log("Gender changed");
+                            updateMessage.innerText = msg;
+                            setTimeout(() => {
+                                updateMsgContainer.style.display = "none";
+                            }, 2000);
+                        }
+                        else
+                        {
+                            updateMessage.innerText = "Failed to update";
                         }
                     }
                 }
