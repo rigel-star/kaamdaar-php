@@ -125,16 +125,13 @@
                         let updateMessage = document.getElementById("update-notif--msg");
 
                         if(xhr.status == 200)
-                        {
                             updateMessage.innerText = msg;
-                            setTimeout(() => {
-                                updateMsgContainer.style.display = "none";
-                            }, 2000);
-                        }
                         else
-                        {
                             updateMessage.innerText = "Failed to update";
-                        }
+                        
+                        setTimeout(() => {
+                            updateMsgContainer.style.display = "none";
+                        }, 2000);
                     }
                 }
 
