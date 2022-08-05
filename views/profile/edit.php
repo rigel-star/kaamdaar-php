@@ -46,32 +46,48 @@
                     </div>
                     <div class="profile-edit-details">
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                            <div class="profile-edit-details--sec profile-edit-details--fname">
-                                <label class="profile-edit--input-label">First Name</label>
-                                <input placeholder="First name" class="profile-edit--input" type="text" id="fname" name="fname" onchange="updateName('f');">
-                            </div>
-                            <div class="profile-edit-details--sec profile-edit-details--lname">
-                                <label class="profile-edit--input-label">Last Name</label>
-                                <input placeholder="Last name" class="profile-edit--input" type="text" id="lname" name="lname" onchange="updateName('l');">
-                            </div>
-                            <div class="profile-edit-details--phone">
-                                <label class="profile-edit-details--sec profile-edit--input-label">Phone</label>
-                                <input placeholder="New phone number" class="profile-edit--input" type="text" id="phone" name="phone">
-                            </div>
-                            <div class="profile-edit-details--sec profile-edit-details--gender">
-                                <div class="ped--gender-1">
-                                    <label class="profile-edit--input-label">Gender</label>
-                                    <select class="profile-edit--select--gender" onchange="updateGender();" id="gender" name="gender">
-                                        <option value="m">MALE</option>
-                                        <option value="f">FEMALE</option>
-                                        <option value="o">OTHER</option>
-                                    </select>
+                            <div class="profile-edit--section profile-edit--section--profile">
+                                <div class="profile-edit--section--head">
+                                    <p class="profile-edit--section--title">Profile</p>
+                                </div>
+                                <div class="profile-edit--section--body">
+                                    <div class="profile-edit-details--sec profile-edit-details--fname">
+                                        <label class="profile-edit--input-label">First Name</label>
+                                        <input placeholder="First name" class="profile-edit--input" type="text" id="fname" name="fname" onchange="updateName('f');">
+                                    </div>
+                                    <div class="profile-edit-details--sec profile-edit-details--lname">
+                                        <label class="profile-edit--input-label">Last Name</label>
+                                        <input placeholder="Last name" class="profile-edit--input" type="text" id="lname" name="lname" onchange="updateName('l');">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="profile-edit-details--sec profile-edit-details--password">
-                                <div class="ped--password-1">
-                                    <label class="profile-edit--input-label">Password</label>
-                                    <button class="ped--password-change">Change</button>
+                            <div class="profile-edit--section profile-edit--section--account">
+                                <div class="profile-edit--section--head">
+                                    <p class="profile-edit--section--title">Account</p>
+                                </div>
+                                <div class="profile-edit--section--body">
+                                    <div class="profile-edit-details--sec profile-edit-details--gender">
+                                        <div class="ped--gender-1">
+                                            <label class="profile-edit--input-label">Gender</label>
+                                            <select class="profile-edit--select--gender" onchange="updateGender();" id="gender" name="gender">
+                                                <option value="m">MALE</option>
+                                                <option value="f">FEMALE</option>
+                                                <option value="o">OTHER</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="profile-edit-details--phone">
+                                        <div class="ped--phone-1">
+                                            <label class="profile-edit-details--sec profile-edit--input-label">Phone</label>
+                                            <button class="ped--phone-change">Change</button>
+                                        </div>
+                                    </div>
+                                    <div class="profile-edit-details--sec profile-edit-details--password">
+                                        <div class="ped--password-1">
+                                            <label class="profile-edit--input-label">Password</label>
+                                            <button class="ped--password-change">Change</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
