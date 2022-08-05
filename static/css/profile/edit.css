@@ -2,22 +2,26 @@
 {
     --app-body-bg-color: #DAE0E6;
     --app-theme-color: rgb(255, 185, 70);
-    --app-basic-box-shadow: box-shadow: 0 1px 2px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
+    --app-basic-box-shadow: 0 1px 2px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
 }
 
 .profile-edit
 {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    height: 100px;
-    width: 40%;
+    left: 0;
+    top: 50px;
+    width: 100%;
     background-color: #FFFFFF;
     box-shadow: 0 1px 2px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
     border-radius: 8px;
-    height: auto;
+    height: 100%;
     padding: 1em;
+}
+
+.profile-edit--section 
+{
+    width: 50%;
+    margin-left: 150px;
 }
 
 .profile-edit--section--head
@@ -38,8 +42,8 @@
 
 .profile-edit-img
 {
-    margin-left: 50%;
-    transform: translateX(-50%);
+    margin-left: 150px;
+    margin-bottom: 20px;
 }
 
 .profile-edit-details--sec
@@ -60,7 +64,9 @@
     font-size: 1em;
     padding: 5px;
     border-radius: 4px;
-    border: 1px solid grey;
+    border: 0.02em solid grey;
+    box-shadow: var(--app-basic-box-shadow);
+    color: #282828;
 }
 
 #profile-edit--img-src

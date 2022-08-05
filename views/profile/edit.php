@@ -1,3 +1,20 @@
+<?php 
+	require_once '../../constants.php';
+    require_once "../k_auth.php";
+
+	session_start();
+	if(!isset($_SESSION['user_phone'])) header('location:login.php?route=profile.php');
+
+	require_once '../../utils.php';
+	require_once ROOT_DIR . "controllers/db/db_kaamdaar.php";
+	require_once ROOT_DIR . "controllers/db/kaamdaar_orm.php";
+
+    $korm = new KaamdaarORM();
+    $phone = $_SESSION['user_phone'];
+    $user = $korm->getUserByPhone($phone);
+    $uid = $user->id;
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,7 +59,7 @@
             <div class="container-body">
                 <div class="profile-edit">
                     <div class="profile-edit-img">
-                        <img id="profile-edit--img-src" src="https://dl.memuplay.com/new_market/img/com.vicman.newprofilepic.icon.2022-06-07-21-33-07.png" alt="Profile image">
+                        <img id="profile-edit--img-src" src="<?php echo $_SESSION['user_image']; ?>" alt="Profile image">
                     </div>
                     <div class="profile-edit-details">
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -53,11 +70,11 @@
                                 <div class="profile-edit--section--body">
                                     <div class="profile-edit-details--sec profile-edit-details--fname">
                                         <label class="profile-edit--input-label">First Name</label>
-                                        <input placeholder="First name" class="profile-edit--input" type="text" id="fname" name="fname" onchange="updateName('f');">
+                                        <input placeholder="First name" class="profile-edit--input" type="text" id="fname" name="fname" onfocusout="updateName('f');" value="<?php echo $user->fname; ?>">
                                     </div>
                                     <div class="profile-edit-details--sec profile-edit-details--lname">
                                         <label class="profile-edit--input-label">Last Name</label>
-                                        <input placeholder="Last name" class="profile-edit--input" type="text" id="lname" name="lname" onchange="updateName('l');">
+                                        <input placeholder="Last name" class="profile-edit--input" type="text" id="lname" name="lname" onfocusout="updateName('l');" value="<?php echo $user->lname; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -70,9 +87,9 @@
                                         <div class="ped--gender-1">
                                             <label class="profile-edit--input-label">Gender</label>
                                             <select class="profile-edit--select--gender" onchange="updateGender();" id="gender" name="gender">
-                                                <option value="m">MALE</option>
-                                                <option value="f">FEMALE</option>
-                                                <option value="o">OTHER</option>
+                                                <option value="m" <?php echo $user->gender === "M" ? "selected" : ""; ?>>MALE</option>
+                                                <option value="f" <?php echo $user->gender === "F" ? "selected" : ""; ?>>FEMALE</option>
+                                                <option value="o" <?php echo $user->gender === "O" ? "selected" : ""; ?>>OTHER</option>
                                             </select>
                                         </div>
                                     </div>
@@ -98,6 +115,12 @@
             <div class="update-notif" id="update-notif">
                 <span id="update-notif--msg"></span>
             </div>
+
+            <div class="change-password-modal">
+                <div class="change-password-modal--content">
+
+                </div>
+            </div>
         </div>
 
         <script src="../static/js/notif/notif-modal.js"></script>
@@ -111,47 +134,76 @@
                 updateField('U_GENDER', newGender, "Gender updated successfully");
             }
 
+            // update name of user
             function updateName(position)
             {
-                switch(position)
+                let field = "";
+                let newName = "";
+                if(position === "f")
                 {
-                    case "f":
-                        let newFname = document.getElementById("fname").value;
-                        updateField('U_FNAME', newFname, "First name updated")
-                        break;
-
-                    case "l":
-                        let newLname = document.getElementById("lname").value;
-                        updateField('U_LNAME', newLname, "Last name updated");
-                        break;
+                    newName = document.getElementById("fname").value.trim();
+                    if(newName === "")
+                    {
+                        popupNotifMessageBox("Field can't be empty", 2000);
+                    }
+                    field = "U_FNAME"
                 }
+                else if(position === "l")
+                {
+                    newName = document.getElementById("lname").value.trim();
+                    field = "U_LNAME";
+                }
+
+                if(newName === "")
+                {
+                    popupNotifMessageBox("Name field can't be empty", 2000);
+                    return;
+                }
+
+                if(/(\d|[^a-zA-Z])/.test(newName))
+                {
+                    popupNotifMessageBox("Name field can't contain any special character or numeric value", 2000);
+                    return;
+                }
+
+                updateField(field, newName, "Name updated");
             }
 
             function updateField(key, value, msg)
             {
+                if(key === '' || value === '')
+                {
+                    popupNotifMessageBox("Field can't be empty", 2000);
+                    return;
+                }
+
                 let xhr = new XMLHttpRequest();
                 xhr.open("GET", `./profile/update-profile.php?field=${key}&value=${value}`, true);
 
                 xhr.onreadystatechange = function() {
                     if(xhr.readyState == XMLHttpRequest.DONE)
                     {
-                        let updateMsgContainer = document.getElementById("update-notif");
-                        updateMsgContainer.style.display = "block";
-
-                        let updateMessage = document.getElementById("update-notif--msg");
-
                         if(xhr.status == 200)
-                            updateMessage.innerText = msg;
+                            popupNotifMessageBox(msg, 2000);
                         else
-                            updateMessage.innerText = "Failed to update";
-                        
-                        setTimeout(() => {
-                            updateMsgContainer.style.display = "none";
-                        }, 2000);
+                            popupNotifMessageBox("Failed to update", 2000);
                     }
                 }
 
                 xhr.send(null);
+            }
+
+            function popupNotifMessageBox(msg, time)
+            {
+                let updateMsgContainer = document.getElementById("update-notif");
+                updateMsgContainer.style.display = "block";
+
+                let updateMessage = document.getElementById("update-notif--msg");
+                updateMessage.innerText = msg;
+
+                setTimeout(() => {
+                    updateMsgContainer.style.display = "none";
+                }, time);
             }
         </script>
     </body>
