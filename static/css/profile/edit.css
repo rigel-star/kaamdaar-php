@@ -142,7 +142,7 @@
     to {bottom: 40px; opacity: 1}
 }
 
-.change-password-modal
+.change-password-modal, .change-phone-modal
 {
     display: none;
     position: absolute;
@@ -156,7 +156,7 @@
     height: 100%;
 }
 
-#change-password-modal--close
+#change-password-modal--close, #change-phone-modal--close
 {
     cursor: pointer;
     font-size: 24px;
@@ -166,7 +166,7 @@
     top: 10px;
 }
 
-.change-password-modal--content
+.change-password-modal--content, .change-phone-modal--content
 {
     position: absolute;
     width: 600px;
@@ -178,29 +178,34 @@
     border-radius: 8px;
 }
 
-.change-password-modal--label
+.change-phone-modal--content
+{
+    height: 400px;
+}
+
+.change-password-modal--label, .change-phone-modal--label
 {
    display: block;
 }
 
-.change-password-modal--input
+.change-password-modal--input, .change-phone-modal--input
 {
     height: 40px;
     width: 90%;
 }
 
-.change-password-modal--form-in-sec
+.change-password-modal--form-in-sec, .change-phone-modal--form-in-sec
 {
     margin-bottom: 1em;
 }
 
-.change-password-modal--form
+.change-password-modal--form, .change-phone-modal--form
 {
     margin-top: 48px;
     margin-left: 20px;
 }
 
-.change-password-modal--save
+.change-password-modal--save, .change-phone-modal--save
 {
     background-color: var(--app-theme-color);
     width: 150px;

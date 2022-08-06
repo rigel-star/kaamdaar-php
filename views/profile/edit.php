@@ -96,7 +96,7 @@
                                     <div class="profile-edit-details--phone">
                                         <div class="ped--phone-1">
                                             <label class="profile-edit-details--sec profile-edit--input-label">Phone</label>
-                                            <button type="button" class="ped--phone-change">Change</button>
+                                            <button type="button" class="ped--phone-change" onclick="openChangePhoneModal();">Change</button>
                                         </div>
                                     </div>
                                     <div class="profile-edit-details--sec profile-edit-details--password">
@@ -138,6 +138,29 @@
 
                             <div class="change-password-modal--form-in-sec">
                                 <button class="change-password-modal--save" type="button" onclick="updatePassword();">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="change-phone-modal" id="change-phone-modal">
+                <div class="change-phone-modal--content">
+                    <span id="change-phone-modal--close" onclick="document.getElementById('change-phone-modal').style.display = 'none';">X</span>
+                    <div class="change-phone-modal--form">
+                        <form action="" method="POST">
+                            <div class="change-phone-modal--form-in-sec change-password-modal--form-old-pass">
+                                <label class="change-phone-modal--label">Current password</label>
+                                <input id="current-pass" class="change-phone-modal--input" type="password" placeholder="Current password">
+                            </div>
+
+                            <div class="change-phone-modal--form-in-sec">
+                                <label class="change-phone-modal--label">New phone</label>
+                                <input id="new-phone" class="change-phone-modal--input" type="text" placeholder="New phone">
+                            </div>
+
+                            <div class="change-phone-modal--form-in-sec">
+                                <button class="change-phone-modal--save" type="button" onclick="updatePhone();">Save</button>
                             </div>
                         </form>
                     </div>
@@ -210,24 +233,25 @@
                 }
 
                 let xhr = new XMLHttpRequest();
-                xhr.open("GET", `./profile/update-pass.php?old=${oldPass}&new=${newPass}&cnew=${cnewPass}`, true);
+                xhr.open("GET", `./profile/check-pass.php?pass=${oldPass}`, true);
                 xhr.onreadystatechange = function() {
                     if(xhr.readyState == XMLHttpRequest.DONE)
                     {
                         if(xhr.status == 200)
                         {
                             if(xhr.responseText === "true")
-                            {
-                                popupNotifMessageBox("Password updated successfully", 2000);
-                            }
-                            else 
-                                popupNotifMessageBox(xhr.responseText, 2000);
+                                updateField('U_PASSWORD', newPass, "Password updated successfully")
+                            else
+                                popupNotifMessageBox("Incorrect old password", 2000);
                         }
-                        else
-                            popupNotifMessageBox("Failed to update password", 2000);
                     }
                 }
                 xhr.send(null);
+            }
+
+            function updatePhone()
+            {
+
             }
 
             function updateField(key, value, msg)
@@ -271,6 +295,12 @@
             {
                 let passModal = document.getElementById("change-password-modal");
                 passModal.style.display = "block";
+            }
+
+            function openChangePhoneModal()
+            {
+                let phoneModal = document.getElementById("change-phone-modal");
+                phoneModal.style.display = "block";
             }
         </script>
     </body>
