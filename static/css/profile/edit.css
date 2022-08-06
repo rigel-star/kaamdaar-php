@@ -107,6 +107,7 @@
     height: 40px;
     font-size: 1em;
     background-color: #FFFFFF;
+    cursor: pointer;
 }
 
 .update-notif
@@ -139,4 +140,72 @@
 @keyframes slideIn {
     from {bottom: -300px; opacity: 0}
     to {bottom: 40px; opacity: 1}
+}
+
+.change-password-modal
+{
+    display: none;
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .4);
+    width: 100%;
+    height: 100%;
+}
+
+#change-password-modal--close
+{
+    cursor: pointer;
+    font-size: 24px;
+    color: #000000;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.change-password-modal--content
+{
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background-color: #FFFFFF;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 8px;
+}
+
+.change-password-modal--label
+{
+   display: block;
+}
+
+.change-password-modal--input
+{
+    height: 40px;
+    width: 90%;
+}
+
+.change-password-modal--form-in-sec
+{
+    margin-bottom: 1em;
+}
+
+.change-password-modal--form
+{
+    margin-top: 48px;
+    margin-left: 20px;
+}
+
+.change-password-modal--save
+{
+    background-color: var(--app-theme-color);
+    width: 150px;
+    height: 40px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: none;
 }

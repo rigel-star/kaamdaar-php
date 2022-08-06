@@ -96,13 +96,13 @@
                                     <div class="profile-edit-details--phone">
                                         <div class="ped--phone-1">
                                             <label class="profile-edit-details--sec profile-edit--input-label">Phone</label>
-                                            <button class="ped--phone-change">Change</button>
+                                            <button type="button" class="ped--phone-change">Change</button>
                                         </div>
                                     </div>
                                     <div class="profile-edit-details--sec profile-edit-details--password">
                                         <div class="ped--password-1">
                                             <label class="profile-edit--input-label">Password</label>
-                                            <button class="ped--password-change">Change</button>
+                                            <button type="button" class="ped--password-change" onclick="openChangePasswordModal();">Change</button>
                                         </div>
                                     </div>
                                 </div>
@@ -116,9 +116,31 @@
                 <span id="update-notif--msg"></span>
             </div>
 
-            <div class="change-password-modal">
+            <div class="change-password-modal" id="change-password-modal">
                 <div class="change-password-modal--content">
+                    <span id="change-password-modal--close" onclick="document.getElementById('change-password-modal').style.display = 'none';">X</span>
+                    <div class="change-password-modal--form">
+                        <form action="?" method="POST">
+                            <div class="change-password-modal--form-in-sec change-password-modal--form-old-pass">
+                                <label class="change-password-modal--label">Old password</label>
+                                <input id="old-pass" class="change-password-modal--input" type="password" placeholder="Old password">
+                            </div>
 
+                            <div class="change-password-modal--form-in-sec">
+                                <label class="change-password-modal--label">New password</label>
+                                <input id="new-pass" class="change-password-modal--input" type="password" placeholder="New password">
+                            </div>
+
+                            <div class="change-password-modal--form-in-sec">
+                                <label class="change-password-modal--label">Confirm new password</label>
+                                <input id="c-new-pass" class="change-password-modal--input" type="password" placeholder="Confirm new password">
+                            </div>
+
+                            <div class="change-password-modal--form-in-sec">
+                                <button class="change-password-modal--save" type="button" onclick="updatePassword();">Save</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -169,6 +191,45 @@
                 updateField(field, newName, "Name updated");
             }
 
+            function updatePassword()
+            {
+                let oldPass = document.getElementById('old-pass').value;
+                let newPass = document.getElementById('new-pass').value;
+                let cnewPass = document.getElementById('c-new-pass').value;
+
+                if(newPass !== cnewPass)
+                {
+                    popupNotifMessageBox("New password and confirm new password must match", 2000);
+                    return;
+                }
+
+                if(newPass.length < 6 || newPass === '' || cnewPass === '')
+                {
+                    popupNotifMessageBox("Password must be at least of length 6 and contain one or more numeric value and capital and small letter", 2000);
+                    return;
+                }
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", `./profile/update-pass.php?old=${oldPass}&new=${newPass}&cnew=${cnewPass}`, true);
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState == XMLHttpRequest.DONE)
+                    {
+                        if(xhr.status == 200)
+                        {
+                            if(xhr.responseText === "true")
+                            {
+                                popupNotifMessageBox("Password updated successfully", 2000);
+                            }
+                            else 
+                                popupNotifMessageBox(xhr.responseText, 2000);
+                        }
+                        else
+                            popupNotifMessageBox("Failed to update password", 2000);
+                    }
+                }
+                xhr.send(null);
+            }
+
             function updateField(key, value, msg)
             {
                 if(key === '' || value === '')
@@ -204,6 +265,12 @@
                 setTimeout(() => {
                     updateMsgContainer.style.display = "none";
                 }, time);
+            }
+
+            function openChangePasswordModal()
+            {
+                let passModal = document.getElementById("change-password-modal");
+                passModal.style.display = "block";
             }
         </script>
     </body>
