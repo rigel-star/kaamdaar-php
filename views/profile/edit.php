@@ -59,7 +59,8 @@
             <div class="container-body">
                 <div class="profile-edit">
                     <div class="profile-edit-img">
-                        <img id="profile-edit--img-src" src="<?php echo $_SESSION['user_image']; ?>" alt="Profile image">
+                        <input class="inputfile" id="input-profile" type="file" accept="image/*" name="" onchange="readURL(this);">
+                        <img class="profile-edit--img-src" id="profile-edit--img-src" src="<?php echo $_SESSION['user_image']; ?>" alt="Profile image">
                     </div>
                     <div class="profile-edit-details">
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -301,6 +302,23 @@
             {
                 let phoneModal = document.getElementById("change-phone-modal");
                 phoneModal.style.display = "block";
+            }
+
+            function readURL(input) 
+            {
+                if(input.files) 
+                {
+                    for(const img of input.files)
+                    {
+                        var reader = new FileReader();
+                        reader.onload = (e) => {
+                            let image = document.getElementById("profile-edit--img-src");
+                            image.src = e.target.result;
+                        };
+
+                        reader.readAsDataURL(img);
+                    }
+                }
             }
         </script>
     </body>

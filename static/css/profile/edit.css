@@ -214,3 +214,8 @@
     border-radius: 8px;
     border: none;
 }
+
+.inputfile
+{
+    display: none;
+}
