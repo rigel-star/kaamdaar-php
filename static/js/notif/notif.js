@@ -23,7 +23,7 @@ class Notification
 
         let notifHeadIconImg = document.createElement("img");
         notifHeadIconImg.classList.add('notif-head-icon-img');
-        notifHeadIconImg.src = this.icon;
+        notifHeadIconImg.src = this.icon != "" ? this.icon : "../static/images/default/blogo.jpeg";
 
         let notifHeadTitle = document.createElement("div");
         notifHeadTitle.classList.add('notif-head-title');
