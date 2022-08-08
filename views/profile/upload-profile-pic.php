@@ -7,6 +7,8 @@ function respondWithHttpError($error)
     header("HTTP/1.1 $error " . $errors[$error]);
 }
 
+// TODO:: Update database value as well
+
 // Immediate function to execute file upload
 (function () {
     if(isset($_FILES['profile-pic']['name']))
@@ -41,7 +43,15 @@ function respondWithHttpError($error)
                 respondWithHttpError(500);
             else 
             {
-                $_SESSION['user_image'] = "../" . $rel_path;
+                $_SESSION['user_image'] = "../$rel_path";
+
+                $connection = new mysqli("localhost", "root", "", "kaamdaar");
+                if($connection->connect_error)
+                    respondWithHttpError(500);
+
+                if(!$connection->query("update users set u_image = '../$rel_path' where u_id = '$user_id';"))
+                    respondWithHttpError(500);
+
                 echo "true";
             }
         }
