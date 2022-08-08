@@ -23,6 +23,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<link rel="stylesheet" href="../static/css/base/layout.css">
         <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
         <link rel="stylesheet" href="../static/css/profile/edit.css">
@@ -61,9 +62,13 @@
                     <div class="profile-edit-img">
                         <input class="inputfile" id="input-profile" type="file" accept="image/*" name="" onchange="readURL(this);">
                         <img class="profile-edit--img-src" id="profile-edit--img-src" src="<?php echo $_SESSION['user_image']; ?>" alt="Profile image">
+                        <button style="display: none;" class="ped--button" id="profile-upload-btn" onclick="uploadNewProfile()">Upload</button>
                     </div>
+
                     <div class="profile-edit-details">
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                            <input type="file" accept=".jpeg,.png,.jpg,.gif" name="profile-pic" id="profile-pic-input" style="display: none;" onchange="readURL(this);"/>
+
                             <div class="profile-edit--section profile-edit--section--profile">
                                 <div class="profile-edit--section--head">
                                     <p class="profile-edit--section--title">Profile</p>
@@ -97,13 +102,13 @@
                                     <div class="profile-edit-details--phone">
                                         <div class="ped--phone-1">
                                             <label class="profile-edit-details--sec profile-edit--input-label">Phone</label>
-                                            <button type="button" class="ped--phone-change" onclick="openChangePhoneModal();">Change</button>
+                                            <button type="button" class="ped--button ped--phone-change" onclick="openChangePhoneModal();">Change</button>
                                         </div>
                                     </div>
                                     <div class="profile-edit-details--sec profile-edit-details--password">
                                         <div class="ped--password-1">
                                             <label class="profile-edit--input-label">Password</label>
-                                            <button type="button" class="ped--password-change" onclick="openChangePasswordModal();">Change</button>
+                                            <button type="button" class="ped--button ped--password-change" onclick="openChangePasswordModal();">Change</button>
                                         </div>
                                     </div>
                                 </div>
@@ -172,6 +177,10 @@
         <script src="../static/js/notif/notif-modal.js"></script>
         <script defer>
             updateNotifCount();
+
+            document.getElementById("profile-edit--img-src").addEventListener("click", () => {
+                document.getElementById("profile-pic-input").click();
+            })
 
             // change gender of user
             function updateGender()
@@ -304,6 +313,8 @@
                 phoneModal.style.display = "block";
             }
 
+
+            var uploadURI = "";
             function readURL(input) 
             {
                 if(input.files) 
@@ -317,7 +328,41 @@
                         };
 
                         reader.readAsDataURL(img);
+                        document.getElementById("profile-upload-btn").style.display = "inline-block";
                     }
+                }
+
+                uploadURI = input.files[0];
+            }
+
+            function uploadNewProfile()
+            {
+                if(uploadURI)
+                {
+                    var formData = new FormData();
+                    formData.append("profile-pic", uploadURI);
+
+                    $.ajax({
+                        url: "./profile/upload-profile-pic.php",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        enctype: "multipart/form-data",
+                        success: function(response) {
+                            if(response == "false")
+                                popupNotifMessageBox("Could not update profile", 2000);
+                            else 
+                                popupNotifMessageBox("Profile picture changed", 2000);
+                        },
+                        error: function(error) {
+                            popupNotifMessageBox("Could not update profile", 2000);
+                        }
+                    });
+                }
+                else 
+                {
+                    popupNotifMessageBox("Please choose image file", 2000);
                 }
             }
         </script>
