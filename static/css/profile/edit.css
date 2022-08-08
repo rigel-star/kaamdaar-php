@@ -99,7 +99,7 @@
     font-weight: 700;
 }
 
-.ped--password-change, .ped--phone-change
+.ped--button, .ped--password-change, .ped--phone-change
 {
     border-radius: 1em;
     border: 2px solid var(--app-theme-color);
