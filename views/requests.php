@@ -236,10 +236,6 @@
                                     <div class="rli-body">
                                         <div class="req-info">
                                             <span id="req-info--date"><?php echo $request['REQUEST_TIME']; ?></span>
-                                            <script>
-                                                let date = document.getElementById("req-info--date");
-                                                date.innerText = `${timeSince(new Date(date.innerText))} ago`;
-                                            </script>
                                             &#8226;
                                             <span id="req-info--loc"><?php echo $request['REQUEST_LOCATION'];; ?></span>
                                         </div>
@@ -292,18 +288,18 @@
 
                 okButton.addEventListener("click", function deleteRequest() {
                     let xhr = new XMLHttpRequest();
-                    const url = `./request/update-request-status.php?rid=${rid}`;
+                    const url = `./request/delete-request.php?rid=${rid}`;
                     xhr.open("GET", url, true);
-                    xhr.send();
+                    xhr.send(null);
 
                     okButton.removeEventListener("click", deleteRequest);
                     window.location.reload();
-                })
+                });
 
                 window.onclick = (event) => {
                     if(event.target == closeModal)
                         closeModal.style.display = "none";
-                }
+                };
             }
         </script>
     </body>
