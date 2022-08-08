@@ -28,7 +28,6 @@
 
         $name = $_POST['business-name'];
         $phone = $_POST['business-phone'];
-        $image = $_POST['business-phone'];
 
         if(empty(trim($name)))
         {
@@ -44,7 +43,36 @@
         {
             $orm = new KaamdaarORM();
             $business_id = random_uniqid("b.", 11);
-            $SQL = "INSERT INTO business_profile(B_PROFILE_ID, B_PROFILE_NAME, B_PROFILE_IMAGE, U_ID) VALUES('$business_id', '$name', '', '" . $_SESSION['user_id'] . "');";
+
+            if(!mkdir("../uploads/bprofile/$business_id"))
+            {
+                die("500(Internal Server Error): Could not create business profile");
+            }
+
+            $image_path = $_SESSION['user_image'];
+            if(isset($_FILES['business-profile']['name']))
+            {
+                if(is_uploaded_file($_FILES['business-profile']['tmp_name']))
+                {
+                    $file_ext = end(explode($_FILES['business-profile']['name']));
+
+                    $base_url = $_SERVER['DOCUMENT_ROOT'] . "/kaamdaar-php";
+                    $rel_path = "uploads/bprofile/$business_id/bprofile.$file_ext";
+                    $abs_path = $base_url . "/$rel_path";
+
+                    echo $abs_path;
+                    die();
+
+                    if(!move_uploaded_file($_FILES['business-profile']['tmp_name'], $abs_path))
+                        die("500(Internal Server Error): Could not create business profile");
+                    else 
+                        $image_path = "../" . $rel_path;
+                }
+                else 
+                    die("500(Internal Server Error): Could not create business profile");
+            }
+
+            $SQL = "INSERT INTO business_profile(B_PROFILE_ID, B_PROFILE_NAME, B_PROFILE_IMAGE, U_ID) VALUES('$business_id', '$name', '$image_path', '" . $_SESSION['user_id'] . "');";
             $orm->connection->query($SQL);
             $orm->close();
 
@@ -96,8 +124,8 @@
                             <div class="pis-1">
                                 <!-- <img id="profile-img" class="profile-img" src="https://thypix.com/wp-content/uploads/2021/10/anime-avatar-profile-picture-thypix-117-700x700.jpg" alt=""> -->
                                 <img id="profile-img" class="profile-img" src="<?php echo $_SESSION['user_image']; ?>" alt="">
-                                <input id="input-profile" class="inputfile input-profile" name="business-profile" type="file" value="Upload new picture" accept="image/*" onchange="readURL(this);">
-                                <button onclick="openFileTray();" class="upload-file-btn">Upload new picture</button>
+                                <input id="input-profile" class="inputfile input-profile" name="business-profile" type="file" accept="image/*" onchange="readURL(this);">
+                                <button onclick="openFileTray();" class="upload-file-btn" type="button">Upload new picture</button>
                             </div>
                         </div>
                     </div>
@@ -116,15 +144,17 @@
 
             function readURL(input) 
             {
-                if (input.files && input.files[0]) 
+                if(input.files) 
                 {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#profile-img').attr('src', e.target.result);
-                    };
+                    for(const file of input.files)
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            document.getElementById('profile-img').src = e.target.result;
+                        };
 
-                    console.log(input.files[0]);
-                    reader.readAsDataURL(input.files[0]);
+                        reader.readAsDataURL(file);
+                    }
                 }
             }
         </script>
