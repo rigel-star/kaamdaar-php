@@ -111,7 +111,10 @@ if(!$business_details || !count($business_details))
                     <div class="business-info--s1">
                         <div class="business-info--s1--l">
                             <div class="business-info--s1--l--1 bottom-bordered">
-                                <img class="business-info--profile" src="<?php echo $business_details['bimage']; ?>" alt="Business profile">
+                                <?php 
+                                    $business_logo = $business_details['bimage'];
+                                ?>
+                                <img class="business-info--profile" src="<?php echo $business_logo != "" ? $business_logo : "../static/images/default/blogo.jpeg" ?>" alt="Business profile">
                                 <div>
                                     <span style="display: block;" class="business-info--name"><?php echo $business_details['bname']; ?></span>
                                     <div class="business-info--rating">
