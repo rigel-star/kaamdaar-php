@@ -53,7 +53,6 @@
 			foreach($fields as $field)
 				unset($_SESSION[$field]);
 
-				
 			header('location:profile.php');
 		}
 		else 

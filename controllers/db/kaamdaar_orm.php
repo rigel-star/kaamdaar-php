@@ -142,7 +142,8 @@
                         u_date,
                         u_location, 
                         u_latlong, 
-                        u_image
+                        u_image,
+                        u_status
                     ) 
                     VALUE(
                         '$user->id',
@@ -154,8 +155,9 @@
                         '$user->dateJoined',
                         '$user->location',
                         '$user->locLatLong',
-                        ''
-                    );";
+                        '$user->image',
+                        '0'
+                    );"; // status 0 means user is all right
 
             $this->connection->query($SQL);
         }
