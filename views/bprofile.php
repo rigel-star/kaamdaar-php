@@ -237,9 +237,7 @@
                     <div id="business-options-container" class="business-options-container" style="display: none;">
                         <div id="business-options" class="business-options">
                             <ul class="bo-list" style="list-style-type: none;">
-                                <li id="bo-suspend" class="bo-item bo-suspend">
-                                    <i class="fa fa-eye-slash" style="font-size:24px"></i> Suspend business
-                                </li>
+                                <li id="bo-suspend" class="bo-item bo-suspend"></li>
                                 <li id="bo-close" class="bo-item bo-close">
                                     <i class="fa fa-trash" style="font-size:24px"></i> Close business
                                 </li>
@@ -284,7 +282,7 @@
                                                 <?php echo date('d M Y', strtotime($bus['business_date'])); ?>
                                             </p>
                                         </div>
-                                        <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" id="td-icon" onclick="showBusinessOptions('<?php echo $bus['business_id']; ?>');"></i>
+                                        <i class="fa fa-ellipsis-v td-icon" style="font-size:24px" id="td-icon" onclick="showBusinessOptions('<?php echo $bus['business_id']; ?>', '<?php echo $bus['business_status']; ?>');"></i>
                                     </div>
                                 </div>
                                 <div class="bli-stat">
@@ -345,7 +343,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
         <script src="business-chart.js"></script>
         <script>
-            function showBusinessOptions(bid)
+            function showBusinessOptions(bid, status)
             {
                 let boOptionsContainer = document.getElementById("business-options-container");
                 boOptionsContainer.style.display = "block";
@@ -362,7 +360,16 @@
                 closeOption.addEventListener("click", () => openBusinessActionDialog("close", bid));
 
                 let suspendOption = document.getElementById("bo-suspend");
-                suspendOption.addEventListener("click", () => openBusinessActionDialog("suspend", bid));
+                let suspendAction = "suspend";
+                if(status == 0)
+                    suspendOption.innerHTML = "<i class='fa fa-eye-slash'></i> Suspend Business";
+                else if(status == 1)
+                {
+                    suspendOption.innerHTML = "<i class='fa-solid fa-eye'></i> Resume Business";
+                    suspendAction = "resume";
+                }
+
+                suspendOption.addEventListener("click", () => openBusinessActionDialog(suspendAction, bid));
 
                 window.onclick = (event) => {
                     if(event.target == boOptionsContainer)
@@ -380,9 +387,15 @@
                 let newStatus;
                 if(action === "suspend")
                 {
-                    message.innerText = "Are you sure you want to suspend this business? You can continue this business later.";
+                    message.innerText = "Are you sure you want to suspend this business? You can resume this business later.";
                     okButton.innerText = "SUSPEND";
                     newStatus = 1;
+                }
+                else if(action === "resume")
+                {
+                    message.innerText = "Are you sure you want to resume this business?";
+                    okButton.innerText = "RESUME";
+                    newStatus = 0;
                 }
                 else if(action === "close")
                 {
@@ -394,7 +407,6 @@
                 okButton.addEventListener("click", function closeBusiness() {
                     let xhr = new XMLHttpRequest();
                     const url = `./business/update-business-status.php?bid=${bid}&status=${newStatus}`;
-                    console.log(url);
                     xhr.open("GET", url, true);
                     xhr.send();
 
