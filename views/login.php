@@ -63,7 +63,7 @@
 
                     $user_image = $user->image;
                     if(empty(trim($user_image)))
-                        $user_image = "https://www.pngitem.com/pimgs/m/146-1468843_profile-icon-orange-png-transparent-png.png";
+                        $user_image = "../static/images/default/profile.png";
 
                     if(isset($_POST['remember-me']))
                     {
