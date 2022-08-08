@@ -30,8 +30,13 @@
 				$_SESSION['date'], 
 				$_SESSION['location'], 
 				$_SESSION['latlon'],
-				''
+				'../static/images/default/profile.png'
 			);
+
+			if(!mkdir("../uploads/profile/" . $new_user->id))
+			{
+				die("Could not register user");
+			}
 
 			$orm = new KaamdaarORM();
 			$orm->addNewUser($new_user);
@@ -42,11 +47,12 @@
 			$_SESSION['user_id'] = $new_user->id;
 
 			//dummy image
-			$_SESSION['user_image'] = 'https://jenmulligandesign.com/wp-content/uploads/2017/04/unsplash-free-stock-photos-download.jpg';
+			$_SESSION['user_image'] = '../static/images/default/profile.png';
 
 			$fields = ['fname', 'lname', 'phone', 'password', 'gender', 'date', 'location', 'latlon'];
 			foreach($fields as $field)
 				unset($_SESSION[$field]);
+
 				
 			header('location:profile.php');
 		}
