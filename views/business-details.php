@@ -35,7 +35,8 @@ $SQL = "SELECT
                 bp.B_PROFILE_IMAGE AS bimage, 
                 br.BR_CAT_NAME AS bcatname,
                 br.BR_CAT_ICON AS bcaticon, 
-                bi.B_INFO_RATING AS brating 
+                bi.B_INFO_RATING AS brating,
+                b.BUSINESS_DESC AS bdesc 
                 FROM business_profile bp 
                 NATURAL JOIN business b 
                 INNER JOIN br_category br 
@@ -130,11 +131,7 @@ if(!$business_details || !count($business_details))
                                 </div>
                             </div>
                             <div class="business-info--desc">
-                                I am an experienced computer repairer with 2 years of experience. 
-                                I mainly work with Dell laptops. I did computer engineering degree from the one and only, IOE.
-                                I love working with hardwares.
-                                Things that i've learned over the years:
-                                1) I have become good at fixing laptops
+                                <?php echo $business_details['bdesc']; ?>
                             </div>
                             <div class="business-info--rr">
                                 <!-- ratings and reviews -->
