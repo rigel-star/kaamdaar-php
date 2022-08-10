@@ -91,7 +91,7 @@
                             <p class="white-bg" id="newb-desc--info">
                                 Please write descriptive information about your experience in this business. Single-word or misleading description will be removed.
                             </p>
-                            <textarea placeholder="Enter description here..." name="newb-desc" class="newb-desc-in inputtext" cols="30" rows="20"></textarea>
+                            <textarea placeholder="Enter description here..." name="newb-desc" class="newb-desc-in inputtext" id="newb-desc-in" cols="30" rows="20"></textarea>
                         </div>
                         <div class="newb-form-in-sec white-bg newb-photos-container">
                             <input class="inputfile input-pics" id="input-pics" type="file" accept="image/*" name="newb-photos" onchange="chooseBusinessPictures(this);" multiple>
@@ -104,7 +104,7 @@
                             <button type="button" class="newb-form-action-button newb-form-cancel">
                                 Cancel
                             </button>
-                            <button type="submit" class="newb-form-action-button newb-form-start">
+                            <button type="button" onclick="addBusiness();" class="newb-form-action-button newb-form-start">
                                 Start
                             </button>
                         </div>
@@ -118,6 +118,7 @@
             updateNotifCount();
 
             var photoCount = 0;
+            var businessPhotoFiles = [];
             function chooseBusinessPictures(input) 
             {
                 let container = document.getElementById("newb-photos-list");
@@ -137,6 +138,7 @@
 
                         reader.readAsDataURL(img);
                     }
+                    businessPhotoFiles = input.files;
                 }
 
                 document.getElementById('newb-photos-upload-btn').style.display = 'none';
@@ -145,6 +147,56 @@
                     document.getElementById('newb-photos-upload-btn-2').style.display = 'inline-block';
                 else 
                     document.getElementById('newb-photos-upload-btn-2').style.display = 'none';
+            }
+
+            function addBusiness()
+            {
+                let desc = document.getElementById("newb-desc-in");
+                if(desc.value.length < 1)
+                {
+                    desc.style.border = "1px solid red";
+                    return;
+                }
+
+                for(const file of businessPhotoFiles)
+                {
+                    if(!file) continue;
+
+                    const formData = new FormData();
+                    formData.append("bphoto", file);
+                    formData.append("bid", "<?php echo $bp->b_profile_id; ?>");
+                    formData.append("btype", "<?php echo $newb_type; ?>");
+
+                    $.ajax({
+                        url: "./business/upload-business-photo.php",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        enctype: "multipart/form-data",
+                        success: function(response) {
+                            if(response == "false")
+                                console.log("Could not update photo: " + response);
+                            else 
+                            {
+                                $.ajax({
+                                    url: `./add-newb.php?type=<?php echo $newb_type; ?>&desc=${desc.value}`,
+                                    type: "GET",
+                                    processData: false,
+                                    success: function(response) {
+                                        location.href = "./bprofile.php";
+                                    },
+                                    error: function(err) {
+                                        console.log(err);
+                                    }
+                                });
+                            }
+                        },
+                        error: function(error) {
+                            console.log("Error: %o", error);
+                        }
+                    });
+                }
             }
         </script>
     </body>
