@@ -1,0 +1,166 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root
+{
+    --body-bg-color: #DAE0E6;
+    --line-color: #939393;
+    --radius-round: 50%;
+}
+
+a
+{
+    text-decoration: none;
+    color: blue;
+}
+
+html 
+{
+    height: 100vh;
+    width: 100vw;
+}
+
+body 
+{
+    font-family: Helvetica, sans-serif, Arial;
+    background-color: var(--body-bg-color);
+}
+
+h2 
+{
+    border-bottom: 0.02em solid var(--line-color);
+    margin-bottom: 8px;
+}
+
+.white-bg
+{
+    background-color: #FFFFFF;
+}
+
+.rfloat
+{
+    float: right;
+}
+
+.newb-form-container
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin-top: 50px;
+}
+
+#input-pics
+{
+    color: transparent;
+    width: 100px;
+    height: 40px;
+    display: none;
+}
+
+.newb-form-in-sec
+{
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.newb-photos-container, .newb-desc-in
+{
+    height: 300px;
+    width: 100%;
+}
+
+.newb-photos-list
+{
+    margin-left: 12px;
+    margin-top: 8px;
+    display: inline-block;
+    width: auto;
+}
+
+.newb-photo
+{
+    width: 96px;
+    height: 96px;
+    border-radius: 4px;
+    margin-right: 4px;
+}
+
+#newb-desc--info
+{
+    font-size: 14px;
+    font-family: Helvetica;
+    padding: 1em;
+    background-color: #FFFFFF;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    color: #636363;
+}
+
+.newb-desc-in
+{
+    width: 100%;
+    resize: vertical;
+    height: 200px;
+    font-family: Roboto;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.newb-type--select
+{
+    width: 200px;
+    height: 50px;
+}
+
+#newb-photos-upload-btn
+{
+    width: 100px;
+    height: 40px;
+    background-color: #FFFFFF;
+    font-size: 16px;
+    border: 2px solid rgb(255, 180, 75);
+    border-radius: 16px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    cursor: pointer;
+}
+
+#newb-photos-upload-btn-2
+{
+    display: none;
+    width: 96px;
+    height: 96px;
+    border: 3px dashed grey;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 0;
+}
+
+#newb-photos-upload-btn-2 img
+{
+    width: 64px;
+    height: 64px;
+}
+
+.newb-form-action-button
+{
+    width: 120px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1em;
+}
+
+.newb-form-start
+{
+    background-color: rgb(255, 180, 75);
+}
