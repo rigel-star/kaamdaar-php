@@ -286,3 +286,16 @@ button
     font-size: 2em;
     cursor: pointer;
 }
+
+.business-info--photos
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.business-info--photo
+{
+    width: 224px;
+    height: 248px;
+}
