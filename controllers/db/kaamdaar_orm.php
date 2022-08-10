@@ -299,59 +299,6 @@
             return $types;
         }
 
-        public function fetchRequestNotifications($bid)
-        {
-            $SQL = "SELECT business_type, business_start_date FROM business WHERE b_profile_id = '$bid';"; //get all the business types and the date they started which are owned by the provided business id
-            $result_set = new ResultSet($this->connection->query($SQL));
-
-            $notifications = [];
-            foreach($result_set as $result)
-            {
-                $type = $result['business_type'];
-                $business_start_date = $result['business_start_date'];
-                // $notif_sql = "SELECT * FROM request_notifications rn INNER JOIN request r ON r.REQUEST_ID = rn.REQUEST_ID INNER JOIN users u ON u.U_ID = r.U_ID WHERE r.REQUEST_TYPE = $type AND TIMESTAMPDIFF(SECOND, r.REQUEST_TIME, '$business_start_date') >= 0;";
-                $notif_sql = "SELECT * FROM request_notifications rn NATURAL JOIN request r NATURAL JOIN users u WHERE r.REQUEST_TYPE = $type AND TIMESTAMPDIFF(SECOND, r.REQUEST_TIME, '$business_start_date') >= 0;";
-                $notifs = new ResultSet($this->connection->query($notif_sql));
-                if(count($notifs))
-                {
-                    foreach($notifs as $notif)
-                    {
-                        $request = new Request(
-                            $notif['REQUEST_ID'],
-                            $notif['REQUEST_LOCATION'],
-                            $notif['REQUEST_LATLONG'],
-                            $notif['REQUEST_TYPE'],
-                            $notif['REQUEST_STATUS'],
-                            $notif['REQUEST_TIME'],
-                            $notif['U_ID']
-                        );
-
-                        $user = new User(
-                            $notif['U_ID'],
-                            $notif["U_FNAME"],
-                            $notif["U_LNAME"],
-                            $notif["U_PHONE"],
-                            $notif["U_PASSWORD"],
-                            $notif["U_GENDER"],
-                            $notif["U_DATE"],
-                            $notif["U_LOCATION"],
-                            $notif["U_LATLONG"],
-                            $notif['U_IMAGE']
-                        );
-
-                        $request_notif = new RequestNotification(
-                            $notif['RNOTIF_ID'], 
-                            $request, 
-                            $user
-                        );
-
-                        array_push($notifications, $request_notif);
-                    }
-                }
-            }
-            return $notifications;
-        }
-
         public function getBusinessCategories()
         {
             $result_set = $this->from("br_category")->fetch(null, null);
