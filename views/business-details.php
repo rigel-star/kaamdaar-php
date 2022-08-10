@@ -133,6 +133,17 @@ if(!$business_details || !count($business_details))
                             <div class="business-info--desc">
                                 <?php echo $business_details['bdesc']; ?>
                             </div>
+                            <div class="business-info--photos">
+                                <?php 
+                                    $business_photos_dir = $_SERVER['DOCUMENT_ROOT'] . "/kaamdaar-php/uploads/business/$bprofile_id/type$business_type";
+                                    $business_photos = array_values(array_diff(scandir($business_photos_dir), ['.', '..']));
+                                    sort($business_photos);
+                                    foreach($business_photos as $bphoto)
+                                    {
+                                        echo "<img class='business-info--photo' src='../uploads/business/$bprofile_id/type$business_type/$bphoto'/>";
+                                    }
+                                ?>
+                            </div>
                             <div class="business-info--rr">
                                 <!-- ratings and reviews -->
                                 <h2 id="rr-title" class="bottom-bordered">Ratings and reviews</h2>
