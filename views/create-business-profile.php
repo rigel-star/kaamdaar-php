@@ -49,6 +49,11 @@
                 die("500(Internal Server Error): Could not create business profile");
             }
 
+            if(!mkdir("../uploads/business/$business_id"))
+            {
+                die("500(Internal Server Error): Could not create business profile");
+            }
+
             $image_path = $_SESSION['user_image'];
             if(isset($_FILES['business-profile']['name']))
             {
