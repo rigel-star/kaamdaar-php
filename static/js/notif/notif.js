@@ -118,6 +118,9 @@ class ResponseNotification extends Notification
             let viewDetails = document.createElement('button');
             viewDetails.innerText = "View details";
             viewDetails.classList.add('notif-btn', 'notif-view-details-btn');
+            viewDetails.addEventListener("click", (e) => {
+                location.href = `./request-details.php?user_id=${this.senderId}&request_id=${this.requestId}`;
+            });
 
             if(this.responseStatus == "0") // if response is interactable
                 actionBar.appendChild(viewDetails);
