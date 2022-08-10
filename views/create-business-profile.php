@@ -94,17 +94,45 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="../static/css/create-business-profile.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+        <link rel="stylesheet" href="../static/css/base/layout.css">
+        <link rel="stylesheet" href="../static/css/modal/notif-modal.css">
+        <link rel="stylesheet" href="../static/css/create-business-profile.css">
+
+        <script src="../static/js/notif/notif.js"></script>
+
         <title>Create business profile</title>
     </head>
     <body>
-        <div class="container">
+        <div id="notif-modal" class="modal notif-modal">
+            <?php 
+                require_once("./modal/notif-modal.php");
+            ?>
+        </div>
+
+        <div class="container-head">
+            <div class="container-head-pt-1">
+                <h1>Kaamdaar</h1>
+                <input type="text" class="search" placeholder="&setminus; Search kaamdaar">
+            </div>
+            <div class="container-head-pt-2">
+                <div class="head-icons">
+                    <div class="head-icon-section head-notif-section" onclick="showNotificationModal();">
+                        <span id="notif-count" class="notif-count"></span>
+                        <img class="head-icon notif-icon" src="https://img.icons8.com/fluency-systems-filled/452/appointment-reminders.png" alt="Notif">
+                    </div>
+                    <div class="head-icon-section head-profile-section">
+                        <img class="head-icon profile-icon" src="<?php echo $_SESSION['user_image']; ?>" alt="Profile">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-body container">
             <div class="business-form">
                 <h2>
                     Create business profile
@@ -141,7 +169,10 @@
             </div>
         </div>
 
+        <script src="../static/js/notif/notif-modal.js"></script>
         <script>
+            updateNotifCount();
+
             function openFileTray()
             {
                 document.getElementById("input-profile").click();
